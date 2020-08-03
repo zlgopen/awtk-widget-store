@@ -1,0 +1,10 @@
+LIBRARY   special_edit
+EXPORTS
+    special_edit_register @1
+    special_edit_create @2
+    special_edit_cast @3
+    special_edit_set_int_limit @4
+    special_edit_set_limit @5
+    special_edit_set_float_dot @6
+    special_edit_set_inc_fun_key @7
+    special_edit_set_dec_fun_key @8

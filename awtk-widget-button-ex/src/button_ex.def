@@ -1,0 +1,6 @@
+LIBRARY   button_ex
+EXPORTS
+    button_ex_register @1
+    button_ex_create @2
+    button_ex_cast @3
+    button_ex_set_new_h @4

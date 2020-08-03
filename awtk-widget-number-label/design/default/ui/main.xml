@@ -1,0 +1,8 @@
+<window theme="main" >
+  <view x="c" y="m" w="240" h="240" children_layout="default(r=4,c=1,s=10,m=10)">
+    <number_label name="num1" value="100.20"/>
+    <number_label name="num2" value="200.20"/>
+    <number_label name="num3" value="300.33" style="green"/>
+    <button name="close" text="Close"/>
+  </view>
+</window>

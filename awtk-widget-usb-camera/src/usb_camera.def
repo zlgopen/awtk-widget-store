@@ -1,0 +1,34 @@
+LIBRARY   usb_camera
+EXPORTS
+    usb_camera_register @1
+    usb_camera_get_all_devices_info @2
+    usb_camera_get_devices_ratio_list @3
+    usb_camera_get_devices_ratio_list_for_device_id @4
+    usb_camera_check_ratio @5
+    usb_camera_open_device @6
+    usb_camera_open_device_with_width_and_height @7
+    usb_camera_set_ratio @8
+    usb_camera_get_ratio @9
+    usb_camera_set_mirror @10
+    usb_camera_close_device @11
+    usb_camera_get_video_image_data @12
+    usb_camera_prepare_image_fun @13
+    usb_camera_devices_info_list_destroy @14
+    usb_camera_devices_info_list_compare @15
+    usb_camera_device_ratio_list_destroy @16
+    usb_camera_device_ratio_list_compare @17
+    usb_camera_create @18
+    usb_camera_cast @19
+    usb_camera_set_camera_id @20
+    usb_camera_set_camera_width @21
+    usb_camera_set_camera_height @22
+    usb_camera_set_camera_mirror @23
+    usb_camera_set_camera_width_and_height @24
+    usb_cemera_open @25
+    usb_cemera_play @26
+    usb_cemera_stop @27
+    usb_camera_close @28
+    usb_camera_enum_all_devices @29
+    usb_camera_enum_device_all_ratio @30
+    usb_cemera_is_play @31
+    usb_cemera_is_open @32

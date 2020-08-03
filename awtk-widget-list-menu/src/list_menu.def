@@ -1,0 +1,23 @@
+LIBRARY   list_menu
+EXPORTS
+    list_menu_register @1
+    list_menu_create @2
+    list_menu_cast @3
+    list_menu_set_virtual_w @4
+    list_menu_set_virtual_h @5
+    list_menu_set_offset @6
+    list_menu_scroll_to @7
+    list_menu_set_vertical @8
+    list_menu_set_keyable @9
+    list_menu_set_animatable @10
+    list_menu_set_item_width @11
+    list_menu_set_item_height @12
+    list_menu_set_focus_prev_key @13
+    list_menu_set_focus_next_key @14
+    list_menu_set_child_selected @15
+    list_menu_set_selected_index @16
+    list_menu_move_selected @17
+    list_menu_selected_prev @18
+    list_menu_selected_next @19
+    menu_item_create @20
+    menu_item_cast @21

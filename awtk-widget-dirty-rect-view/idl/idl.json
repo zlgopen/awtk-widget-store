@@ -1,0 +1,349 @@
+[
+  {
+    "params": [],
+    "annotation": {
+      "global": true
+    },
+    "desc": "注册控件。",
+    "name": "dirty_rect_view_register",
+    "return": {
+      "type": "ret_t",
+      "desc": "返回RET_OK表示成功，否则表示失败。"
+    },
+    "type": "method",
+    "header": "src/dirty_rect_view_register.h",
+    "level": 1
+  },
+  {
+    "type": "class",
+    "methods": [
+      {
+        "params": [
+          {
+            "type": "widget_t*",
+            "name": "parent",
+            "desc": "父控件"
+          },
+          {
+            "type": "xy_t",
+            "name": "x",
+            "desc": "x坐标"
+          },
+          {
+            "type": "xy_t",
+            "name": "y",
+            "desc": "y坐标"
+          },
+          {
+            "type": "wh_t",
+            "name": "w",
+            "desc": "宽度"
+          },
+          {
+            "type": "wh_t",
+            "name": "h",
+            "desc": "高度"
+          }
+        ],
+        "annotation": {
+          "constructor": true,
+          "scriptable": true
+        },
+        "desc": "创建dirty_rect_view_item对象",
+        "name": "dirty_rect_view_item_create",
+        "return": {
+          "type": "widget_t*",
+          "desc": "对象。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "widget_t*",
+            "name": "widget",
+            "desc": "控件对象。"
+          },
+          {
+            "type": "int32_t",
+            "name": "invalidate_number",
+            "desc": "刷新次数。"
+          }
+        ],
+        "annotation": {
+          "scriptable": true
+        },
+        "desc": "设置刷新次数。",
+        "name": "dirty_rect_view_item_set_invalidate_number",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "widget_t*",
+            "name": "widget",
+            "desc": "控件对象。"
+          },
+          {
+            "type": "bool_t",
+            "name": "invalidate_background",
+            "desc": "控件对应的 dirty_rect_view"
+          }
+        ],
+        "annotation": {
+          "scriptable": true
+        },
+        "desc": "设置控件对应的 dirty_rect_view 控件的背景图区域。\n控件的背景图区域。",
+        "name": "dirty_rect_view_item_set_paint_background",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "widget_t*",
+            "name": "widget",
+            "desc": "控件对象。。"
+          }
+        ],
+        "annotation": {
+          "scriptable": true
+        },
+        "desc": "获取控件是否需要绘制。",
+        "name": "dirty_rect_view_item_get_is_paint",
+        "return": {
+          "type": "bool_t",
+          "desc": "返回TRUE表示需要，否则表示不需要。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "widget_t*",
+            "name": "widget",
+            "desc": "控件对象。。"
+          }
+        ],
+        "annotation": {
+          "scriptable": true
+        },
+        "desc": "获取控件是否需要绘制控件对应的 dirty_rect_view 控件的背景图区域。",
+        "name": "dirty_rect_view_item_get_is_paint_background",
+        "return": {
+          "type": "bool_t",
+          "desc": "返回TRUE表示需要，否则表示不需要。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "widget_t*",
+            "name": "widget",
+            "desc": "dirty_rect_view_item对象。"
+          }
+        ],
+        "annotation": {
+          "cast": true,
+          "scriptable": true
+        },
+        "desc": "转换为dirty_rect_view_item对象(供脚本语言使用)。",
+        "name": "dirty_rect_view_item_cast",
+        "return": {
+          "type": "widget_t*",
+          "desc": "dirty_rect_view_item对象。"
+        }
+      }
+    ],
+    "events": [],
+    "properties": [
+      {
+        "name": "invalidate_number",
+        "desc": "刷新次数。",
+        "type": "int32_t",
+        "annotation": {
+          "set_prop": true,
+          "get_prop": true,
+          "readable": true,
+          "persitent": true,
+          "design": true,
+          "scriptable": true
+        }
+      },
+      {
+        "name": "invalidate_background",
+        "desc": "刷新次数。",
+        "type": "bool_t",
+        "annotation": {
+          "set_prop": true,
+          "get_prop": true,
+          "readable": true,
+          "persitent": true,
+          "design": true,
+          "scriptable": true
+        }
+      }
+    ],
+    "header": "dirty_rect_view/dirty_rect_view_item.h",
+    "desc": "自定义脏矩形模块控件",
+    "name": "dirty_rect_view_item_t",
+    "parent": "widget_t",
+    "annotation": {
+      "scriptable": true,
+      "design": true,
+      "widget": true
+    },
+    "level": 2
+  },
+  {
+    "type": "class",
+    "methods": [
+      {
+        "params": [
+          {
+            "type": "widget_t*",
+            "name": "parent",
+            "desc": "父控件"
+          },
+          {
+            "type": "xy_t",
+            "name": "x",
+            "desc": "x坐标"
+          },
+          {
+            "type": "xy_t",
+            "name": "y",
+            "desc": "y坐标"
+          },
+          {
+            "type": "wh_t",
+            "name": "w",
+            "desc": "宽度"
+          },
+          {
+            "type": "wh_t",
+            "name": "h",
+            "desc": "高度"
+          }
+        ],
+        "annotation": {
+          "constructor": true,
+          "scriptable": true
+        },
+        "desc": "创建dirty_rect_view对象",
+        "name": "dirty_rect_view_create",
+        "return": {
+          "type": "widget_t*",
+          "desc": "dirty_rect_view对象。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "widget_t*",
+            "name": "widget",
+            "desc": "dirty_rect_view对象。"
+          }
+        ],
+        "annotation": {
+          "cast": true,
+          "scriptable": true
+        },
+        "desc": "转换为dirty_rect_view对象(供脚本语言使用)。",
+        "name": "dirty_rect_view_cast",
+        "return": {
+          "type": "widget_t*",
+          "desc": "dirty_rect_view对象。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "widget_t*",
+            "name": "widget",
+            "desc": "widget对象。"
+          },
+          {
+            "type": "int32_t",
+            "name": "lcd_buff_number",
+            "desc": "lcd 的缓冲 buff 个数，注意 lcd 的缓冲一定是要按照顺序来切换，否则会乱套。"
+          }
+        ],
+        "annotation": {
+          "scriptable": true
+        },
+        "desc": "设置 lcd 的缓冲 buff 个数，注意 lcd 的缓冲一定是要按照顺序来切换，否则会乱套。",
+        "name": "dirty_rect_view_set_lcd_buff_number",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "widget_t*",
+            "name": "widget",
+            "desc": "widget对象。"
+          },
+          {
+            "type": "bool_t",
+            "name": "enable_dirty_rect_view",
+            "desc": "是否开启自定义脏矩形。"
+          }
+        ],
+        "annotation": {
+          "scriptable": true
+        },
+        "desc": "设置是否开启自定义脏矩形。",
+        "name": "dirty_rect_view_set_enable_dirty_rect_view",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      }
+    ],
+    "events": [],
+    "properties": [
+      {
+        "name": "lcd_buff_number",
+        "desc": "lcd 的缓冲 buff 个数，注意 lcd 的缓冲一定是要按照顺序来切换，否则会乱套。",
+        "type": "int32_t",
+        "annotation": {
+          "set_prop": true,
+          "get_prop": true,
+          "readable": true,
+          "persitent": true,
+          "design": true,
+          "scriptable": true
+        }
+      },
+      {
+        "name": "enable_dirty_rect_view",
+        "desc": "是否开启自定义脏矩形。",
+        "type": "bool_t",
+        "annotation": {
+          "set_prop": true,
+          "get_prop": true,
+          "readable": true,
+          "persitent": true,
+          "design": true,
+          "scriptable": true
+        }
+      }
+    ],
+    "header": "dirty_rect_view/dirty_rect_view.h",
+    "desc": "自定义脏矩形控件",
+    "name": "dirty_rect_view_t",
+    "parent": "widget_t",
+    "annotation": {
+      "scriptable": true,
+      "design": true,
+      "widget": true
+    },
+    "level": 2
+  }
+]

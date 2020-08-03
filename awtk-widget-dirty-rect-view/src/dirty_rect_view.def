@@ -1,0 +1,13 @@
+LIBRARY   dirty_rect_view
+EXPORTS
+    dirty_rect_view_register @1
+    dirty_rect_view_item_create @2
+    dirty_rect_view_item_set_invalidate_number @3
+    dirty_rect_view_item_set_paint_background @4
+    dirty_rect_view_item_get_is_paint @5
+    dirty_rect_view_item_get_is_paint_background @6
+    dirty_rect_view_item_cast @7
+    dirty_rect_view_create @8
+    dirty_rect_view_cast @9
+    dirty_rect_view_set_lcd_buff_number @10
+    dirty_rect_view_set_enable_dirty_rect_view @11

@@ -1,0 +1,16 @@
+<window theme="main">
+	<cache_view x="0" y="0" w="100%" h="100%" update_interval="3000">
+		<image x="0" y="0" w="100%" h="50%" image="logo" rotation="0" />
+		<image x="0" y="0" w="100%" h="50%" image="logo" rotation="1" />
+		<image x="0" y="0" w="100%" h="50%" image="logo" rotation="2" />
+		<image x="0" y="0" w="100%" h="50%" image="logo" rotation="3" />
+		<image x="0" y="0" w="100%" h="50%" image="logo" rotation="4" />
+		<image x="0" y="0" w="100%" h="50%" image="logo" rotation="5" />
+		<digit_clock x="c" y="m:30" w="80" h="30" format="YY/MM/DD h:mm:ss" />
+		<check_button x="10" y="b:30" w="80" h="30" name="disable" text="Disable Cache" />
+		<button x="c:60" y="b:30" w="80" h="30" name="close" text="Close" />
+	</cache_view>
+  
+		<guage_pointer x="c" y="50" w="24" h="140" value="-128" image="guage_pointer" animation="value(from=-128, to=128, yoyo_times=6, duration=3000, delay=1000, auto_destroy=false)" />
+		<guage_pointer x="c" y="b:50" w="12" h="140" value="-128" image="pointer" animation="value(from=-128, to=128, yoyo_times=1000, duration=3000)" />
+</window>
