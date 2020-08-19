@@ -26,6 +26,9 @@
 #include "video_image/video_image.h"
 
 ret_t video_image_register(void) {
-  return widget_factory_register(widget_factory(), WIDGET_TYPE_VIDEO_IMAGE,
-                                 video_image_create);
+  return widget_factory_register(widget_factory(), WIDGET_TYPE_VIDEO_IMAGE, video_image_create);
+}
+
+const char* video_image_supported_render_mode(void) {
+  return "OpenGL|AGGE-BGR565|AGGE-BGRA8888|AGGE-MONO";
 }

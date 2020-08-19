@@ -55,14 +55,6 @@ series_dispaly_mode_t series_dispaly_mode_from_str(const char* mode);
  */
 typedef struct _series_line_params_t {
   /**
-   * style的名称。
-   */
-  char* style;
-  /**
-   * Style对象。
-   */
-  style_t* astyle;
-  /**
    * 是否显示。
    */
   uint8_t show : 1;
@@ -77,14 +69,6 @@ typedef struct _series_line_params_t {
  */
 typedef struct _series_line_area_params_t {
   /**
-   * style的名称。
-   */
-  char* style;
-  /**
-   * Style对象。
-   */
-  style_t* astyle;
-  /**
    * 是否显示。
    */
   uint8_t show : 1;
@@ -94,14 +78,6 @@ typedef struct _series_line_area_params_t {
  * 序列点的标记
  */
 typedef struct _series_symbol_params_t {
-  /**
-   * style的名称。
-   */
-  char* style;
-  /**
-   * Style对象。
-   */
-  style_t* astyle;
   /**
    * 大小
    */
@@ -116,14 +92,6 @@ typedef struct _series_symbol_params_t {
  * 指示序列值的柱条
  */
 typedef struct _series_bar_params_t {
-  /**
-   * style的名称。
-   */
-  char* style;
-  /**
-   * Style对象。
-   */
-  style_t* astyle;
   /**
    * 是否在div上重叠显示。
    */
@@ -226,42 +194,9 @@ typedef struct _series_vtable_t {
   series_index_of_point_in_t index_of_point_in;
   series_to_local_t to_local;
   series_on_paint_t on_paint;
-  widget_subpart_set_style_name_t subpart_set_style_name;
-  widget_subpart_get_style_obj_t subpart_get_style_obj;
 
   const series_draw_data_info_t* draw_data_info;
 } series_vtable_t;
-
-/**
- * @enum widget_subpart_t
- * @annotation ["scriptable", "string"]
- * @prefix SERIES_SUBPART_
- * 控件的子部件。
- */
-
-/**
- * @const SERIES_SUBPART_LINE
- * 序列形成的曲线
- */
-#define SERIES_SUBPART_LINE "series_line"
-
-/**
- * @const SERIES_SUBPART_LINE_AREA
- * 序列的曲线与轴围成的区域
- */
-#define SERIES_SUBPART_LINE_AREA "series_line_area"
-
-/**
- * @const SERIES_SUBPART_SYMBOL
- * 序列点的标记
- */
-#define SERIES_SUBPART_SYMBOL "series_symbol"
-
-/**
- * @const SERIES_SUBPART_BAR
- * 指示序列值的柱条
- */
-#define SERIES_SUBPART_BAR "series_bar"
 
 /**
  * @enum widget_prop_t
@@ -349,22 +284,16 @@ typedef struct _series_vtable_t {
 #define SERIES_PROP_LINE "line"
 
 /**
- * @const SERIES_PROP_LINE_STYLE
- * 序列形成的曲线的样式
- */
-#define SERIES_PROP_LINE_STYLE "line.style"
-
-/**
  * @const SERIES_PROP_LINE_SHOW
  * 序列形成的曲线是否显示
  */
-#define SERIES_PROP_LINE_SHOW "line.show"
+#define SERIES_PROP_LINE_SHOW "line:show"
 
 /**
  * @const SERIES_PROP_LINE_SMOOTH
  * 序列形成的曲线是否平滑显示
  */
-#define SERIES_PROP_LINE_SMOOTH "line.smooth"
+#define SERIES_PROP_LINE_SMOOTH "line:smooth"
 
 /**
  * @const SERIES_PROP_LINE_AREA
@@ -373,16 +302,10 @@ typedef struct _series_vtable_t {
 #define SERIES_PROP_LINE_AREA "area"
 
 /**
- * @const SERIES_PROP_LINE_AREA_STYLE
- * 序列的曲线与轴围成的区域的样式
- */
-#define SERIES_PROP_LINE_AREA_STYLE "area.style"
-
-/**
  * @const SERIES_PROP_LINE_AREA_SHOW
  * 序列的曲线与轴围成的区域是否显示
  */
-#define SERIES_PROP_LINE_AREA_SHOW "area.show"
+#define SERIES_PROP_LINE_AREA_SHOW "area:show"
 
 /**
  * @const SERIES_PROP_SYMBOL
@@ -391,20 +314,15 @@ typedef struct _series_vtable_t {
 #define SERIES_PROP_SYMBOL "symbol"
 
 /**
- * @const SERIES_PROP_SYMBOL_STYLE
- * 序列点的标记的样式
- */
-#define SERIES_PROP_SYMBOL_STYLE "symbol.style"
-/**
  * @const SERIES_PROP_SYMBOL_SIZE
  * 序列点的标记的大小
  */
-#define SERIES_PROP_SYMBOL_SIZE "symbol.size"
+#define SERIES_PROP_SYMBOL_SIZE "symbol:size"
 /**
  * @const SERIES_PROP_SYMBOL_SHOW
  * 序列点的标记是否显示
  */
-#define SERIES_PROP_SYMBOL_SHOW "symbol.show"
+#define SERIES_PROP_SYMBOL_SHOW "symbol:show"
 
 /**
  * @const SERIES_PROP_BAR
@@ -416,7 +334,7 @@ typedef struct _series_vtable_t {
  * @const SERIES_PROP_BAR_OVERLAP
  * 指示序列值的柱条是否重叠显示
  */
-#define SERIES_PROP_BAR_OVERLAP "bar.overlap"
+#define SERIES_PROP_BAR_OVERLAP "bar:overlap"
 
 /**
  * @enum widget_type_t
@@ -450,56 +368,56 @@ typedef struct _series_vtable_t {
 #define WIDGET_TYPE_BAR_SERIES_MINMAX "bar_series_minmax"
 
 /**
- * @const LINE_BORDER_COLOR
+ * @enum style_id_series_t
+ * @prefix STYLE_ID_SERIES_
+ * @annotation ["scriptable", "string"]
+ * style常量定义。
+ */
+/**
+ * @const STYLE_ID_SERIES_LINE_BORDER_COLOR
  * 序列形成的曲线边框颜色
  */
-#define LINE_BORDER_COLOR "line_border_color"
+#define STYLE_ID_SERIES_LINE_BORDER_COLOR "line_border_color"
 
 /**
- * @const LINE_BORDER_WIDTH
+ * @const STYLE_ID_SERIES_LINE_BORDER_WIDTH
  * 序列形成的曲线边框宽度
  */
-#define LINE_BORDER_WIDTH "line_border_width"
+#define STYLE_ID_SERIES_LINE_BORDER_WIDTH "line_border_width"
 
 /**
- * @const AREA_FG_COLOR
- * 序列的曲线与轴围成的区域前景颜色
+ * @const STYLE_ID_SERIES_AREA_COLOR
+ * 序列的曲线与轴围成的区域颜色
  */
-#define AREA_FG_COLOR "area_fg_color"
+#define STYLE_ID_SERIES_AREA_COLOR "area_color"
 
 /**
- * @const SYMBOL_BORDER_COLOR
+ * @const STYLE_ID_SERIES_SYMBOL_BORDER_COLOR
  * 序列点的标记边框颜色
  */
-#define SYMBOL_BORDER_COLOR "symbol_border_color"
+#define STYLE_ID_SERIES_SYMBOL_BORDER_COLOR "symbol_border_color"
 
 /**
- * @const SYMBOL_FG_COLOR
- * 序列点的标记前景颜色
+ * @const STYLE_ID_SERIES_SYMBOL_BG_COLOR
+ * 序列点的标记颜色
  */
-#define SYMBOL_FG_COLOR "symbol_fg_color"
+#define STYLE_ID_SERIES_SYMBOL_BG_COLOR "symbol_bg_color"
 
 /**
- * @const SYMBOL_BORDER_COLOR
- * 序列点的标记边框颜色
- */
-#define SYMBOL_BORDER_COLOR "symbol_border_color"
-
-/**
- * @const SYMBOL_BORDER_WIDTH
+ * @const STYLE_ID_SERIES_SYMBOL_BORDER_WIDTH
  * 序列点的标记边框宽度
  */
-#define SYMBOL_BORDER_WIDTH "symbol_border_width"
+#define STYLE_ID_SERIES_SYMBOL_BORDER_WIDTH "symbol_border_width"
 
 /**
- * @const SYMBOL_FG_IMAGE
- * 序列点的标记前景图片
+ * @const STYLE_ID_SERIES_SYMBOL_IMAGE
+ * 序列点的标记图片
  */
-#define SYMBOL_FG_IMAGE "symbol_fg_image"
+#define STYLE_ID_SERIES_SYMBOL_IMAGE "symbol_image"
 
 /**
- * @const SMOOTH_AREA_FG_COLOR
- * 序列的曲线与轴围成的平滑区域前景颜色
+ * @const STYLE_ID_SERIES_SMOOTH_AREA_COLOR
+ * 序列的曲线与轴围成的平滑区域颜色
  */
-#define SMOOTH_AREA_FG_COLOR "smooth_area_fg_color"
+#define STYLE_ID_SERIES_SMOOTH_AREA_COLOR "smooth_area_color"
 #endif /*TK_SERIES_TYPES_H*/

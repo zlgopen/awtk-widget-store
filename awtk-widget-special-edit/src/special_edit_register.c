@@ -19,7 +19,6 @@
  *
  */
 
-
 #include "tkc/mem.h"
 #include "tkc/utils.h"
 #include "special_edit_register.h"
@@ -28,4 +27,8 @@
 
 ret_t special_edit_register(void) {
   return widget_factory_register(widget_factory(), WIDGET_TYPE_SPECIAL_EDIT, special_edit_create);
+}
+
+const char* special_edit_supported_render_mode(void) {
+  return "OpenGL|AGGE-BGR565|AGGE-BGRA8888|AGGE-MONO";
 }

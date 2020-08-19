@@ -1,7 +1,6 @@
 #include "awtk.h"
 #include "base/assets_manager.h"
 #ifndef WITH_FS_RES
-#include "default/inc/styles/default.data"
 #include "default/inc/ui/home_page.data"
 #include "default/inc/ui/system_bar.data"
 #include "default/inc/ui/window_bar_series.data"
@@ -18,6 +17,7 @@
 #include "default/inc/ui/window_line_series_parall.data"
 #include "default/inc/ui/window_line_series_vertical.data"
 #include "default/inc/ui/window_pie.data"
+#include "default/inc/styles/default.data"
 #ifdef WITH_STB_IMAGE
 #include "default/inc/images/back_normal.res"
 #include "default/inc/images/back_pressed.res"
@@ -51,10 +51,10 @@
 #endif /*WITH_STB_IMAGE*/
 #ifdef WITH_VGCANVAS
 #endif /*WITH_VGCANVAS*/
-#if defined(WITH_STB_FONT) || defined(WITH_FT_FONT)
+#if defined(WITH_TRUETYPE_FONT)
 #include "default/inc/fonts/default.res"
-#else/*WITH_STB_FONT or WITH_FT_FONT*/
-#endif /*WITH_STB_FONT or WITH_FT_FONT*/
+#else /*WITH_TRUETYPE_FONT*/
+#endif /*WITH_TRUETYPE_FONT*/
 #endif /*WITH_FS_RES*/
 
 ret_t assets_init_default(void) {
@@ -64,7 +64,6 @@ ret_t assets_init_default(void) {
   assets_manager_preload(am, ASSET_TYPE_FONT, "default");
   assets_manager_preload(am, ASSET_TYPE_STYLE, "default");
 #else
-  assets_manager_add(am, style_default);
   assets_manager_add(am, ui_home_page);
   assets_manager_add(am, ui_system_bar);
   assets_manager_add(am, ui_window_bar_series);
@@ -81,6 +80,7 @@ ret_t assets_init_default(void) {
   assets_manager_add(am, ui_window_line_series_parall);
   assets_manager_add(am, ui_window_line_series_vertical);
   assets_manager_add(am, ui_window_pie);
+  assets_manager_add(am, style_default);
   assets_manager_add(am, image_back_normal);
   assets_manager_add(am, image_back_pressed);
   assets_manager_add(am, image_close_d);
@@ -109,12 +109,9 @@ ret_t assets_init_default(void) {
   assets_manager_add(am, image_pie_label_select);
   assets_manager_add(am, image_play_normal);
   assets_manager_add(am, image_play_pressed);
+  assets_manager_add(am, font_default);
 #ifdef WITH_VGCANVAS
 #endif /*WITH_VGCANVAS*/
-#if defined(WITH_STB_FONT) || defined(WITH_FT_FONT)
-  assets_manager_add(am, font_default);
-#else /*WITH_STB_FONT or WITH_FT_FONT*/
-#endif /*WITH_STB_FONT or WITH_FT_FONT*/
 #endif
 
   tk_init_assets();

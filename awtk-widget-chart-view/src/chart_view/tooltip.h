@@ -31,6 +31,24 @@ BEGIN_C_DECLS
  * @parent widget_t
  * @annotation ["scriptable","design","widget"]
  * 提示信息控件。
+ * 
+ * 在xml中使用"tooltip"标签创建扩展按钮控件。如：
+ *
+ * ```xml
+ * <!-- ui -->
+ * <tooltip x="c" y="50" w="100" h="100" />
+ * ```
+ *
+ * 可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：
+ *
+ * ```xml
+ * <!-- style -->
+ * <tooltip>
+ *  <style name="default">
+ *      <normal fg_color="#ffffff" symbol_border_color="#007acc" symbol_border_width="3" symbol_color="#ffffff"  tip_bg_color="#ffffff80" tip_border_color="#ffffff" tip_border_width="3" margin="4" text_color="#ffffff"/>
+ *  </style>
+ * </tooltip>
+ * ```
  */
 typedef struct _tooltip_t {
   widget_t widget;

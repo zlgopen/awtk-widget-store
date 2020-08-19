@@ -15,6 +15,21 @@
     "level": 1
   },
   {
+    "params": [],
+    "annotation": {
+      "global": true
+    },
+    "desc": "获取支持的渲染模式。",
+    "name": "usb_camera_supported_render_mode",
+    "return": {
+      "type": "const char*",
+      "desc": "返回渲染模式。"
+    },
+    "type": "method",
+    "header": "src/usb_camera_register.h",
+    "level": 1
+  },
+  {
     "type": "class",
     "methods": [],
     "events": [],
@@ -930,7 +945,7 @@
     "header": "usb_camera/usb_camera.h",
     "desc": "USB 摄像头控件",
     "name": "usb_camera_t",
-    "parent": "mutable_image_t",
+    "parent": "widget_t",
     "annotation": {
       "scriptable": true,
       "design": true,

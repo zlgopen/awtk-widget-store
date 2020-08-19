@@ -28,3 +28,7 @@
 ret_t qr_register(void) {
   return widget_factory_register(widget_factory(), WIDGET_TYPE_QR, qr_create);
 }
+
+const char* qr_supported_render_mode(void) {
+  return "OpenGL|AGGE-BGR565|AGGE-BGRA8888|AGGE-MONO";
+}

@@ -15,5 +15,4 @@
 /bin/*.lib
 /bin/*.exp
 /format.sh
-/.clang-format
 /scripts/update_res_generate_res_handler.pyc

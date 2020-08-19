@@ -36,6 +36,16 @@ BEGIN_C_DECLS
  */
 ret_t date_picker_register(void);
 
+/**
+ * @method  date_picker_supported_render_mode
+ * 获取支持的渲染模式。
+ *
+ * @annotation ["global"]
+ *
+ * @return {const char*} 返回渲染模式。
+ */
+const char* date_picker_supported_render_mode(void);
+
 END_C_DECLS
 
 #endif /*TK_DATE_PICKER_REGISTER_H*/

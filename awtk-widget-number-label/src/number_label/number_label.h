@@ -42,25 +42,25 @@ BEGIN_C_DECLS
  * 在xml中使用"number\_label"标签创建数值文本控件。如：
  *
  * ```xml
- * <number_label x="c" y="50" w="24" h="140" value="-128" format="%.4lf" decimal_font_size_scale="0.5"/>
+ * <!-- ui -->
+ * <number_label x="c" y="50" w="100" h="40" value="-128" format="%.4lf" decimal_font_size_scale="0.5"/>
  * ```
+ *
  * 在c代码中使用函数number\_label\_create创建数值文本控件。如：
  *
  * ```c
  *  widget_t* number_label = number_label_create(win, 10, 10, 128, 30);
  * ```
- * 可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：
- * 
- * ```xml
- * <number_label>
- * <style name="default" font_size="32">
- *   <normal text_color="black" />
- * </style>
  *
- * <style name="green" font_name="led" font_size="32">
- *   <normal text_color="green" />
- * </style>
-* </number_label>
+ * 可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：
+ *
+ * ```xml
+ * <!-- style -->
+ * <number_label>
+ *   <style name="default" font_size="32">
+ *     <normal text_color="black" />
+ *   </style>
+ * </number_label>
  * ```
  */
 typedef struct _number_label_t {

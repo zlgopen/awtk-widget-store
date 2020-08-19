@@ -206,14 +206,6 @@ typedef enum _axis_at_type_t {
  */
 typedef struct _axis_label_params_t {
   /**
-   * style的名称。
-   */
-  char* style;
-  /**
-   * Style对象。
-   */
-  style_t* astyle;
-  /**
    * 是否显示。
    */
   uint8_t show : 1;
@@ -233,14 +225,6 @@ typedef struct _axis_title_params_t {
    */
   wstr_t text;
   /**
-   * style的名称。
-   */
-  char* style;
-  /**
-   * Style对象。
-   */
-  style_t* astyle;
-  /**
    * 是否显示。
    */
   uint8_t show : 1;
@@ -251,14 +235,6 @@ typedef struct _axis_title_params_t {
  * 轴上的刻度线。
  */
 typedef struct _axis_tick_params_t {
-  /**
-   * style的名称。
-   */
-  char* style;
-  /**
-   * Style对象。
-   */
-  style_t* astyle;
   /**
    * 是否显示。
    */
@@ -283,14 +259,6 @@ typedef struct _axis_line_params_t {
    */
   uint32_t lengthen;
   /**
-   * style的名称。
-   */
-  char* style;
-  /**
-   * Style对象。
-   */
-  style_t* astyle;
-  /**
    * 是否显示。
    */
   uint8_t show : 1;
@@ -301,14 +269,6 @@ typedef struct _axis_line_params_t {
  * 坐标系上的分割线。
  */
 typedef struct _axis_split_line_params_t {
-  /**
-   * style的名称。
-   */
-  char* style;
-  /**
-   * Style对象。
-   */
-  style_t* astyle;
   /**
    * 是否显示。
    */
@@ -348,13 +308,6 @@ axis_data_t* axis_data_create(float_t tick, const char* text);
  * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
  */
 ret_t axis_data_destroy(axis_data_t* data);
-
-/**
- * @enum widget_subpart_t
- * @annotation ["scriptable", "string"]
- * @prefix AXIS_SUBPART_
- * 控件的子部件。
- */
 
 /**
  * 坐标轴的刻度的默认长度
@@ -408,7 +361,7 @@ ret_t axis_data_destroy(axis_data_t* data);
  * @const AXIS_PROP_SPLIT_LINE_SHOW
  * 坐标轴上的分割线是否显示
  */
-#define AXIS_PROP_SPLIT_LINE_SHOW "split_line.show"
+#define AXIS_PROP_SPLIT_LINE_SHOW "split_line:show"
 
 /**
  * @const AXIS_PROP_LINE
@@ -420,7 +373,7 @@ ret_t axis_data_destroy(axis_data_t* data);
  * @const AXIS_PROP_LINE_SHOW
  * 坐标轴的轴线是否显示
  */
-#define AXIS_PROP_LINE_SHOW "line.show"
+#define AXIS_PROP_LINE_SHOW "line:show"
 
 /**
  * @const AXIS_PROP_TICK
@@ -432,7 +385,7 @@ ret_t axis_data_destroy(axis_data_t* data);
  * @const AXIS_PROP_TICK_SHOW
  * 坐标轴的刻度线是否显示
  */
-#define AXIS_PROP_TICK_SHOW "tick.show"
+#define AXIS_PROP_TICK_SHOW "tick:show"
 
 /**
  * @const AXIS_PROP_LABEL
@@ -444,7 +397,7 @@ ret_t axis_data_destroy(axis_data_t* data);
  * @const AXIS_PROP_LABEL_SHOW
  * 坐标轴上的刻度值是否显示
  */
-#define AXIS_PROP_LABEL_SHOW "label.show"
+#define AXIS_PROP_LABEL_SHOW "label:show"
 
 /**
  * @const AXIS_PROP_TITLE
@@ -456,7 +409,7 @@ ret_t axis_data_destroy(axis_data_t* data);
  * @const AXIS_PROP_TITLE_SHOW
  * 坐标轴的标题是否显示
  */
-#define AXIS_PROP_TITLE_SHOW "title.show"
+#define AXIS_PROP_TITLE_SHOW "title:show"
 
 /**
  * @enum widget_type_t
@@ -478,28 +431,34 @@ ret_t axis_data_destroy(axis_data_t* data);
 #define WIDGET_TYPE_Y_AXIS "y_axis"
 
 /**
- * @const AXIS_SPLIT_LINE_FG_COLOR
+ * @enum style_id_axis_t
+ * @prefix STYLE_ID_AXIS_
+ * @annotation ["scriptable", "string"]
+ * style常量定义。
+ */
+/**
+ * @const STYLE_ID_AXIS_SPLIT_LINE_COLOR
  * 坐标轴分割线颜色。
  */
-#define AXIS_SPLIT_LINE_FG_COLOR "split_line_fg_color"
+#define STYLE_ID_AXIS_SPLIT_LINE_COLOR "split_line_color"
 
 /**
- * @const SPLIT_LINE_FG_IMAGE
- * 坐标轴前景图片。
+ * @const STYLE_ID_AXIS_SPLIT_LINE_IMAGE
+ * 坐标轴的图片。
  */
-#define SPLIT_LINE_FG_IMAGE "split_line_fg_image"
+#define STYLE_ID_AXIS_SPLIT_LINE_IMAGE "split_line_image"
 
 /**
- * @const TICK_COLOR
+ * @const STYLE_ID_AXIS_TICK_COLOR
  * 坐标轴刻度线颜色。
  */
-#define TICK_COLOR "tick_color"
+#define STYLE_ID_AXIS_TICK_COLOR "tick_color"
 
 /**
- * @const TICK_FG_IMAGE
- * 坐标轴刻度线前景颜色。
+ * @const STYLE_ID_AXIS_TICK_IMAGE
+ * 坐标轴刻度线颜色。
  */
-#define TICK_FG_IMAGE "tick_fg_image"
+#define STYLE_ID_AXIS_TICK_IMAGE "tick_image"
 
 END_C_DECLS
 

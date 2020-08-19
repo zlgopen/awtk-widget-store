@@ -205,9 +205,9 @@ ret_t tooltip_draw_symbol(widget_t* widget, canvas_t* c) {
   style = widget->astyle;
   return_value_if_fail(style != NULL, RET_BAD_PARAMS);
 
-  fg_color = style_get_color(style, SYMBOL_FG_COLOR, trans);
-  bd_color = style_get_color(style, SYMBOL_BORDER_COLOR, trans);
-  border_width = style_get_int(style, SYMBOL_BORDER_WIDTH, 1);
+  fg_color = style_get_color(style, STYLE_ID_TOOLTIP_SYMBOL_COLOR, trans);
+  bd_color = style_get_color(style, STYLE_ID_TOOLTIP_SYMBOL_BORDER_COLOR, trans);
+  border_width = style_get_int(style, STYLE_ID_TOOLTIP_SYMBOL_BORDER_WIDTH, 1);
 
   if (fg_color.rgba.a || bd_color.rgba.a) {
     vgcanvas_save(vg);
@@ -346,9 +346,9 @@ ret_t tooltip_draw_tip(widget_t* widget, canvas_t* c) {
   margin_left = style_get_int(style, STYLE_ID_MARGIN_LEFT, margin);
   margin_right = style_get_int(style, STYLE_ID_MARGIN_RIGHT, margin);
   margin_bottom = style_get_int(style, STYLE_ID_MARGIN_BOTTOM, margin);
-  bg_color = style_get_color(style, TIP_BG_COLOR, trans);
-  bd_color = style_get_color(style, TIP_BORDER_COLOR, trans);
-  border_width = style_get_int(style, TIP_BORDER_WIDTH, 1);
+  bg_color = style_get_color(style, STYLE_ID_TOOLTIP_BG_COLOR, trans);
+  bd_color = style_get_color(style, STYLE_ID_TOOLTIP_BORDER_COLOR, trans);
+  border_width = style_get_int(style, STYLE_ID_TOOLTIP_BORDER_WIDTH, 1);
   radius = style_get_int(style, STYLE_ID_ROUND_RADIUS, 0);
   text_color = style_get_color(style, STYLE_ID_TEXT_COLOR, trans);
   font_name = style_get_str(style, STYLE_ID_FONT_NAME, NULL);

@@ -19,7 +19,6 @@
  *
  */
 
-
 #include "tkc/mem.h"
 #include "tkc/utils.h"
 #include "list_menu_register.h"
@@ -31,4 +30,8 @@ ret_t list_menu_register(void) {
   widget_factory_register(widget_factory(), WIDGET_TYPE_LIST_MENU, list_menu_create);
   widget_factory_register(widget_factory(), WIDGET_TYPE_MENU_ITEM, menu_item_create);
   return RET_OK;
+}
+
+const char* list_menu_supported_render_mode(void) {
+  return "OpenGL|AGGE-BGR565|AGGE-BGRA8888|AGGE-MONO";
 }

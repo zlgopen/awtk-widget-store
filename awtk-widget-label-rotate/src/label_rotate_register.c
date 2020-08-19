@@ -19,7 +19,6 @@
  *
  */
 
-
 #include "tkc/mem.h"
 #include "tkc/utils.h"
 #include "label_rotate_register.h"
@@ -28,4 +27,8 @@
 
 ret_t label_rotate_register(void) {
   return widget_factory_register(widget_factory(), WIDGET_TYPE_LABEL_ROTATE, label_rotate_create);
+}
+
+const char* label_rotate_supported_render_mode(void) {
+  return "OpenGL|AGGE-BGR565|AGGE-BGRA8888|AGGE-MONO";
 }

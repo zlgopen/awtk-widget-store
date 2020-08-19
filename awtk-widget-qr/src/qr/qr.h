@@ -35,6 +35,7 @@ BEGIN_C_DECLS
  * 在xml中使用"qr"标签创建数值文本控件。如：
  *
  * ```xml
+ * <!-- ui -->
  * <qr x="c" y="m" w="240" h="240" value="https://github.com/zlgopen/awtk" />
  * ```
  * 在c代码中使用函数qr\_create创建数值文本控件。如：
@@ -45,11 +46,12 @@ BEGIN_C_DECLS
  * 可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：
  *
  * ```xml
+ * <!-- style -->
  * <qr>
- * <style name="default" >
- *   <normal fg_color="black" bg_color="white"/>
- *   <disable fg_color="gray" bg_color="#f0f0f0"/>
- * </style>
+ *   <style name="default" >
+ *     <normal fg_color="black" bg_color="white"/>
+ *     <disable fg_color="gray" bg_color="#f0f0f0"/>
+ *   </style>
  * </qr>
  * ```
  */

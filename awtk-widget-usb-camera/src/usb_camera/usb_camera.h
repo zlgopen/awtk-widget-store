@@ -29,7 +29,7 @@
 BEGIN_C_DECLS
 /**
  * @class usb_camera_t
- * @parent mutable_image_t
+ * @parent widget_t
  * @annotation ["scriptable","design","widget"]
  * USB 摄像头控件
  */

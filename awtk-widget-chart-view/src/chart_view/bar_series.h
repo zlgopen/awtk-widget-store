@@ -28,9 +28,31 @@ BEGIN_C_DECLS
 
 /**
  * @class bar_series_t
- * @parent series_t
- * @annotation ["scriptable"]
+ * @parent widget_t
+ * @annotation ["scriptable","design","widget"]
  * 柱条序列。
+ * 
+ * 在xml中使用"bar\_series"标签创建扩展按钮控件。如：
+ *
+ * ```xml
+ * <!-- ui -->
+ * <bar_series x="c" y="50" w="200" h="100" />
+ * ```
+ *
+ * 可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：
+ *
+ * ```xml
+ * <!-- style -->
+ * <bar_series>
+ *  <style name="default">
+ *      <normal margin_bottom="1" margin_left="20" margin_right="2" margin_top="3" fg_color="#69CF5C"/>
+ *  </style>
+ * <bar_series_minmax>
+ *  <style name="default">
+ *      <normal margin_bottom="1" margin_left="20" margin_right="2" margin_top="3" fg_color="#36B3C3"/>
+ *  </style>
+ * </bar_series_minmax>
+ * ```
  */
 typedef struct _bar_series_t {
   series_t base;

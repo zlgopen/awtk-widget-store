@@ -64,26 +64,6 @@ typedef void (*chart_utils_on_object_parse_t)(void* ctx, const char* name, const
 ret_t chart_utils_object_parse(chart_utils_on_object_parse_t on_parse, void* ctx,
                                const char* object);
 
-typedef ret_t (*widget_subpart_set_style_name_t)(widget_t* widget, const char* subpart,
-                                                 const char* value);
-typedef style_t** (*widget_subpart_get_style_obj_t)(widget_t* widget, const char* subpart);
-ret_t widget_subpart_use_style(widget_t* widget, const char* subpart, const char* value,
-                               widget_subpart_set_style_name_t set_style_name,
-                               widget_subpart_get_style_obj_t get_style_obj);
-ret_t widget_subpart_update_style(style_t* style, widget_t* widget, const char* subpart,
-                                  const char* style_name);
-ret_t widget_subpart_set_style(widget_t* widget, const char* subpart, const char* state_and_name,
-                               const value_t* value, widget_subpart_get_style_obj_t get_style_obj);
-ret_t widget_subpart_set_style_int(widget_t* widget, const char* subpart,
-                                   const char* state_and_name, int32_t value,
-                                   widget_subpart_get_style_obj_t get_style_obj);
-ret_t widget_subpart_set_style_color(widget_t* widget, const char* subpart,
-                                     const char* state_and_name, uint32_t value,
-                                     widget_subpart_get_style_obj_t get_style_obj);
-ret_t widget_subpart_set_style_str(widget_t* widget, const char* subpart,
-                                   const char* state_and_name, const char* value,
-                                   widget_subpart_get_style_obj_t get_style_obj);
-
 END_C_DECLS
 
 #endif /*TK_CHART_UTILS_H*/

@@ -77,9 +77,9 @@ static const char *LABEL_ROTATE_DIRECTION_STRING_LIST[] = {
  * 可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：
  *
  * ```xml
+ * <!-- style -->
  *  <style name="left">
- *   <normal text_color="red" text_align_h="left" border_color="#a0a0a0"
- *margin="4" />
+ *   <normal text_color="red" text_align_h="left" border_color="#a0a0a0" margin="4" />
  *  </style>
  * ```
  *

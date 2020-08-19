@@ -30,7 +30,7 @@ BEGIN_C_DECLS
 /**
  * @class axis_t
  * @parent widget_t
- * @annotation ["scriptable","widget"]
+ * @annotation ["scriptable","design","widget"]
  * 坐标轴控件。
  */
 typedef struct _axis_t {

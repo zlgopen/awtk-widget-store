@@ -15,6 +15,21 @@
     "level": 1
   },
   {
+    "params": [],
+    "annotation": {
+      "global": true
+    },
+    "desc": "获取支持的渲染模式。",
+    "name": "dirty_rect_view_supported_render_mode",
+    "return": {
+      "type": "const char*",
+      "desc": "返回渲染模式。"
+    },
+    "type": "method",
+    "header": "src/dirty_rect_view_register.h",
+    "level": 1
+  },
+  {
     "type": "class",
     "methods": [
       {
@@ -336,7 +351,7 @@
       }
     ],
     "header": "dirty_rect_view/dirty_rect_view.h",
-    "desc": "自定义脏矩形控件",
+    "desc": "自定义脏矩形控件\n\n在xml中使用dirty\\_rect\\_view\"标签创建扩展按钮控件。如：\n\n```xml\n<!-- ui -->\n<dirty_rect_view x=\"c\" y=\"50\" w=\"24\" h=\"100\" />\n```",
     "name": "dirty_rect_view_t",
     "parent": "widget_t",
     "annotation": {

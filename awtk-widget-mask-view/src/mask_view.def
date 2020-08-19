@@ -1,14 +1,15 @@
 LIBRARY   mask_view
 EXPORTS
     mask_view_register @1
-    mask_view_item_create @2
-    mask_view_item_cast @3
-    mask_view_item_set_mask_view @4
-    mask_view_item_get_mask_view @5
-    mask_view_create @6
-    mask_view_cast @7
-    mask_view_set_fg_interval_time @8
-    mask_view_set_bg_interval_time @9
-    mask_view_fg_interval @10
-    mask_view_bg_interval @11
-    mask_view_update_children_list @12
+    mask_view_supported_render_mode @2
+    mask_view_item_create @3
+    mask_view_item_cast @4
+    mask_view_item_set_mask_view @5
+    mask_view_item_get_mask_view @6
+    mask_view_create @7
+    mask_view_cast @8
+    mask_view_set_fg_interval_time @9
+    mask_view_set_bg_interval_time @10
+    mask_view_fg_interval @11
+    mask_view_bg_interval @12
+    mask_view_update_children_list @13

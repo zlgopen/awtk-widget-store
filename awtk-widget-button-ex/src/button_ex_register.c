@@ -19,7 +19,6 @@
  *
  */
 
-
 #include "tkc/mem.h"
 #include "tkc/utils.h"
 #include "button_ex_register.h"
@@ -28,4 +27,8 @@
 
 ret_t button_ex_register(void) {
   return widget_factory_register(widget_factory(), WIDGET_TYPE_BUTTON_EX, button_ex_create);
+}
+
+const char* button_ex_supported_render_mode(void) {
+  return "OpenGL|AGGE-BGR565|AGGE-BGRA8888|AGGE-MONO";
 }

@@ -45,9 +45,9 @@ static ret_t dirty_rect_view_widget_fill_rect(widget_t *widget, canvas_t *c,
     canvas_set_fill_color(c, color);
     if (radius > 3) {
       if (bg) {
-        ret = widget_fill_rounded_rect(c, r, NULL, &color, radius);
+        ret = canvas_fill_rounded_rect(c, r, NULL, &color, radius);
       } else {
-        ret = widget_fill_rounded_rect(c, r, &bg_r, &color, radius);
+        ret = canvas_fill_rounded_rect(c, r, &bg_r, &color, radius);
       }
       if (ret == RET_FAIL) {
         canvas_fill_rect(c, r->x, r->y, r->w, r->h);

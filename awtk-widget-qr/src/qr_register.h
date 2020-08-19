@@ -36,6 +36,16 @@ BEGIN_C_DECLS
  */
 ret_t qr_register(void);
 
+/**
+ * @method  qr_supported_render_mode
+ * 获取支持的渲染模式。
+ *
+ * @annotation ["global"]
+ *
+ * @return {const char*} 返回渲染模式。
+ */
+const char* qr_supported_render_mode(void);
+
 END_C_DECLS
 
 #endif /*TK_QR_REGISTER_H*/

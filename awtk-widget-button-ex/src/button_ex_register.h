@@ -19,7 +19,6 @@
  *
  */
 
-
 #ifndef TK_BUTTON_EX_REGISTER_H
 #define TK_BUTTON_EX_REGISTER_H
 
@@ -36,6 +35,16 @@ BEGIN_C_DECLS
  * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
  */
 ret_t button_ex_register(void);
+
+/**
+ * @method  button_ex_supported_render_mode
+ * 获取支持的渲染模式。
+ *
+ * @annotation ["global"]
+ *
+ * @return {const char*} 返回渲染模式。
+ */
+const char* button_ex_supported_render_mode(void);
 
 END_C_DECLS
 

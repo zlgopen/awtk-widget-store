@@ -28,3 +28,7 @@
 ret_t number_label_register(void) {
   return widget_factory_register(widget_factory(), WIDGET_TYPE_NUMBER_LABEL, number_label_create);
 }
+
+const char* number_label_supported_render_mode(void) {
+  return "OpenGL|AGGE-BGR565|AGGE-BGRA8888|AGGE-MONO";
+}

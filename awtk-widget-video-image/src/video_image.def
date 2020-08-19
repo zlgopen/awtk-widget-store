@@ -1,8 +1,9 @@
 LIBRARY   video_image
 EXPORTS
     video_image_register @1
-    video_image_create @2
-    video_image_cast @3
-    video_image_set_video_name @4
-    video_image_set_auto_play @5
-    video_image_set_delay_paly @6
+    video_image_supported_render_mode @2
+    video_image_create @3
+    video_image_cast @4
+    video_image_set_video_name @5
+    video_image_set_auto_play @6
+    video_image_set_delay_paly @7

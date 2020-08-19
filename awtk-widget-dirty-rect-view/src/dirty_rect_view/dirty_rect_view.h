@@ -31,6 +31,13 @@ BEGIN_C_DECLS
  * @parent widget_t
  * @annotation ["scriptable","design","widget"]
  * 自定义脏矩形控件
+ * 
+ * 在xml中使用dirty\_rect\_view"标签创建扩展按钮控件。如：
+ *
+ * ```xml
+ * <!-- ui -->
+ * <dirty_rect_view x="c" y="50" w="24" h="100" />
+ * ```
  */
 typedef struct _dirty_rect_view_t {
   widget_t widget;

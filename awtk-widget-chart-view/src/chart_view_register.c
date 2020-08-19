@@ -18,3 +18,7 @@ ret_t chart_view_register(void) {
   tooltip_register();
   pie_slice_register();
 }
+
+const char* chart_view_supported_render_mode(void) {
+  return "OpenGL|AGGE-BGR565|AGGE-BGRA8888|AGGE-MONO";
+}

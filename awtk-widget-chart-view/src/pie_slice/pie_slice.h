@@ -29,8 +29,26 @@ BEGIN_C_DECLS
 /**
  * @class pie_slice_t
  * @parent widget_t
- * @annotation ["scriptable"]
+ * @annotation ["scriptable","design","widget"]
  * 进度圆环控件。
+ *
+ * 在xml中使用"pie\_slice"标签创建扩展按钮控件。如：
+ *
+ * ```xml
+ * <!-- ui -->
+ * <pie_slice x="c" y="50" w="100" h="100" />
+ * ```
+ *
+ * 可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：
+ *
+ * ```xml
+ * <!-- style -->
+ * <pie_slice>
+ *  <style name="default">
+ *      <normal fg_color="#000000" text_color="#008000"/>
+ *  </style>
+ * </pie_slice>
+ * ```
  */
 typedef struct _pie_slice_t {
   widget_t widget;

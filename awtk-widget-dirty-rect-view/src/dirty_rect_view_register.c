@@ -19,7 +19,6 @@
  *
  */
 
-
 #include "tkc/mem.h"
 #include "tkc/utils.h"
 #include "dirty_rect_view_register.h"
@@ -27,13 +26,19 @@
 #include "dirty_rect_view/dirty_rect_view.h"
 #include "dirty_rect_view/dirty_rect_view_item.h"
 
-ret_t dirty_rect_view_register(void) { 
+ret_t dirty_rect_view_register(void) {
   ret_t ret = RET_OK;
-  ret = widget_factory_register(widget_factory(), WIDGET_TYPE_DIRTY_RECT_VIEW, dirty_rect_view_create);
-  
+  ret = widget_factory_register(widget_factory(), WIDGET_TYPE_DIRTY_RECT_VIEW,
+                                dirty_rect_view_create);
+
   if (ret == RET_OK) {
-    return widget_factory_register(widget_factory(), WIDGET_TYPE_DIRTY_RECT_VIEW_ITEM, dirty_rect_view_item_create);
+    return widget_factory_register(widget_factory(), WIDGET_TYPE_DIRTY_RECT_VIEW_ITEM,
+                                   dirty_rect_view_item_create);
   } else {
     return ret;
   }
+}
+
+const char* dirty_rect_view_supported_render_mode(void) {
+  return "OpenGL|AGGE-BGR565|AGGE-BGRA8888|AGGE-MONO";
 }

@@ -36,6 +36,16 @@ BEGIN_C_DECLS
  */
 ret_t usb_camera_register(void);
 
+/**
+ * @method  usb_camera_supported_render_mode
+ * 获取支持的渲染模式。
+ *
+ * @annotation ["global"]
+ *
+ * @return {const char*} 返回渲染模式。
+ */
+const char* usb_camera_supported_render_mode(void);
+
 END_C_DECLS
 
 #endif /*TK_USB_CAMERA_REGISTER_H*/

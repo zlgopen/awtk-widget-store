@@ -1,7 +1,8 @@
 LIBRARY   label_rotate
 EXPORTS
     label_rotate_register @1
-    label_rotate_create @2
-    label_rotate_set_length @3
-    label_rotate_set_orientation @4
-    label_rotate_cast @5
+    label_rotate_supported_render_mode @2
+    label_rotate_create @3
+    label_rotate_set_length @4
+    label_rotate_set_orientation @5
+    label_rotate_cast @6

@@ -44,19 +44,20 @@ BEGIN_C_DECLS
  * 
  * 子控件的大小和风格可以自行设定，遵循命名规则即可。
  * 
- * 在xml中使用"date\_picker"标签创建按钮控件。如：
+ * 在xml中使用"date\_picker"标签创建日期选择控件。如：
  *
  * ```xml
- * <date_picker x="c" y="m" w="280" h="280">
- *   <row name="title" x="0" y="0" w="100%" h="30">
+ * <!-- ui -->
+ * <date_picker x="c" y="m" w="200" h="200">
+ *   <view name="title" x="0" y="0" w="100%" h="30">
  *     <button name="prev_year" x="0" y="m" w="30" h="26" text="<<"/>
  *     <button name="prev_month" x="35" y="m" w="30" h="26" text="<"/>
  *     <label name="year_month" x="c" y="m" w="50%" h="100%" text="2020/7"/>
  *     <button name="next_month" x="r:35" y="m" w="30" h="26" text=">"/>
  *     <button name="next_year" x="r" y="m" w="30" h="26" text=">>"/>
- *   </row>
+ *   </view>
  *
- *   <row name="week" x="0" y="32" w="100%" h="30" children_layout="default(r=1,c=7,m=2,s=2)">
+ *   <view name="week" x="0" y="32" w="100%" h="30" children_layout="default(r=1,c=7,m=2,s=2)">
  *     <label name="sun" tr_text="Su"/>
  *     <label name="mon" tr_text="Mo"/>
  *     <label name="tue" tr_text="Tu"/>
@@ -64,9 +65,9 @@ BEGIN_C_DECLS
  *     <label name="thu" tr_text="Th"/>
  *     <label name="fri" tr_text="Fr"/>
  *     <label name="sat" tr_text="Sa"/>
- *   </row>
+ *   </view>
  *
- *   <grid name="days" x="0" y="64" w="100%" h="-100" children_layout="default(r=6,c=7,m=2,s=2)">
+ *   <view name="days" x="0" y="64" w="100%" h="-100" children_layout="default(r=6,c=7,m=2,s=2)">
  *     <button text="0"/>
  *     <button text="1"/>
  *     <button text="2"/>
@@ -99,7 +100,7 @@ BEGIN_C_DECLS
  *     <button text="5"/>
  *     <button text="6"/>
  *
- *    <button text="0"/>
+ *     <button text="0"/>
  *     <button text="1"/>
  *     <button text="2"/>
  *     <button text="3"/>
@@ -114,11 +115,32 @@ BEGIN_C_DECLS
  *     <button text="4"/>
  *     <button text="5"/>
  *     <button text="6"/>
- *   </grid>
- *   <button name="today" x="c" y="b:2" w="60" h="30" tr_text="Today">
+ *   </view>
+ *   <button name="today" x="c" y="b:2" w="60" h="30" tr_text="Today"/>
  * </date_picker>
  * ```
- * 
+ *
+ * 可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：
+ *
+ * ```xml
+ * <!-- style -->
+ * <button>
+ *   <style name="day">
+ *     <normal text_color="#222222"/>
+ *     <pressed text_color="#ffffff" bg_color="#1971dd" border_color="#1971dd"/>
+ *     <over text_color="#ffffff" bg_color="#338fff" border_color="#338fff"/>
+ *     <focused text_color="#444444" bg_color="#f4f4f4" border_color="#338fff" />
+ *     <disable text_color="gray"/>
+ *   </style>
+ *   <style name="day_current">
+ *     <normal text_color="#444444" bg_color="#338fff"/>
+ *     <pressed text_color="#ffffff" bg_color="#1971dd" border_color="#1971dd"/>
+ *     <over text_color="#ffffff" bg_color="#338fff" border_color="#338fff"/>
+ *     <focused text_color="#444444" bg_color="#f4f4f4" border_color="#338fff" />
+ *     <disable text_color="#444444" />
+ *   </style>
+ * </button>
+ * ```
  */
 typedef struct _date_picker_t {
   widget_t widget;

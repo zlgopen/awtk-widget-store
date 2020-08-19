@@ -352,7 +352,7 @@ static ret_t mask_view_widget_on_layout_children(widget_t* widget) {
 
 static ret_t mask_view_get_children(widget_t* widget) {
   mask_view_t* mask_view = MASK_VIEW(widget);
-  if (widget != NULL && mask_view != NULL) {
+  if (widget != NULL && mask_view != NULL && widget->children != NULL) {
     darray_deinit(&(mask_view->bg_rect_views));
     darray_deinit(&(mask_view->fg_mask_views));
 
@@ -377,13 +377,14 @@ static ret_t mask_view_online_bitmap_init(mask_view_t* mask_view) {
   mask_view->online_bitmap.h = bitmap->h;
   mask_view->online_bitmap.flags = bitmap->flags;
   mask_view->online_bitmap.format = bitmap->format;
+  mask_view->online_bitmap.image_manager = image_manager();
   bitmap_set_line_length(&(mask_view->online_bitmap), bitmap->line_length);
 
   mask_view->online_bitmap.buffer = GRAPHIC_BUFFER_CREATE_WITH_DATA(buff, bitmap->w, bitmap->h,
                                                   (bitmap_format_t)(bitmap->format));
 
   mask_view->online_bitmap.should_free_data = mask_view->online_bitmap.buffer != NULL;
-  bitmap_lock_buffer_for_write(bitmap);
+  bitmap_unlock_buffer(bitmap);
 
   mask_view->bg_alpha_data = TKMEM_CALLOC(sizeof(uint8_t), bitmap->w * bitmap->h);
 

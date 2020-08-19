@@ -1,5 +1,203 @@
 [
   {
+    "type": "enum",
+    "desc": "控件的属性。",
+    "consts": [
+      {
+        "desc": "坐标轴的类型",
+        "name": "AXIS_PROP_TYPE"
+      },
+      {
+        "desc": "坐标轴的位置",
+        "name": "AXIS_PROP_AT"
+      },
+      {
+        "desc": "坐标轴的偏移",
+        "name": "AXIS_PROP_OFFSET"
+      },
+      {
+        "desc": "坐标轴的刻度数据",
+        "name": "AXIS_PROP_DATA"
+      },
+      {
+        "desc": "坐标轴是否反向",
+        "name": "AXIS_PROP_INVERSE"
+      },
+      {
+        "desc": "坐标轴上的分割线",
+        "name": "AXIS_PROP_SPLIT_LINE"
+      },
+      {
+        "desc": "坐标轴上的分割线是否显示",
+        "name": "AXIS_PROP_SPLIT_LINE_SHOW"
+      },
+      {
+        "desc": "坐标轴的轴线",
+        "name": "AXIS_PROP_LINE"
+      },
+      {
+        "desc": "坐标轴的轴线是否显示",
+        "name": "AXIS_PROP_LINE_SHOW"
+      },
+      {
+        "desc": "坐标轴的刻度线",
+        "name": "AXIS_PROP_TICK"
+      },
+      {
+        "desc": "坐标轴的刻度线是否显示",
+        "name": "AXIS_PROP_TICK_SHOW"
+      },
+      {
+        "desc": "坐标轴上的刻度值",
+        "name": "AXIS_PROP_LABEL"
+      },
+      {
+        "desc": "坐标轴上的刻度值是否显示",
+        "name": "AXIS_PROP_LABEL_SHOW"
+      },
+      {
+        "desc": "坐标轴的标题",
+        "name": "AXIS_PROP_TITLE"
+      },
+      {
+        "desc": "坐标轴的标题是否显示",
+        "name": "AXIS_PROP_TITLE_SHOW"
+      },
+      {
+        "desc": "位于顶层的series的索引",
+        "name": "CHART_VIEW_PROP_TOP_SERIES"
+      },
+      {
+        "desc": "序列的容量",
+        "name": "SERIES_PROP_CAPACITY"
+      },
+      {
+        "desc": "序列元素的大小",
+        "name": "SERIES_PROP_UNIT_SIZE"
+      },
+      {
+        "desc": "序列的偏移位置",
+        "name": "SERIES_PROP_OFFSET"
+      },
+      {
+        "desc": "序列的偏移位置的最大值",
+        "name": "SERIES_PROP_OFFSET_MAX"
+      },
+      {
+        "desc": "序列的裁剪范围",
+        "name": "SERIES_PROP_CLIP_RANGE"
+      },
+      {
+        "desc": "序列的覆盖范围（点数）",
+        "name": "SERIES_PROP_COVERAGE"
+      },
+      {
+        "desc": "指示序列位置的轴",
+        "name": "SERIES_PROP_SERIES_AXIS"
+      },
+      {
+        "desc": "指示序列值的轴",
+        "name": "SERIES_PROP_VALUE_AXIS"
+      },
+      {
+        "desc": "序列的显示模式",
+        "name": "SERIES_PROP_DISPLAY_MODE"
+      },
+      {
+        "desc": "序列值动画的持续时间",
+        "name": "SERIES_PROP_VALUE_ANIMATION"
+      },
+      {
+        "desc": "序列新周期部分的点数",
+        "name": "SERIES_PROP_NEW_PERIOD"
+      },
+      {
+        "desc": "序列的标题",
+        "name": "SERIES_PROP_TITLE"
+      },
+      {
+        "desc": "序列形成的曲线",
+        "name": "SERIES_PROP_LINE"
+      },
+      {
+        "desc": "序列形成的曲线是否显示",
+        "name": "SERIES_PROP_LINE_SHOW"
+      },
+      {
+        "desc": "序列形成的曲线是否平滑显示",
+        "name": "SERIES_PROP_LINE_SMOOTH"
+      },
+      {
+        "desc": "序列的曲线与轴围成的区域",
+        "name": "SERIES_PROP_LINE_AREA"
+      },
+      {
+        "desc": "序列的曲线与轴围成的区域是否显示",
+        "name": "SERIES_PROP_LINE_AREA_SHOW"
+      },
+      {
+        "desc": "序列点的标记",
+        "name": "SERIES_PROP_SYMBOL"
+      },
+      {
+        "desc": "序列点的标记的大小",
+        "name": "SERIES_PROP_SYMBOL_SIZE"
+      },
+      {
+        "desc": "序列点的标记是否显示",
+        "name": "SERIES_PROP_SYMBOL_SHOW"
+      },
+      {
+        "desc": "指示序列值的柱条",
+        "name": "SERIES_PROP_BAR"
+      },
+      {
+        "desc": "指示序列值的柱条是否重叠显示",
+        "name": "SERIES_PROP_BAR_OVERLAP"
+      },
+      {
+        "desc": "pointer按下时的x坐标",
+        "name": "TOOLTIP_PROP_DOWN_X"
+      },
+      {
+        "desc": "pointer按下时的y坐标",
+        "name": "TOOLTIP_PROP_DOWN_Y"
+      },
+      {
+        "desc": "指示序列点位置的线",
+        "name": "TOOLTIP_PROP_LINE"
+      },
+      {
+        "desc": "指示序列点位置的线是否显示",
+        "name": "TOOLTIP_PROP_LINE_SHOW"
+      },
+      {
+        "desc": "指示序列点位置的点",
+        "name": "TOOLTIP_PROP_SYMBOL"
+      },
+      {
+        "desc": "指示序列点位置的点是否显示",
+        "name": "TOOLTIP_PROP_SYMBOL_SHOW"
+      },
+      {
+        "desc": "提示文本",
+        "name": "TOOLTIP_PROP_TIP"
+      },
+      {
+        "desc": "提示文本是否显示",
+        "name": "TOOLTIP_PROP_TIP_SHOW"
+      }
+    ],
+    "header": "chart_view/axis_types.h",
+    "name": "widget_prop_t",
+    "prefix": "AXIS_PROP_",
+    "annotation": {
+      "scriptable": true,
+      "string": true
+    },
+    "level": 1
+  },
+  {
     "type": "class",
     "methods": [
       {
@@ -815,243 +1013,18 @@
     "level": 1
   },
   {
-    "type": "enum",
-    "desc": "控件的子部件。",
-    "consts": [
-      {
-        "desc": "序列形成的曲线",
-        "name": "SERIES_SUBPART_LINE"
-      },
-      {
-        "desc": "序列的曲线与轴围成的区域",
-        "name": "SERIES_SUBPART_LINE_AREA"
-      },
-      {
-        "desc": "序列点的标记",
-        "name": "SERIES_SUBPART_SYMBOL"
-      },
-      {
-        "desc": "指示序列值的柱条",
-        "name": "SERIES_SUBPART_BAR"
-      }
-    ],
-    "header": "chart_view/axis_types.h",
-    "name": "widget_subpart_t",
-    "prefix": "AXIS_SUBPART_",
+    "params": [],
     "annotation": {
-      "scriptable": true,
-      "string": true
+      "global": true
     },
-    "level": 1
-  },
-  {
-    "type": "enum",
-    "desc": "控件的属性。",
-    "consts": [
-      {
-        "desc": "坐标轴的类型",
-        "name": "AXIS_PROP_TYPE"
-      },
-      {
-        "desc": "坐标轴的位置",
-        "name": "AXIS_PROP_AT"
-      },
-      {
-        "desc": "坐标轴的偏移",
-        "name": "AXIS_PROP_OFFSET"
-      },
-      {
-        "desc": "坐标轴的刻度数据",
-        "name": "AXIS_PROP_DATA"
-      },
-      {
-        "desc": "坐标轴是否反向",
-        "name": "AXIS_PROP_INVERSE"
-      },
-      {
-        "desc": "坐标轴上的分割线",
-        "name": "AXIS_PROP_SPLIT_LINE"
-      },
-      {
-        "desc": "坐标轴上的分割线是否显示",
-        "name": "AXIS_PROP_SPLIT_LINE_SHOW"
-      },
-      {
-        "desc": "坐标轴的轴线",
-        "name": "AXIS_PROP_LINE"
-      },
-      {
-        "desc": "坐标轴的轴线是否显示",
-        "name": "AXIS_PROP_LINE_SHOW"
-      },
-      {
-        "desc": "坐标轴的刻度线",
-        "name": "AXIS_PROP_TICK"
-      },
-      {
-        "desc": "坐标轴的刻度线是否显示",
-        "name": "AXIS_PROP_TICK_SHOW"
-      },
-      {
-        "desc": "坐标轴上的刻度值",
-        "name": "AXIS_PROP_LABEL"
-      },
-      {
-        "desc": "坐标轴上的刻度值是否显示",
-        "name": "AXIS_PROP_LABEL_SHOW"
-      },
-      {
-        "desc": "坐标轴的标题",
-        "name": "AXIS_PROP_TITLE"
-      },
-      {
-        "desc": "坐标轴的标题是否显示",
-        "name": "AXIS_PROP_TITLE_SHOW"
-      },
-      {
-        "desc": "位于顶层的series的索引",
-        "name": "CHART_VIEW_PROP_TOP_SERIES"
-      },
-      {
-        "desc": "序列的容量",
-        "name": "SERIES_PROP_CAPACITY"
-      },
-      {
-        "desc": "序列元素的大小",
-        "name": "SERIES_PROP_UNIT_SIZE"
-      },
-      {
-        "desc": "序列的偏移位置",
-        "name": "SERIES_PROP_OFFSET"
-      },
-      {
-        "desc": "序列的偏移位置的最大值",
-        "name": "SERIES_PROP_OFFSET_MAX"
-      },
-      {
-        "desc": "序列的裁剪范围",
-        "name": "SERIES_PROP_CLIP_RANGE"
-      },
-      {
-        "desc": "序列的覆盖范围（点数）",
-        "name": "SERIES_PROP_COVERAGE"
-      },
-      {
-        "desc": "指示序列位置的轴",
-        "name": "SERIES_PROP_SERIES_AXIS"
-      },
-      {
-        "desc": "指示序列值的轴",
-        "name": "SERIES_PROP_VALUE_AXIS"
-      },
-      {
-        "desc": "序列的显示模式",
-        "name": "SERIES_PROP_DISPLAY_MODE"
-      },
-      {
-        "desc": "序列值动画的持续时间",
-        "name": "SERIES_PROP_VALUE_ANIMATION"
-      },
-      {
-        "desc": "序列新周期部分的点数",
-        "name": "SERIES_PROP_NEW_PERIOD"
-      },
-      {
-        "desc": "序列的标题",
-        "name": "SERIES_PROP_TITLE"
-      },
-      {
-        "desc": "序列形成的曲线",
-        "name": "SERIES_PROP_LINE"
-      },
-      {
-        "desc": "序列形成的曲线的样式",
-        "name": "SERIES_PROP_LINE_STYLE"
-      },
-      {
-        "desc": "序列形成的曲线是否显示",
-        "name": "SERIES_PROP_LINE_SHOW"
-      },
-      {
-        "desc": "序列形成的曲线是否平滑显示",
-        "name": "SERIES_PROP_LINE_SMOOTH"
-      },
-      {
-        "desc": "序列的曲线与轴围成的区域",
-        "name": "SERIES_PROP_LINE_AREA"
-      },
-      {
-        "desc": "序列的曲线与轴围成的区域的样式",
-        "name": "SERIES_PROP_LINE_AREA_STYLE"
-      },
-      {
-        "desc": "序列的曲线与轴围成的区域是否显示",
-        "name": "SERIES_PROP_LINE_AREA_SHOW"
-      },
-      {
-        "desc": "序列点的标记",
-        "name": "SERIES_PROP_SYMBOL"
-      },
-      {
-        "desc": "序列点的标记的样式",
-        "name": "SERIES_PROP_SYMBOL_STYLE"
-      },
-      {
-        "desc": "序列点的标记的大小",
-        "name": "SERIES_PROP_SYMBOL_SIZE"
-      },
-      {
-        "desc": "序列点的标记是否显示",
-        "name": "SERIES_PROP_SYMBOL_SHOW"
-      },
-      {
-        "desc": "指示序列值的柱条",
-        "name": "SERIES_PROP_BAR"
-      },
-      {
-        "desc": "指示序列值的柱条是否重叠显示",
-        "name": "SERIES_PROP_BAR_OVERLAP"
-      },
-      {
-        "desc": "pointer按下时的x坐标",
-        "name": "TOOLTIP_PROP_DOWN_X"
-      },
-      {
-        "desc": "pointer按下时的y坐标",
-        "name": "TOOLTIP_PROP_DOWN_Y"
-      },
-      {
-        "desc": "指示序列点位置的线",
-        "name": "TOOLTIP_PROP_LINE"
-      },
-      {
-        "desc": "指示序列点位置的线是否显示",
-        "name": "TOOLTIP_PROP_LINE_SHOW"
-      },
-      {
-        "desc": "指示序列点位置的点",
-        "name": "TOOLTIP_PROP_SYMBOL"
-      },
-      {
-        "desc": "指示序列点位置的点是否显示",
-        "name": "TOOLTIP_PROP_SYMBOL_SHOW"
-      },
-      {
-        "desc": "提示文本",
-        "name": "TOOLTIP_PROP_TIP"
-      },
-      {
-        "desc": "提示文本是否显示",
-        "name": "TOOLTIP_PROP_TIP_SHOW"
-      }
-    ],
-    "header": "chart_view/axis_types.h",
-    "name": "widget_prop_t",
-    "prefix": "AXIS_PROP_",
-    "annotation": {
-      "scriptable": true,
-      "string": true
+    "desc": "获取支持的渲染模式。",
+    "name": "chart_view_supported_render_mode",
+    "return": {
+      "type": "const char*",
+      "desc": "返回渲染模式。"
     },
+    "type": "method",
+    "header": "src/chart_view_register.h",
     "level": 1
   },
   {
@@ -1065,22 +1038,6 @@
       {
         "desc": "y坐标轴。",
         "name": "WIDGET_TYPE_Y_AXIS"
-      },
-      {
-        "desc": "坐标轴分割线颜色。",
-        "name": "AXIS_SPLIT_LINE_FG_COLOR"
-      },
-      {
-        "desc": "坐标轴前景图片。",
-        "name": "SPLIT_LINE_FG_IMAGE"
-      },
-      {
-        "desc": "坐标轴刻度线颜色。",
-        "name": "TICK_COLOR"
-      },
-      {
-        "desc": "坐标轴刻度线前景颜色。",
-        "name": "TICK_FG_IMAGE"
       },
       {
         "desc": "chart_view。",
@@ -1103,68 +1060,8 @@
         "name": "WIDGET_TYPE_BAR_SERIES_MINMAX"
       },
       {
-        "desc": "序列形成的曲线边框颜色",
-        "name": "LINE_BORDER_COLOR"
-      },
-      {
-        "desc": "序列形成的曲线边框宽度",
-        "name": "LINE_BORDER_WIDTH"
-      },
-      {
-        "desc": "序列的曲线与轴围成的区域前景颜色",
-        "name": "AREA_FG_COLOR"
-      },
-      {
-        "desc": "序列点的标记边框颜色",
-        "name": "SYMBOL_BORDER_COLOR"
-      },
-      {
-        "desc": "序列点的标记前景颜色",
-        "name": "SYMBOL_FG_COLOR"
-      },
-      {
-        "desc": "序列点的标记边框颜色",
-        "name": "SYMBOL_BORDER_COLOR"
-      },
-      {
-        "desc": "序列点的标记边框宽度",
-        "name": "SYMBOL_BORDER_WIDTH"
-      },
-      {
-        "desc": "序列点的标记前景图片",
-        "name": "SYMBOL_FG_IMAGE"
-      },
-      {
-        "desc": "序列的曲线与轴围成的平滑区域前景颜色",
-        "name": "SMOOTH_AREA_FG_COLOR"
-      },
-      {
         "desc": "提示信息控件。",
         "name": "WIDGET_TYPE_TOOLTIP"
-      },
-      {
-        "desc": "指示序列点位置的点的边框颜色",
-        "name": "SYMBOL_BORDER_COLOR"
-      },
-      {
-        "desc": "指示序列点位置的点的边框宽度",
-        "name": "SYMBOL_BORDER_WIDTH"
-      },
-      {
-        "desc": "指示序列点位置的点的前景颜色",
-        "name": "SYMBOL_FG_COLOR"
-      },
-      {
-        "desc": "提示信息框的边框颜色",
-        "name": "TIP_BORDER_COLOR"
-      },
-      {
-        "desc": "提示信息框的背景颜色",
-        "name": "TIP_BG_COLOR"
-      },
-      {
-        "desc": "提示信息框的边框宽度",
-        "name": "tip_border_width"
       }
     ],
     "header": "chart_view/axis_types.h",
@@ -1174,6 +1071,51 @@
       "scriptable": true,
       "string": true
     },
+    "level": 1
+  },
+  {
+    "type": "enum",
+    "desc": "style常量定义。",
+    "consts": [
+      {
+        "desc": "坐标轴分割线颜色。",
+        "name": "STYLE_ID_AXIS_SPLIT_LINE_COLOR"
+      },
+      {
+        "desc": "坐标轴的图片。",
+        "name": "STYLE_ID_AXIS_SPLIT_LINE_IMAGE"
+      },
+      {
+        "desc": "坐标轴刻度线颜色。",
+        "name": "STYLE_ID_AXIS_TICK_COLOR"
+      },
+      {
+        "desc": "坐标轴刻度线颜色。",
+        "name": "STYLE_ID_AXIS_TICK_IMAGE"
+      }
+    ],
+    "header": "chart_view/axis_types.h",
+    "name": "style_id_axis_t",
+    "prefix": "STYLE_ID_AXIS_",
+    "annotation": {
+      "scriptable": true,
+      "string": true
+    },
+    "level": 1
+  },
+  {
+    "params": [],
+    "annotation": {
+      "global": true
+    },
+    "desc": "注册控件。",
+    "name": "chart_view_register",
+    "return": {
+      "type": "ret_t",
+      "desc": "返回RET_OK表示成功，否则表示失败。"
+    },
+    "type": "method",
+    "header": "src/chart_view_register.h",
     "level": 1
   },
   {
@@ -1401,6 +1343,52 @@
   },
   {
     "type": "enum",
+    "desc": "style常量定义。",
+    "consts": [
+      {
+        "desc": "序列形成的曲线边框颜色",
+        "name": "STYLE_ID_SERIES_LINE_BORDER_COLOR"
+      },
+      {
+        "desc": "序列形成的曲线边框宽度",
+        "name": "STYLE_ID_SERIES_LINE_BORDER_WIDTH"
+      },
+      {
+        "desc": "序列的曲线与轴围成的区域颜色",
+        "name": "STYLE_ID_SERIES_AREA_COLOR"
+      },
+      {
+        "desc": "序列点的标记边框颜色",
+        "name": "STYLE_ID_SERIES_SYMBOL_BORDER_COLOR"
+      },
+      {
+        "desc": "序列点的标记颜色",
+        "name": "STYLE_ID_SERIES_SYMBOL_BG_COLOR"
+      },
+      {
+        "desc": "序列点的标记边框宽度",
+        "name": "STYLE_ID_SERIES_SYMBOL_BORDER_WIDTH"
+      },
+      {
+        "desc": "序列点的标记图片",
+        "name": "STYLE_ID_SERIES_SYMBOL_IMAGE"
+      },
+      {
+        "desc": "序列的曲线与轴围成的平滑区域颜色",
+        "name": "STYLE_ID_SERIES_SMOOTH_AREA_COLOR"
+      }
+    ],
+    "header": "chart_view/series_types.h",
+    "name": "style_id_series_t",
+    "prefix": "STYLE_ID_SERIES_",
+    "annotation": {
+      "scriptable": true,
+      "string": true
+    },
+    "level": 1
+  },
+  {
+    "type": "enum",
     "desc": "指示序列点位置的线。",
     "consts": [],
     "header": "chart_view/tooltip_types.h",
@@ -1427,500 +1415,42 @@
     "level": 1
   },
   {
-    "type": "class",
-    "methods": [
+    "type": "enum",
+    "desc": "style常量定义。",
+    "consts": [
       {
-        "params": [
-          {
-            "type": "widget_t*",
-            "name": "parent",
-            "desc": "widget的父控件。"
-          },
-          {
-            "type": "const widget_vtable_t*",
-            "name": "vt",
-            "desc": "虚函数表。"
-          },
-          {
-            "type": "xy_t",
-            "name": "x",
-            "desc": "x坐标。"
-          },
-          {
-            "type": "xy_t",
-            "name": "y",
-            "desc": "y坐标。"
-          },
-          {
-            "type": "wh_t",
-            "name": "w",
-            "desc": "宽度。"
-          },
-          {
-            "type": "wh_t",
-            "name": "h",
-            "desc": "高度。"
-          }
-        ],
-        "annotation": {},
-        "desc": "创建对象。\n\n> 仅供子类调用。",
-        "name": "axis_create",
-        "return": {
-          "type": "widget_t*",
-          "desc": "widget对象本身。"
-        }
+        "desc": "指示序列点位置的点的边框颜色",
+        "name": "STYLE_ID_TOOLTIP_SYMBOL_BORDER_COLOR"
       },
       {
-        "params": [
-          {
-            "type": "widget_t*",
-            "name": "widget",
-            "desc": "widget对象。"
-          }
-        ],
-        "annotation": {},
-        "desc": "销毁对象时的处理。\n\n> 仅供子类调用。",
-        "name": "axis_on_destroy",
-        "return": {
-          "type": "ret_t",
-          "desc": "返回RET_OK表示成功，否则表示失败。"
-        }
+        "desc": "指示序列点位置的点的边框宽度",
+        "name": "STYLE_ID_TOOLTIP_SYMBOL_BORDER_WIDTH"
       },
       {
-        "params": [
-          {
-            "type": "widget_t*",
-            "name": "widget",
-            "desc": "widget对象。"
-          },
-          {
-            "type": "float_t",
-            "name": "min",
-            "desc": "最小值。"
-          },
-          {
-            "type": "float_t",
-            "name": "max",
-            "desc": "最大值。"
-          }
-        ],
-        "annotation": {
-          "scriptable": true
-        },
-        "desc": "设置坐标轴的刻度范围。",
-        "name": "axis_set_range",
-        "return": {
-          "type": "ret_t",
-          "desc": "返回RET_OK表示成功，否则表示失败。"
-        }
+        "desc": "指示序列点位置的点的颜色",
+        "name": "STYLE_ID_TOOLTIP_SYMBOL_COLOR"
       },
       {
-        "params": [
-          {
-            "type": "widget_t*",
-            "name": "widget",
-            "desc": "widget对象。"
-          },
-          {
-            "type": "bool_t",
-            "name": "is_series_axis",
-            "desc": "是否为指示序列位置的轴"
-          }
-        ],
-        "annotation": {
-          "scriptable": true
-        },
-        "desc": "获取坐标轴的刻度范围。",
-        "name": "axis_get_range",
-        "return": {
-          "type": "float_t",
-          "desc": "刻度范围。"
-        }
+        "desc": "提示信息框的边框颜色",
+        "name": "STYLE_ID_TOOLTIP_BORDER_COLOR"
       },
       {
-        "params": [
-          {
-            "type": "widget_t*",
-            "name": "widget",
-            "desc": "widget对象。"
-          },
-          {
-            "type": "const char*",
-            "name": "data",
-            "desc": "显示值。"
-          }
-        ],
-        "annotation": {
-          "scriptable": true
-        },
-        "desc": "设置坐标轴的刻度显示值。",
-        "name": "axis_set_data",
-        "return": {
-          "type": "ret_t",
-          "desc": "返回RET_OK表示成功，否则表示失败。"
-        }
+        "desc": "提示信息框的背景颜色",
+        "name": "STYLE_ID_TOOLTIP__BG_COLOR"
       },
       {
-        "params": [
-          {
-            "type": "widget_t*",
-            "name": "widget",
-            "desc": "widget对象。"
-          },
-          {
-            "type": "axis_data_from_series_t",
-            "name": "from_series",
-            "desc": "生成回调。"
-          },
-          {
-            "type": "void*",
-            "name": "ctx",
-            "desc": "上下文。"
-          }
-        ],
-        "annotation": {
-          "scriptable": true
-        },
-        "desc": "设置坐标轴的刻度显示值的生成器。",
-        "name": "axis_set_data_from_series",
-        "return": {
-          "type": "ret_t",
-          "desc": "返回RET_OK表示成功，否则表示失败。"
-        }
-      },
-      {
-        "params": [
-          {
-            "type": "widget_t*",
-            "name": "widget",
-            "desc": "widget对象。"
-          }
-        ],
-        "annotation": {
-          "scriptable": true
-        },
-        "desc": "设置需要更新坐标轴的刻度显示值。",
-        "name": "axis_set_need_update_data",
-        "return": {
-          "type": "ret_t",
-          "desc": "返回RET_OK表示成功，否则表示失败。"
-        }
-      },
-      {
-        "params": [
-          {
-            "type": "widget_t*",
-            "name": "widget",
-            "desc": "axis_base对象。"
-          }
-        ],
-        "annotation": {
-          "cast": true,
-          "scriptable": true
-        },
-        "desc": "转换为axis_base对象(供脚本语言使用)。",
-        "name": "axis_cast",
-        "return": {
-          "type": "widget_t*",
-          "desc": "axis_base对象。"
-        }
-      },
-      {
-        "params": [
-          {
-            "type": "widget_t*",
-            "name": "widget",
-            "desc": "控件对象。"
-          }
-        ],
-        "annotation": {
-          "scriptable": true
-        },
-        "desc": "判断当前控件是否为axis控件。",
-        "name": "widget_is_axis",
-        "return": {
-          "type": "bool_t",
-          "desc": "返回当前控件是否为axis控件。"
-        }
+        "desc": "提示信息框的边框宽度",
+        "name": "STYLE_ID_TIP_BORDER_WIDTH"
       }
     ],
-    "events": [],
-    "properties": [
-      {
-        "name": "type",
-        "desc": "类型。",
-        "type": "axis_type_t",
-        "annotation": {
-          "set_prop": true,
-          "get_prop": true,
-          "readable": true,
-          "persitent": true,
-          "design": true,
-          "scriptable": true
-        }
-      },
-      {
-        "name": "at",
-        "desc": "位置。",
-        "type": "axis_at_type_t",
-        "annotation": {
-          "set_prop": true,
-          "get_prop": true,
-          "readable": true,
-          "persitent": true,
-          "design": true,
-          "scriptable": true
-        }
-      },
-      {
-        "name": "min",
-        "desc": "最小刻度。",
-        "type": "float_t",
-        "annotation": {
-          "set_prop": true,
-          "get_prop": true,
-          "readable": true,
-          "persitent": true,
-          "design": true,
-          "scriptable": true
-        }
-      },
-      {
-        "name": "max",
-        "desc": "最大刻度。",
-        "type": "float_t",
-        "annotation": {
-          "set_prop": true,
-          "get_prop": true,
-          "readable": true,
-          "persitent": true,
-          "design": true,
-          "scriptable": true
-        }
-      },
-      {
-        "name": "data",
-        "desc": "刻度数据。",
-        "type": "darray_t*",
-        "annotation": {
-          "readable": true
-        }
-      },
-      {
-        "name": "data_from_series",
-        "desc": "刻度数据的生成器。",
-        "type": "axis_data_from_series_t",
-        "annotation": {
-          "readable": true
-        }
-      },
-      {
-        "name": "data_from_series_ctx",
-        "desc": "刻度数据生成时的上下文。",
-        "type": "void*",
-        "annotation": {
-          "readable": true
-        }
-      },
-      {
-        "name": "offset",
-        "desc": "偏移位置。",
-        "type": "uint32_t",
-        "annotation": {
-          "set_prop": true,
-          "get_prop": true,
-          "readable": true,
-          "persitent": true,
-          "design": true,
-          "scriptable": true
-        }
-      },
-      {
-        "name": "offset_percent",
-        "desc": "偏移位置是否为百分比值。",
-        "type": "bool_t",
-        "annotation": {
-          "readable": true
-        }
-      },
-      {
-        "name": "inverse",
-        "desc": "是否反向",
-        "type": "bool_t",
-        "annotation": {
-          "set_prop": true,
-          "get_prop": true,
-          "readable": true,
-          "persitent": true,
-          "design": true,
-          "scriptable": true
-        }
-      },
-      {
-        "name": "data_fixed",
-        "desc": "刻度数据是否固定。",
-        "type": "bool_t",
-        "annotation": {
-          "readable": true
-        }
-      },
-      {
-        "name": "need_update_data",
-        "desc": "刻度数据是否需要更新。",
-        "type": "bool_t",
-        "annotation": {
-          "readable": true
-        }
-      },
-      {
-        "name": "painted_before",
-        "desc": "是否需要在绘制前做额外处理。",
-        "type": "bool_t",
-        "annotation": {
-          "readable": true
-        }
-      },
-      {
-        "name": "vt",
-        "desc": "虚函数表。",
-        "type": "series_vtable_t",
-        "annotation": {
-          "readable": true
-        }
-      }
-    ],
-    "header": "chart_view/axis.h",
-    "desc": "坐标轴控件。",
-    "name": "axis_t",
-    "parent": "widget_t",
+    "header": "chart_view/tooltip_types.h",
+    "name": "style_tooltip_t",
+    "prefix": "STYLE_ID_TOOLTIP_",
     "annotation": {
       "scriptable": true,
-      "widget": true
+      "string": true
     },
-    "level": 2
-  },
-  {
-    "type": "class",
-    "methods": [
-      {
-        "params": [
-          {
-            "type": "widget_t*",
-            "name": "parent",
-            "desc": "父控件"
-          },
-          {
-            "type": "xy_t",
-            "name": "x",
-            "desc": "x坐标"
-          },
-          {
-            "type": "xy_t",
-            "name": "y",
-            "desc": "y坐标"
-          },
-          {
-            "type": "wh_t",
-            "name": "w",
-            "desc": "宽度"
-          },
-          {
-            "type": "wh_t",
-            "name": "h",
-            "desc": "高度"
-          }
-        ],
-        "annotation": {
-          "constructor": true,
-          "scriptable": true
-        },
-        "desc": "创建chart_view_对象",
-        "name": "chart_view_create",
-        "return": {
-          "type": "widget_t*",
-          "desc": "对象。"
-        }
-      },
-      {
-        "params": [
-          {
-            "type": "widget_t*",
-            "name": "widget",
-            "desc": "控件对象。"
-          },
-          {
-            "type": "int32_t",
-            "name": "index",
-            "desc": "series索引。"
-          }
-        ],
-        "annotation": {
-          "scriptable": true
-        },
-        "desc": "设置需置顶的series的索引。",
-        "name": "chart_view_set_top_series",
-        "return": {
-          "type": "ret_t",
-          "desc": "返回RET_OK表示成功，否则表示失败。"
-        }
-      },
-      {
-        "params": [
-          {
-            "type": "widget_t*",
-            "name": "widget",
-            "desc": "chart_view对象。"
-          }
-        ],
-        "annotation": {
-          "cast": true,
-          "scriptable": true
-        },
-        "desc": "转换chart_view对象(供脚本语言使用)。",
-        "name": "chart_view_cast",
-        "return": {
-          "type": "widget_t*",
-          "desc": "chart_view对象。"
-        }
-      },
-      {
-        "params": [],
-        "annotation": {
-          "scriptable": true,
-          "static": true
-        },
-        "desc": "注册chart_view控件。",
-        "name": "chart_view_register",
-        "return": {
-          "type": "ret_t",
-          "desc": "返回RET_OK表示成功，否则表示失败。"
-        }
-      }
-    ],
-    "events": [],
-    "properties": [
-      {
-        "name": "top_series",
-        "desc": "位于顶层的series的索引。",
-        "type": "int32_t",
-        "annotation": {
-          "set_prop": true,
-          "get_prop": true,
-          "readable": true,
-          "persitent": true,
-          "design": true,
-          "scriptable": true
-        }
-      }
-    ],
-    "header": "chart_view/chart_view.h",
-    "desc": "chart view",
-    "name": "chart_view_t",
-    "parent": "widget_t",
-    "annotation": {
-      "scriptable": true
-    },
-    "level": 2
+    "level": 1
   },
   {
     "type": "class",
@@ -2574,40 +2104,163 @@
           {
             "type": "widget_t*",
             "name": "parent",
-            "desc": "widget的父控件。"
-          },
-          {
-            "type": "const widget_vtable_t*",
-            "name": "vt",
-            "desc": "虚函数表。"
+            "desc": "父控件"
           },
           {
             "type": "xy_t",
             "name": "x",
-            "desc": "x坐标。"
+            "desc": "x坐标"
           },
           {
             "type": "xy_t",
             "name": "y",
-            "desc": "y坐标。"
+            "desc": "y坐标"
           },
           {
             "type": "wh_t",
             "name": "w",
-            "desc": "宽度。"
+            "desc": "宽度"
           },
           {
             "type": "wh_t",
             "name": "h",
-            "desc": "高度。"
+            "desc": "高度"
           }
         ],
-        "annotation": {},
-        "desc": "创建对象。\n\n> 仅供子类调用。",
-        "name": "tooltip_create",
+        "annotation": {
+          "constructor": true,
+          "scriptable": true
+        },
+        "desc": "创建chart_view_对象",
+        "name": "chart_view_create",
         "return": {
           "type": "widget_t*",
-          "desc": "widget对象本身。"
+          "desc": "对象。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "widget_t*",
+            "name": "widget",
+            "desc": "控件对象。"
+          },
+          {
+            "type": "int32_t",
+            "name": "index",
+            "desc": "series索引。"
+          }
+        ],
+        "annotation": {
+          "scriptable": true
+        },
+        "desc": "设置需置顶的series的索引。",
+        "name": "chart_view_set_top_series",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "widget_t*",
+            "name": "widget",
+            "desc": "chart_view对象。"
+          }
+        ],
+        "annotation": {
+          "cast": true,
+          "scriptable": true
+        },
+        "desc": "转换chart_view对象(供脚本语言使用)。",
+        "name": "chart_view_cast",
+        "return": {
+          "type": "widget_t*",
+          "desc": "chart_view对象。"
+        }
+      },
+      {
+        "params": [],
+        "annotation": {
+          "scriptable": true,
+          "static": true
+        },
+        "desc": "注册chart_view控件。",
+        "name": "chart_view_s_register",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      }
+    ],
+    "events": [],
+    "properties": [
+      {
+        "name": "top_series",
+        "desc": "位于顶层的series的索引。",
+        "type": "int32_t",
+        "annotation": {
+          "set_prop": true,
+          "get_prop": true,
+          "readable": true,
+          "persitent": true,
+          "design": true,
+          "scriptable": true
+        }
+      }
+    ],
+    "header": "chart_view/chart_view.h",
+    "desc": "chart view\n\n在xml中使用\"chart\\_view\"标签创建扩展按钮控件。如：\n\n```xml\n<!-- ui -->\n<chart_view x=\"c\" y=\"50\" w=\"200\" h=\"100\" />\n```\n\n可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：\n\n```xml\n<!-- style -->\n<chart_view>\n<style name=\"default\">\n<normal margin_bottom=\"20\" margin_left=\"55\" margin_right=\"55\" margin_top=\"20\"/>\n</style>\n</chart_view>\n```",
+    "name": "chart_view_t",
+    "parent": "widget_t",
+    "annotation": {
+      "scriptable": true,
+      "design": true,
+      "widget": true
+    },
+    "level": 2
+  },
+  {
+    "type": "class",
+    "methods": [
+      {
+        "params": [
+          {
+            "type": "widget_t*",
+            "name": "parent",
+            "desc": "父控件"
+          },
+          {
+            "type": "xy_t",
+            "name": "x",
+            "desc": "x坐标"
+          },
+          {
+            "type": "xy_t",
+            "name": "y",
+            "desc": "y坐标"
+          },
+          {
+            "type": "wh_t",
+            "name": "w",
+            "desc": "宽度"
+          },
+          {
+            "type": "wh_t",
+            "name": "h",
+            "desc": "高度"
+          }
+        ],
+        "annotation": {
+          "constructor": true,
+          "scriptable": true
+        },
+        "desc": "创建line_series对象",
+        "name": "line_series_create",
+        "return": {
+          "type": "widget_t*",
+          "desc": "对象。"
         }
       },
       {
@@ -2642,8 +2295,8 @@
           "constructor": true,
           "scriptable": true
         },
-        "desc": "创建tooltip对象",
-        "name": "tooltip_create_default",
+        "desc": "创建彩色line_series对象",
+        "name": "line_series_colorful_create",
         "return": {
           "type": "widget_t*",
           "desc": "对象。"
@@ -2654,46 +2307,18 @@
           {
             "type": "widget_t*",
             "name": "widget",
-            "desc": "控件对象。"
-          },
-          {
-            "type": "xy_t",
-            "name": "x",
-            "desc": "x坐标"
-          },
-          {
-            "type": "xy_t",
-            "name": "y",
-            "desc": "y坐标"
-          }
-        ],
-        "annotation": {
-          "scriptable": true
-        },
-        "desc": "移动tooltip。",
-        "name": "tooltip_move",
-        "return": {
-          "type": "ret_t",
-          "desc": "返回RET_OK表示成功，否则表示失败。"
-        }
-      },
-      {
-        "params": [
-          {
-            "type": "widget_t*",
-            "name": "widget",
-            "desc": "tooltip_base对象。"
+            "desc": "line_series对象。"
           }
         ],
         "annotation": {
           "cast": true,
           "scriptable": true
         },
-        "desc": "转换为tooltip_base对象(供脚本语言使用)。",
-        "name": "tooltip_cast",
+        "desc": "转换为line_series对象(供脚本语言使用)。",
+        "name": "line_series_cast",
         "return": {
           "type": "widget_t*",
-          "desc": "tooltip_base对象。"
+          "desc": "line_series对象。"
         }
       },
       {
@@ -2702,37 +2327,59 @@
           "scriptable": true,
           "static": true
         },
-        "desc": "注册tooltip控件。",
-        "name": "tooltip_register",
+        "desc": "注册line_series控件。",
+        "name": "line_series_register",
         "return": {
           "type": "ret_t",
           "desc": "返回RET_OK表示成功，否则表示失败。"
         }
       },
       {
-        "params": [
-          {
-            "type": "widget_t*",
-            "name": "widget",
-            "desc": "控件对象。"
-          }
-        ],
+        "params": [],
         "annotation": {
-          "scriptable": true
+          "scriptable": true,
+          "static": true
         },
-        "desc": "判断当前控件是否为tooltip控件。",
-        "name": "widget_is_tooltip",
+        "desc": "注册line_series_colorful控件。",
+        "name": "line_series_colorful_register",
         "return": {
-          "type": "bool_t",
-          "desc": "返回当前控件是否为tooltip控件。"
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
         }
       }
     ],
     "events": [],
-    "properties": [],
-    "header": "chart_view/tooltip.h",
-    "desc": "提示信息控件。",
-    "name": "tooltip_t",
+    "properties": [
+      {
+        "name": "series_axis",
+        "desc": "标示序列位置的轴。",
+        "type": "char*",
+        "annotation": {
+          "set_prop": true,
+          "get_prop": true,
+          "readable": true,
+          "persitent": true,
+          "design": true,
+          "scriptable": true
+        }
+      },
+      {
+        "name": "value_axis",
+        "desc": "标示序列值的轴。",
+        "type": "char*",
+        "annotation": {
+          "set_prop": true,
+          "get_prop": true,
+          "readable": true,
+          "persitent": true,
+          "design": true,
+          "scriptable": true
+        }
+      }
+    ],
+    "header": "chart_view/line_series.h",
+    "desc": "线形序列。\n\n在xml中使用\"line\\_series\"标签创建扩展按钮控件。如：\n\n```xml\n<!-- ui -->\n<line_series x=\"c\" y=\"50\" w=\"200\" h=\"100\" />\n```\n\n可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：\n\n```xml\n<!-- style -->\n<line_series>\n<style name=\"default\">\n<normal line_border_color=\"#69cf5c\" line_border_width=\"1\"   area_color=\"#69CF5C66\"  smooth_area_color=\"#69CF5C66\" symbol_border_color=\"#FFC393\" symbol_color=\"#69CF5C\"/>\n</style>\n</line_series>\n<line_series_colorful>\n<style name=\"default\">\n<normal line_border_color=\"#69cf5c\" line_border_width=\"1\"   area_color=\"#69cf5c66\"  smooth_area_color=\"#69CF5C66\" symbol_border_color=\"#FFC393\" symbol_color=\"#69CF5C\"/>\n</style>\n</line_series_colorful>\n```",
+    "name": "line_series_t",
     "parent": "widget_t",
     "annotation": {
       "scriptable": true,
@@ -3261,11 +2908,772 @@
       }
     ],
     "header": "pie_slice/pie_slice.h",
-    "desc": "进度圆环控件。",
+    "desc": "进度圆环控件。\n\n在xml中使用\"pie\\_slice\"标签创建扩展按钮控件。如：\n\n```xml\n<!-- ui -->\n<pie_slice x=\"c\" y=\"50\" w=\"100\" h=\"100\" />\n```\n\n可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：\n\n```xml\n<!-- style -->\n<pie_slice>\n<style name=\"default\">\n<normal fg_color=\"#000000\" text_color=\"#008000\"/>\n</style>\n</pie_slice>\n```",
     "name": "pie_slice_t",
     "parent": "widget_t",
     "annotation": {
-      "scriptable": true
+      "scriptable": true,
+      "design": true,
+      "widget": true
+    },
+    "level": 2
+  },
+  {
+    "type": "class",
+    "methods": [
+      {
+        "params": [
+          {
+            "type": "widget_t*",
+            "name": "parent",
+            "desc": "widget的父控件。"
+          },
+          {
+            "type": "const widget_vtable_t*",
+            "name": "vt",
+            "desc": "虚函数表。"
+          },
+          {
+            "type": "xy_t",
+            "name": "x",
+            "desc": "x坐标。"
+          },
+          {
+            "type": "xy_t",
+            "name": "y",
+            "desc": "y坐标。"
+          },
+          {
+            "type": "wh_t",
+            "name": "w",
+            "desc": "宽度。"
+          },
+          {
+            "type": "wh_t",
+            "name": "h",
+            "desc": "高度。"
+          }
+        ],
+        "annotation": {},
+        "desc": "创建对象。\n\n> 仅供子类调用。",
+        "name": "axis_create",
+        "return": {
+          "type": "widget_t*",
+          "desc": "widget对象本身。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "widget_t*",
+            "name": "widget",
+            "desc": "widget对象。"
+          }
+        ],
+        "annotation": {},
+        "desc": "销毁对象时的处理。\n\n> 仅供子类调用。",
+        "name": "axis_on_destroy",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "widget_t*",
+            "name": "widget",
+            "desc": "widget对象。"
+          },
+          {
+            "type": "float_t",
+            "name": "min",
+            "desc": "最小值。"
+          },
+          {
+            "type": "float_t",
+            "name": "max",
+            "desc": "最大值。"
+          }
+        ],
+        "annotation": {
+          "scriptable": true
+        },
+        "desc": "设置坐标轴的刻度范围。",
+        "name": "axis_set_range",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "widget_t*",
+            "name": "widget",
+            "desc": "widget对象。"
+          },
+          {
+            "type": "bool_t",
+            "name": "is_series_axis",
+            "desc": "是否为指示序列位置的轴"
+          }
+        ],
+        "annotation": {
+          "scriptable": true
+        },
+        "desc": "获取坐标轴的刻度范围。",
+        "name": "axis_get_range",
+        "return": {
+          "type": "float_t",
+          "desc": "刻度范围。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "widget_t*",
+            "name": "widget",
+            "desc": "widget对象。"
+          },
+          {
+            "type": "const char*",
+            "name": "data",
+            "desc": "显示值。"
+          }
+        ],
+        "annotation": {
+          "scriptable": true
+        },
+        "desc": "设置坐标轴的刻度显示值。",
+        "name": "axis_set_data",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "widget_t*",
+            "name": "widget",
+            "desc": "widget对象。"
+          },
+          {
+            "type": "axis_data_from_series_t",
+            "name": "from_series",
+            "desc": "生成回调。"
+          },
+          {
+            "type": "void*",
+            "name": "ctx",
+            "desc": "上下文。"
+          }
+        ],
+        "annotation": {
+          "scriptable": true
+        },
+        "desc": "设置坐标轴的刻度显示值的生成器。",
+        "name": "axis_set_data_from_series",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "widget_t*",
+            "name": "widget",
+            "desc": "widget对象。"
+          }
+        ],
+        "annotation": {
+          "scriptable": true
+        },
+        "desc": "设置需要更新坐标轴的刻度显示值。",
+        "name": "axis_set_need_update_data",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "widget_t*",
+            "name": "widget",
+            "desc": "axis_base对象。"
+          }
+        ],
+        "annotation": {
+          "cast": true,
+          "scriptable": true
+        },
+        "desc": "转换为axis_base对象(供脚本语言使用)。",
+        "name": "axis_cast",
+        "return": {
+          "type": "widget_t*",
+          "desc": "axis_base对象。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "widget_t*",
+            "name": "widget",
+            "desc": "控件对象。"
+          }
+        ],
+        "annotation": {
+          "scriptable": true
+        },
+        "desc": "判断当前控件是否为axis控件。",
+        "name": "widget_is_axis",
+        "return": {
+          "type": "bool_t",
+          "desc": "返回当前控件是否为axis控件。"
+        }
+      }
+    ],
+    "events": [],
+    "properties": [
+      {
+        "name": "type",
+        "desc": "类型。",
+        "type": "axis_type_t",
+        "annotation": {
+          "set_prop": true,
+          "get_prop": true,
+          "readable": true,
+          "persitent": true,
+          "design": true,
+          "scriptable": true
+        }
+      },
+      {
+        "name": "at",
+        "desc": "位置。",
+        "type": "axis_at_type_t",
+        "annotation": {
+          "set_prop": true,
+          "get_prop": true,
+          "readable": true,
+          "persitent": true,
+          "design": true,
+          "scriptable": true
+        }
+      },
+      {
+        "name": "min",
+        "desc": "最小刻度。",
+        "type": "float_t",
+        "annotation": {
+          "set_prop": true,
+          "get_prop": true,
+          "readable": true,
+          "persitent": true,
+          "design": true,
+          "scriptable": true
+        }
+      },
+      {
+        "name": "max",
+        "desc": "最大刻度。",
+        "type": "float_t",
+        "annotation": {
+          "set_prop": true,
+          "get_prop": true,
+          "readable": true,
+          "persitent": true,
+          "design": true,
+          "scriptable": true
+        }
+      },
+      {
+        "name": "data",
+        "desc": "刻度数据。",
+        "type": "darray_t*",
+        "annotation": {
+          "readable": true
+        }
+      },
+      {
+        "name": "data_from_series",
+        "desc": "刻度数据的生成器。",
+        "type": "axis_data_from_series_t",
+        "annotation": {
+          "readable": true
+        }
+      },
+      {
+        "name": "data_from_series_ctx",
+        "desc": "刻度数据生成时的上下文。",
+        "type": "void*",
+        "annotation": {
+          "readable": true
+        }
+      },
+      {
+        "name": "offset",
+        "desc": "偏移位置。",
+        "type": "uint32_t",
+        "annotation": {
+          "set_prop": true,
+          "get_prop": true,
+          "readable": true,
+          "persitent": true,
+          "design": true,
+          "scriptable": true
+        }
+      },
+      {
+        "name": "offset_percent",
+        "desc": "偏移位置是否为百分比值。",
+        "type": "bool_t",
+        "annotation": {
+          "readable": true
+        }
+      },
+      {
+        "name": "inverse",
+        "desc": "是否反向",
+        "type": "bool_t",
+        "annotation": {
+          "set_prop": true,
+          "get_prop": true,
+          "readable": true,
+          "persitent": true,
+          "design": true,
+          "scriptable": true
+        }
+      },
+      {
+        "name": "data_fixed",
+        "desc": "刻度数据是否固定。",
+        "type": "bool_t",
+        "annotation": {
+          "readable": true
+        }
+      },
+      {
+        "name": "need_update_data",
+        "desc": "刻度数据是否需要更新。",
+        "type": "bool_t",
+        "annotation": {
+          "readable": true
+        }
+      },
+      {
+        "name": "painted_before",
+        "desc": "是否需要在绘制前做额外处理。",
+        "type": "bool_t",
+        "annotation": {
+          "readable": true
+        }
+      },
+      {
+        "name": "vt",
+        "desc": "虚函数表。",
+        "type": "series_vtable_t",
+        "annotation": {
+          "readable": true
+        }
+      }
+    ],
+    "header": "chart_view/axis.h",
+    "desc": "坐标轴控件。",
+    "name": "axis_t",
+    "parent": "widget_t",
+    "annotation": {
+      "scriptable": true,
+      "design": true,
+      "widget": true
+    },
+    "level": 2
+  },
+  {
+    "type": "class",
+    "methods": [
+      {
+        "params": [
+          {
+            "type": "widget_t*",
+            "name": "parent",
+            "desc": "widget的父控件。"
+          },
+          {
+            "type": "const widget_vtable_t*",
+            "name": "vt",
+            "desc": "虚函数表。"
+          },
+          {
+            "type": "xy_t",
+            "name": "x",
+            "desc": "x坐标。"
+          },
+          {
+            "type": "xy_t",
+            "name": "y",
+            "desc": "y坐标。"
+          },
+          {
+            "type": "wh_t",
+            "name": "w",
+            "desc": "宽度。"
+          },
+          {
+            "type": "wh_t",
+            "name": "h",
+            "desc": "高度。"
+          }
+        ],
+        "annotation": {},
+        "desc": "创建对象。\n\n> 仅供子类调用。",
+        "name": "tooltip_create",
+        "return": {
+          "type": "widget_t*",
+          "desc": "widget对象本身。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "widget_t*",
+            "name": "parent",
+            "desc": "父控件"
+          },
+          {
+            "type": "xy_t",
+            "name": "x",
+            "desc": "x坐标"
+          },
+          {
+            "type": "xy_t",
+            "name": "y",
+            "desc": "y坐标"
+          },
+          {
+            "type": "wh_t",
+            "name": "w",
+            "desc": "宽度"
+          },
+          {
+            "type": "wh_t",
+            "name": "h",
+            "desc": "高度"
+          }
+        ],
+        "annotation": {
+          "constructor": true,
+          "scriptable": true
+        },
+        "desc": "创建tooltip对象",
+        "name": "tooltip_create_default",
+        "return": {
+          "type": "widget_t*",
+          "desc": "对象。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "widget_t*",
+            "name": "widget",
+            "desc": "控件对象。"
+          },
+          {
+            "type": "xy_t",
+            "name": "x",
+            "desc": "x坐标"
+          },
+          {
+            "type": "xy_t",
+            "name": "y",
+            "desc": "y坐标"
+          }
+        ],
+        "annotation": {
+          "scriptable": true
+        },
+        "desc": "移动tooltip。",
+        "name": "tooltip_move",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "widget_t*",
+            "name": "widget",
+            "desc": "tooltip_base对象。"
+          }
+        ],
+        "annotation": {
+          "cast": true,
+          "scriptable": true
+        },
+        "desc": "转换为tooltip_base对象(供脚本语言使用)。",
+        "name": "tooltip_cast",
+        "return": {
+          "type": "widget_t*",
+          "desc": "tooltip_base对象。"
+        }
+      },
+      {
+        "params": [],
+        "annotation": {
+          "scriptable": true,
+          "static": true
+        },
+        "desc": "注册tooltip控件。",
+        "name": "tooltip_register",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "widget_t*",
+            "name": "widget",
+            "desc": "控件对象。"
+          }
+        ],
+        "annotation": {
+          "scriptable": true
+        },
+        "desc": "判断当前控件是否为tooltip控件。",
+        "name": "widget_is_tooltip",
+        "return": {
+          "type": "bool_t",
+          "desc": "返回当前控件是否为tooltip控件。"
+        }
+      }
+    ],
+    "events": [],
+    "properties": [],
+    "header": "chart_view/tooltip.h",
+    "desc": "提示信息控件。\n\n在xml中使用\"tooltip\"标签创建扩展按钮控件。如：\n\n```xml\n<!-- ui -->\n<tooltip x=\"c\" y=\"50\" w=\"100\" h=\"100\" />\n```\n\n可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：\n\n```xml\n<!-- style -->\n<tooltip>\n<style name=\"default\">\n<normal fg_color=\"#ffffff\" symbol_border_color=\"#007acc\" symbol_border_width=\"3\" symbol_color=\"#ffffff\"  tip_bg_color=\"#ffffff80\" tip_border_color=\"#ffffff\" tip_border_width=\"3\" margin=\"4\" text_color=\"#ffffff\"/>\n</style>\n</tooltip>\n```",
+    "name": "tooltip_t",
+    "parent": "widget_t",
+    "annotation": {
+      "scriptable": true,
+      "design": true,
+      "widget": true
+    },
+    "level": 2
+  },
+  {
+    "type": "class",
+    "methods": [
+      {
+        "params": [
+          {
+            "type": "widget_t*",
+            "name": "parent",
+            "desc": "父控件"
+          },
+          {
+            "type": "xy_t",
+            "name": "x",
+            "desc": "x坐标"
+          },
+          {
+            "type": "xy_t",
+            "name": "y",
+            "desc": "y坐标"
+          },
+          {
+            "type": "wh_t",
+            "name": "w",
+            "desc": "宽度"
+          },
+          {
+            "type": "wh_t",
+            "name": "h",
+            "desc": "高度"
+          }
+        ],
+        "annotation": {
+          "constructor": true,
+          "scriptable": true
+        },
+        "desc": "创建axis对象",
+        "name": "x_axis_create",
+        "return": {
+          "type": "widget_t*",
+          "desc": "对象。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "widget_t*",
+            "name": "widget",
+            "desc": "axis对象。"
+          }
+        ],
+        "annotation": {
+          "cast": true,
+          "scriptable": true
+        },
+        "desc": "转换为axis对象(供脚本语言使用)。",
+        "name": "x_axis_cast",
+        "return": {
+          "type": "widget_t*",
+          "desc": "axis对象。"
+        }
+      },
+      {
+        "params": [],
+        "annotation": {
+          "scriptable": true,
+          "static": true
+        },
+        "desc": "注册x_axis控件。",
+        "name": "x_axis_register",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      }
+    ],
+    "events": [],
+    "properties": [
+      {
+        "name": "x_defined",
+        "desc": "x坐标是否确定。",
+        "type": "bool_t",
+        "annotation": {
+          "readable": true
+        }
+      },
+      {
+        "name": "w_defined",
+        "desc": "w宽度是否确定。",
+        "type": "bool_t",
+        "annotation": {
+          "readable": true
+        }
+      }
+    ],
+    "header": "chart_view/x_axis.h",
+    "desc": "x坐标轴控件。\n\n在xml中使用\"x\\_axis\"标签创建扩展按钮控件。如：\n\n```xml\n<!-- ui -->\n<x_axis x=\"c\" y=\"50\" w=\"2\" h=\"100\" />\n```\n\n可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：\n\n```xml\n<!-- style -->\n<x_axis>\n<style name=\"default\">\n<normal text_color=\"#a1d8ef\" font_size=\"20\" split_line_color=\"#213b4d\" tick_color=\"#294b63\" fg_color=\"#294b63\" />\n</style>\n</x_axis>\n```",
+    "name": "x_axis_t",
+    "parent": "widget_t",
+    "annotation": {
+      "scriptable": true,
+      "design": true,
+      "widget": true
+    },
+    "level": 2
+  },
+  {
+    "type": "class",
+    "methods": [
+      {
+        "params": [
+          {
+            "type": "widget_t*",
+            "name": "parent",
+            "desc": "父控件"
+          },
+          {
+            "type": "xy_t",
+            "name": "x",
+            "desc": "x坐标"
+          },
+          {
+            "type": "xy_t",
+            "name": "y",
+            "desc": "y坐标"
+          },
+          {
+            "type": "wh_t",
+            "name": "w",
+            "desc": "宽度"
+          },
+          {
+            "type": "wh_t",
+            "name": "h",
+            "desc": "高度"
+          }
+        ],
+        "annotation": {
+          "constructor": true,
+          "scriptable": true
+        },
+        "desc": "创建axis对象",
+        "name": "y_axis_create",
+        "return": {
+          "type": "widget_t*",
+          "desc": "对象。"
+        }
+      },
+      {
+        "params": [
+          {
+            "type": "widget_t*",
+            "name": "widget",
+            "desc": "axis对象。"
+          }
+        ],
+        "annotation": {
+          "cast": true,
+          "scriptable": true
+        },
+        "desc": "转换为axis对象(供脚本语言使用)。",
+        "name": "y_axis_cast",
+        "return": {
+          "type": "widget_t*",
+          "desc": "axis对象。"
+        }
+      },
+      {
+        "params": [],
+        "annotation": {
+          "scriptable": true,
+          "static": true
+        },
+        "desc": "注册y_axis控件。",
+        "name": "y_axis_register",
+        "return": {
+          "type": "ret_t",
+          "desc": "返回RET_OK表示成功，否则表示失败。"
+        }
+      }
+    ],
+    "events": [],
+    "properties": [
+      {
+        "name": "y_defined",
+        "desc": "y坐标是否确定。",
+        "type": "bool_t",
+        "annotation": {
+          "readable": true
+        }
+      },
+      {
+        "name": "h_defined",
+        "desc": "h高度是否确定。",
+        "type": "bool_t",
+        "annotation": {
+          "readable": true
+        }
+      }
+    ],
+    "header": "chart_view/y_axis.h",
+    "desc": "y坐标轴控件。\n\n在xml中使用\"y\\_axis\"标签创建扩展按钮控件。如：\n\n```xml\n<!-- ui -->\n<y_axis x=\"c\" y=\"50\" w=\"2\" h=\"100\" />\n```\n\n可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：\n\n```xml\n<!-- style -->\n<y_axis>\n<style name=\"default\">\n<normal text_color=\"#a1d8ef\" font_size=\"20\" split_line_color=\"#213b4d\" tick_color=\"#294b63\" fg_color=\"#294b63\" />\n</style>\n</y_axis>\n```",
+    "name": "y_axis_t",
+    "parent": "widget_t",
+    "annotation": {
+      "scriptable": true,
+      "design": true,
+      "widget": true
     },
     "level": 2
   },
@@ -3426,387 +3834,14 @@
       }
     ],
     "header": "chart_view/bar_series.h",
-    "desc": "柱条序列。",
+    "desc": "柱条序列。\n\n在xml中使用\"bar\\_series\"标签创建扩展按钮控件。如：\n\n```xml\n<!-- ui -->\n<bar_series x=\"c\" y=\"50\" w=\"200\" h=\"100\" />\n```\n\n可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：\n\n```xml\n<!-- style -->\n<bar_series>\n<style name=\"default\">\n<normal margin_bottom=\"1\" margin_left=\"20\" margin_right=\"2\" margin_top=\"3\" fg_color=\"#69CF5C\"/>\n</style>\n<bar_series_minmax>\n<style name=\"default\">\n<normal margin_bottom=\"1\" margin_left=\"20\" margin_right=\"2\" margin_top=\"3\" fg_color=\"#36B3C3\"/>\n</style>\n</bar_series_minmax>\n```",
     "name": "bar_series_t",
-    "parent": "series_t",
-    "annotation": {
-      "scriptable": true
-    },
-    "level": 3
-  },
-  {
-    "type": "class",
-    "methods": [
-      {
-        "params": [
-          {
-            "type": "widget_t*",
-            "name": "parent",
-            "desc": "父控件"
-          },
-          {
-            "type": "xy_t",
-            "name": "x",
-            "desc": "x坐标"
-          },
-          {
-            "type": "xy_t",
-            "name": "y",
-            "desc": "y坐标"
-          },
-          {
-            "type": "wh_t",
-            "name": "w",
-            "desc": "宽度"
-          },
-          {
-            "type": "wh_t",
-            "name": "h",
-            "desc": "高度"
-          }
-        ],
-        "annotation": {
-          "constructor": true,
-          "scriptable": true
-        },
-        "desc": "创建line_series对象",
-        "name": "line_series_create",
-        "return": {
-          "type": "widget_t*",
-          "desc": "对象。"
-        }
-      },
-      {
-        "params": [
-          {
-            "type": "widget_t*",
-            "name": "parent",
-            "desc": "父控件"
-          },
-          {
-            "type": "xy_t",
-            "name": "x",
-            "desc": "x坐标"
-          },
-          {
-            "type": "xy_t",
-            "name": "y",
-            "desc": "y坐标"
-          },
-          {
-            "type": "wh_t",
-            "name": "w",
-            "desc": "宽度"
-          },
-          {
-            "type": "wh_t",
-            "name": "h",
-            "desc": "高度"
-          }
-        ],
-        "annotation": {
-          "constructor": true,
-          "scriptable": true
-        },
-        "desc": "创建彩色line_series对象",
-        "name": "line_series_colorful_create",
-        "return": {
-          "type": "widget_t*",
-          "desc": "对象。"
-        }
-      },
-      {
-        "params": [
-          {
-            "type": "widget_t*",
-            "name": "widget",
-            "desc": "line_series对象。"
-          }
-        ],
-        "annotation": {
-          "cast": true,
-          "scriptable": true
-        },
-        "desc": "转换为line_series对象(供脚本语言使用)。",
-        "name": "line_series_cast",
-        "return": {
-          "type": "widget_t*",
-          "desc": "line_series对象。"
-        }
-      },
-      {
-        "params": [],
-        "annotation": {
-          "scriptable": true,
-          "static": true
-        },
-        "desc": "注册line_series控件。",
-        "name": "line_series_register",
-        "return": {
-          "type": "ret_t",
-          "desc": "返回RET_OK表示成功，否则表示失败。"
-        }
-      },
-      {
-        "params": [],
-        "annotation": {
-          "scriptable": true,
-          "static": true
-        },
-        "desc": "注册line_series_colorful控件。",
-        "name": "line_series_colorful_register",
-        "return": {
-          "type": "ret_t",
-          "desc": "返回RET_OK表示成功，否则表示失败。"
-        }
-      }
-    ],
-    "events": [],
-    "properties": [
-      {
-        "name": "series_axis",
-        "desc": "标示序列位置的轴。",
-        "type": "char*",
-        "annotation": {
-          "set_prop": true,
-          "get_prop": true,
-          "readable": true,
-          "persitent": true,
-          "design": true,
-          "scriptable": true
-        }
-      },
-      {
-        "name": "value_axis",
-        "desc": "标示序列值的轴。",
-        "type": "char*",
-        "annotation": {
-          "set_prop": true,
-          "get_prop": true,
-          "readable": true,
-          "persitent": true,
-          "design": true,
-          "scriptable": true
-        }
-      }
-    ],
-    "header": "chart_view/line_series.h",
-    "desc": "线形序列。",
-    "name": "line_series_t",
-    "parent": "series_t",
-    "annotation": {
-      "scriptable": true
-    },
-    "level": 3
-  },
-  {
-    "type": "class",
-    "methods": [
-      {
-        "params": [
-          {
-            "type": "widget_t*",
-            "name": "parent",
-            "desc": "父控件"
-          },
-          {
-            "type": "xy_t",
-            "name": "x",
-            "desc": "x坐标"
-          },
-          {
-            "type": "xy_t",
-            "name": "y",
-            "desc": "y坐标"
-          },
-          {
-            "type": "wh_t",
-            "name": "w",
-            "desc": "宽度"
-          },
-          {
-            "type": "wh_t",
-            "name": "h",
-            "desc": "高度"
-          }
-        ],
-        "annotation": {
-          "constructor": true,
-          "scriptable": true
-        },
-        "desc": "创建axis对象",
-        "name": "x_axis_create",
-        "return": {
-          "type": "widget_t*",
-          "desc": "对象。"
-        }
-      },
-      {
-        "params": [
-          {
-            "type": "widget_t*",
-            "name": "widget",
-            "desc": "axis对象。"
-          }
-        ],
-        "annotation": {
-          "cast": true,
-          "scriptable": true
-        },
-        "desc": "转换为axis对象(供脚本语言使用)。",
-        "name": "x_axis_cast",
-        "return": {
-          "type": "widget_t*",
-          "desc": "axis对象。"
-        }
-      },
-      {
-        "params": [],
-        "annotation": {
-          "scriptable": true,
-          "static": true
-        },
-        "desc": "注册x_axis控件。",
-        "name": "x_axis_register",
-        "return": {
-          "type": "ret_t",
-          "desc": "返回RET_OK表示成功，否则表示失败。"
-        }
-      }
-    ],
-    "events": [],
-    "properties": [
-      {
-        "name": "x_defined",
-        "desc": "x坐标是否确定。",
-        "type": "bool_t",
-        "annotation": {
-          "readable": true
-        }
-      },
-      {
-        "name": "w_defined",
-        "desc": "w宽度是否确定。",
-        "type": "bool_t",
-        "annotation": {
-          "readable": true
-        }
-      }
-    ],
-    "header": "chart_view/x_axis.h",
-    "desc": "x坐标轴控件。",
-    "name": "x_axis_t",
-    "parent": "axis_t",
+    "parent": "widget_t",
     "annotation": {
       "scriptable": true,
       "design": true,
       "widget": true
     },
-    "level": 3
-  },
-  {
-    "type": "class",
-    "methods": [
-      {
-        "params": [
-          {
-            "type": "widget_t*",
-            "name": "parent",
-            "desc": "父控件"
-          },
-          {
-            "type": "xy_t",
-            "name": "x",
-            "desc": "x坐标"
-          },
-          {
-            "type": "xy_t",
-            "name": "y",
-            "desc": "y坐标"
-          },
-          {
-            "type": "wh_t",
-            "name": "w",
-            "desc": "宽度"
-          },
-          {
-            "type": "wh_t",
-            "name": "h",
-            "desc": "高度"
-          }
-        ],
-        "annotation": {
-          "constructor": true,
-          "scriptable": true
-        },
-        "desc": "创建axis对象",
-        "name": "y_axis_create",
-        "return": {
-          "type": "widget_t*",
-          "desc": "对象。"
-        }
-      },
-      {
-        "params": [
-          {
-            "type": "widget_t*",
-            "name": "widget",
-            "desc": "axis对象。"
-          }
-        ],
-        "annotation": {
-          "cast": true,
-          "scriptable": true
-        },
-        "desc": "转换为axis对象(供脚本语言使用)。",
-        "name": "y_axis_cast",
-        "return": {
-          "type": "widget_t*",
-          "desc": "axis对象。"
-        }
-      },
-      {
-        "params": [],
-        "annotation": {
-          "scriptable": true,
-          "static": true
-        },
-        "desc": "注册y_axis控件。",
-        "name": "y_axis_register",
-        "return": {
-          "type": "ret_t",
-          "desc": "返回RET_OK表示成功，否则表示失败。"
-        }
-      }
-    ],
-    "events": [],
-    "properties": [
-      {
-        "name": "y_defined",
-        "desc": "y坐标是否确定。",
-        "type": "bool_t",
-        "annotation": {
-          "readable": true
-        }
-      },
-      {
-        "name": "h_defined",
-        "desc": "h高度是否确定。",
-        "type": "bool_t",
-        "annotation": {
-          "readable": true
-        }
-      }
-    ],
-    "header": "chart_view/y_axis.h",
-    "desc": "y坐标轴控件。",
-    "name": "y_axis_t",
-    "parent": "axis_t",
-    "annotation": {
-      "scriptable": true,
-      "design": true,
-      "widget": true
-    },
-    "level": 3
+    "level": 2
   }
 ]

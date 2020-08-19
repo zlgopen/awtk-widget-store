@@ -30,3 +30,7 @@ ret_t date_picker_register(void) {
   widget_factory_register(widget_factory(), WIDGET_TYPE_DATE_EDIT, date_edit_create);
   return widget_factory_register(widget_factory(), WIDGET_TYPE_DATE_PICKER, date_picker_create);
 }
+
+const char* date_picker_supported_render_mode(void) {
+  return "OpenGL|AGGE-BGR565|AGGE-BGRA8888|AGGE-MONO";
+}

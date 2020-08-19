@@ -203,8 +203,8 @@ ret_t x_axis_draw_tick(axis_t* axis, canvas_t* c) {
   style_t* style = widget->astyle;
   bitmap_t img;
   color_t trans = color_init(0, 0, 0, 0);
-  color_t color = style_get_color(style, TICK_COLOR, trans);
-  const char* image_name = style_get_str(style, TICK_FG_IMAGE, NULL);
+  color_t color = style_get_color(style, STYLE_ID_AXIS_TICK_COLOR, trans);
+  const char* image_name = style_get_str(style, STYLE_ID_AXIS_TICK_IMAGE, NULL);
   image_draw_type_t draw_type =
       (image_draw_type_t)style_get_int(style, STYLE_ID_FG_IMAGE_DRAW_TYPE, IMAGE_DRAW_PATCH3_X);
   int32_t axis_offset = widget_get_prop_int(WIDGET(axis), AXIS_PROP_OFFSET, 0);
@@ -305,8 +305,8 @@ ret_t x_axis_draw_split_line(axis_t* axis, canvas_t* c) {
   style_t* style = widget->astyle;
   bitmap_t img;
   color_t trans = color_init(0, 0, 0, 0);
-  color_t color = style_get_color(style, AXIS_SPLIT_LINE_FG_COLOR, trans);
-  const char* image_name = style_get_str(style, SPLIT_LINE_FG_IMAGE, NULL);
+  color_t color = style_get_color(style, STYLE_ID_AXIS_SPLIT_LINE_COLOR, trans);
+  const char* image_name = style_get_str(style, STYLE_ID_AXIS_SPLIT_LINE_IMAGE, NULL);
   image_draw_type_t draw_type =
       (image_draw_type_t)style_get_int(style, STYLE_ID_FG_IMAGE_DRAW_TYPE, IMAGE_DRAW_PATCH3_X);
   rect_t r = rect_init(0, axis->draw_rect.y, 1, axis->split_line.line_len);

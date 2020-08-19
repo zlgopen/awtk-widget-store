@@ -1,32 +1,32 @@
 <x_axis>
     <style name="default">
-        <normal text_color="#a1d8ef" font_size="20" split_line_fg_color="#213b4d" tick_color="#294b63" fg_color="#294b63" />
+        <normal text_color="#a1d8ef" font_size="20" split_line_color="#213b4d" tick_color="#294b63" fg_color="#294b63" />
     </style>
 </x_axis>
 <y_axis>
     <style name="default">
-        <normal text_color="#a1d8ef" font_size="20" split_line_fg_color="#213b4d" tick_color="#294b63" fg_color="#294b63" />
+        <normal text_color="#a1d8ef" font_size="20" split_line_color="#213b4d" tick_color="#294b63" fg_color="#294b63" />
     </style>
 </y_axis>
 <tooltip>
     <style name="default">
-        <normal fg_color="#ffffff" symbol_border_color="#007acc" symbol_border_width="3" symbol_fg_color="#ffffff"  tip_bg_color="#ffffff80" tip_border_color="#ffffff" tip_border_width="3" margin="4" text_color="#ffffff"/>
+        <normal fg_color="#ffffff" symbol_border_color="#007acc" symbol_border_width="3" symbol_color="#ffffff"  tip_bg_color="#ffffff80" tip_border_color="#ffffff" tip_border_width="3" margin="4" text_color="#ffffff"/>
     </style>
 </tooltip>
 <line_series>
     <style name="default">
-        <normal line_border_color="#69cf5c" line_border_width="1"   area_fg_color="#69CF5C66"  smooth_area_fg_color="#69CF5C66" symbol_border_color="#FFC393" symbol_fg_color="#69CF5C"/>
+        <normal line_border_color="#69cf5c" line_border_width="1"   area_color="#69CF5C66"  smooth_area_color="#69CF5C66" symbol_border_color="#FFC393" symbol_color="#69CF5C"/>
     </style>
     <style name="s1">
-        <normal line_border_color="#69cf5c" line_border_width="1"   area_fg_color="#69cf5c66"  smooth_area_fg_color="#69cf5c66" symbol_border_color="#ffc393" symbol_fg_color="#69cf5c"/>
+        <normal line_border_color="#69cf5c" line_border_width="1"   area_color="#69cf5c66"  smooth_area_color="#69cf5c66" symbol_border_color="#ffc393" symbol_color="#69cf5c"/>
     </style>
     <style name="s2">
-        <normal line_border_color="#36b3c3" line_border_width="1"   area_fg_color="#36b3c366"  smooth_area_fg_color="#36b3c366" symbol_border_color="#ffc393" symbol_fg_color="#36b3c3"/>
+        <normal line_border_color="#36b3c3" line_border_width="1"   area_color="#36b3c366"  smooth_area_color="#36b3c366" symbol_border_color="#ffc393" symbol_color="#36b3c3"/>
     </style>
 </line_series>
 <line_series_colorful>
     <style name="default">
-        <normal line_border_color="#69cf5c" line_border_width="1"   area_fg_color="#69cf5c66"  smooth_area_fg_color="#69CF5C66" symbol_border_color="#FFC393" symbol_fg_color="#69CF5C"/>
+        <normal line_border_color="#69cf5c" line_border_width="1"   area_color="#69cf5c66"  smooth_area_color="#69CF5C66" symbol_border_color="#FFC393" symbol_color="#69CF5C"/>
     </style>
 </line_series_colorful>
 <bar_series>

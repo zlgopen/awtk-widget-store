@@ -10,4 +10,3 @@
 /bin/*.lib
 /bin/*.exp
 /format.sh
-/.clang-format

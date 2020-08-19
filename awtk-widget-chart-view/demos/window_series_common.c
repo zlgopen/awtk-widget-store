@@ -9,6 +9,8 @@
 #define PROP_NEWEST_INDEX "newest"
 #define PROP_TIME_NOW "now"
 #define PROP_UPDATED "updated"
+#define TIME_PER_DIV 2000        //每个DIV的持续时间
+#define SAMPLE_COUNT_PER_DIV 10  //每个DIV的采样点数
 
 static ret_t on_series_prop_changed(void* ctx, event_t* e, const char* prop, const char* btn_name,
                                     const char* style, const char* style_select) {
@@ -166,8 +168,8 @@ static void generate_minmax_data(void* buffer, uint32_t size) {
 typedef void (*_generate_data_t)(void* buffer, uint32_t size);
 static void on_series_push_data(widget_t* widget, uint32_t count, uint32_t unit_size,
                                 _generate_data_t gen) {
-  uint32_t tdiv = 2000;
-  uint32_t sdiv = 10;
+  uint32_t tdiv = TIME_PER_DIV;
+  uint32_t sdiv = SAMPLE_COUNT_PER_DIV;
   uint32_t now;
   bool_t updated = FALSE;
   widget_t* axis;
@@ -273,7 +275,7 @@ ret_t on_series_push_rand_ufloat_data(const timer_info_t* timer) {
   widget_t* win = WIDGET(timer->ctx);
   widget_t* chart_view = widget_lookup(win, "chartview", TRUE);
   if (chart_view) {
-    on_series_push_ufloat_data(chart_view, 1);
+    on_series_push_ufloat_data(chart_view, SAMPLE_COUNT_PER_DIV * 1000 / TIME_PER_DIV);
   }
   return RET_REPEAT;
 }
@@ -344,8 +346,8 @@ ret_t axis_time_generate(void* ctx, uint32_t begin, uint32_t end, uint32_t middl
                          darray_t* v) {
   widget_t* axis = WIDGET(ctx);
   axis_data_t* d;
-  uint32_t tdiv = 2000;
-  uint32_t sdiv = 10;
+  uint32_t tdiv = TIME_PER_DIV;
+  uint32_t sdiv = SAMPLE_COUNT_PER_DIV;
   uint32_t offset = 0;
   uint32_t index = 0;
   uint32_t nr;

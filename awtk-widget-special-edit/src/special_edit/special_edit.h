@@ -30,6 +30,29 @@ BEGIN_C_DECLS
  * @parent widget_t
  * @annotation ["scriptable","design","widget"]
  * special_edit编辑框控件，对于一些没有触摸屏的设备，可通过设置键盘上的快捷键如：F7或F8，增加或者减小数值
+ * 
+ * 在xml中使用"special\_edit"标签创建扩展按钮控件。如：
+ *
+ * ```xml
+ * <!-- ui -->
+ * <special_edit x="c" y="50" w="100" h="50" />
+ * ```
+ *
+ * 可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：
+ * 
+ * ```xml
+ * <!-- style -->
+ * <special_edit selected_fg_color="#020202" selected_text_color="#010101" selected_bg_color="#b5d7fd">
+ *    <style name="default" border_color="#a0a0a0"  text_color="black" text_align_h="left">
+ *       <normal     bg_color="#f0f0f0" />
+ *         <focused    bg_color="#f0f0f0" border_color="black"/>
+ *        <disable    bg_color="gray" text_color="#d0d0d0" />
+ *        <error      bg_color="#f0f0f0" text_color="red" />
+ *        <empty      bg_color="#f0f0f0" text_color="#a0a0a0" />
+ *        <empty_focus bg_color="#f0f0f0" text_color="#a0a0a0" border_color="black"/>
+ *    </style>
+</special_edit>  
+ * ```
  */
 typedef struct _special_edit_t {
   widget_t widget;

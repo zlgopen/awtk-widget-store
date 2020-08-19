@@ -40,15 +40,30 @@ BEGIN_C_DECLS
  * 
  * 子控件的大小和风格可以自行设定，遵循命名规则即可。
  * 
- * 在xml中使用"date\_edit"标签创建按钮控件。如：
+ * 在xml中使用"date\_edit"标签创建日期编辑控件。如：
  *
  * ```xml
+ * <!-- ui -->
  * <date_edit x="10" y="10" w="148" h="30" year="2020" month="12" day="31">
  *   <edit name="date" x="0" y="m" w="100%" h="100%" input_type="date" />
  *   <button name="pick" style="pick" x="r:2" y="m" w="26" h="26" text="..." />
  * </date_edit>
  * ```
- * 
+ *
+ * 可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：
+ *
+ * ```xml
+ * <!-- style -->
+ * <button>
+ *   <style name="pick">
+ *     <normal text_color="#222222"/>
+ *     <pressed text_color="#ffffff" bg_color="#1971dd" border_color="#1971dd"/>
+ *     <over text_color="#ffffff" bg_color="#338fff" border_color="#338fff"/>
+ *     <focused text_color="#444444" bg_color="#f4f4f4" border_color="#338fff" />
+ *     <disable text_color="gray"/>
+ *   </style>
+ * </button>
+ * ```
  *
  */
 typedef struct _date_edit_t {

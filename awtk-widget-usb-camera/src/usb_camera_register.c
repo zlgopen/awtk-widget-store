@@ -26,6 +26,9 @@
 #include "usb_camera/usb_camera.h"
 
 ret_t usb_camera_register(void) {
-  return widget_factory_register(widget_factory(), WIDGET_TYPE_USB_CAMERA,
-                                 usb_camera_create);
+  return widget_factory_register(widget_factory(), WIDGET_TYPE_USB_CAMERA, usb_camera_create);
+}
+
+const char* usb_camera_supported_render_mode(void) {
+  return "OpenGL|AGGE-BGR565|AGGE-BGRA8888|AGGE-MONO";
 }

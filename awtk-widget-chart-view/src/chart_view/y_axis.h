@@ -28,9 +28,27 @@ BEGIN_C_DECLS
 
 /**
  * @class y_axis_t
- * @parent axis_t
+ * @parent widget_t
  * @annotation ["scriptable","design","widget"]
  * y坐标轴控件。
+ * 
+ * 在xml中使用"y\_axis"标签创建扩展按钮控件。如：
+ *
+ * ```xml
+ * <!-- ui -->
+ * <y_axis x="c" y="50" w="2" h="100" />
+ * ```
+ *
+ * 可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：
+ *
+ * ```xml
+ * <!-- style -->
+ * <y_axis>
+ *  <style name="default">
+ *      <normal text_color="#a1d8ef" font_size="20" split_line_color="#213b4d" tick_color="#294b63" fg_color="#294b63" />
+ *  </style>
+ * </y_axis>
+ * ```
  */
 typedef struct _y_axis_t {
   axis_t base;

@@ -31,8 +31,26 @@ BEGIN_C_DECLS
 /**
  * @class chart_view_t
  * @parent widget_t
- * @annotation ["scriptable"]
+ * @annotation ["scriptable","design","widget"]
  * chart view
+ * 
+ * 在xml中使用"chart\_view"标签创建扩展按钮控件。如：
+ *
+ * ```xml
+ * <!-- ui -->
+ * <chart_view x="c" y="50" w="200" h="100" />
+ * ```
+ *
+ * 可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：
+ *
+ * ```xml
+ * <!-- style -->
+ * <chart_view>
+ *  <style name="default">
+ *      <normal margin_bottom="20" margin_left="55" margin_right="55" margin_top="20"/>
+ *  </style>
+ * </chart_view>
+ * ```
  */
 typedef struct _chart_view_t {
   widget_t widget;

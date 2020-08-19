@@ -19,7 +19,6 @@
  *
  */
 
-
 #include "tkc/mem.h"
 #include "tkc/utils.h"
 #include "mask_view_register.h"
@@ -31,4 +30,8 @@ ret_t mask_view_register(void) {
   widget_factory_register(widget_factory(), WIDGET_TYPE_MASK_VIEW, mask_view_create);
   widget_factory_register(widget_factory(), WIDGET_TYPE_MASK_VIEW_ITEM, mask_view_item_create);
   return RET_OK;
+}
+
+const char* mask_view_supported_render_mode(void) {
+  return "OpenGL|AGGE-BGR565|AGGE-BGRA8888|AGGE-MONO";
 }

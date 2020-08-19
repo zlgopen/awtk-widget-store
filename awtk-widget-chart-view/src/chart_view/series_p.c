@@ -360,8 +360,8 @@ ret_t series_p_draw_line(widget_t* widget, canvas_t* c, vgcanvas_t* vg, style_t*
   assert(index < fifo->size && index + size - 1 < fifo->size);
   return_value_if_true(fifo->size == 0 || size == 0, RET_OK);
 
-  color = style_get_color(style, LINE_BORDER_COLOR, trans);
-  border_width = (float_t)style_get_int(style, LINE_BORDER_WIDTH, 1);
+  color = style_get_color(style, STYLE_ID_SERIES_LINE_BORDER_COLOR, trans);
+  border_width = (float_t)style_get_int(style, STYLE_ID_SERIES_LINE_BORDER_WIDTH, 1);
 
   if (color.rgba.a) {
     if (use_canvas && border_width == 1) {
@@ -416,7 +416,7 @@ ret_t series_p_draw_line_colorful(widget_t* widget, canvas_t* c, vgcanvas_t* vg,
   assert(index < fifo->size && index + size - 1 < fifo->size);
   return_value_if_true(fifo->size == 0 || size == 0, RET_OK);
 
-  border_width = style_get_int(style, LINE_BORDER_WIDTH, 1);
+  border_width = style_get_int(style, STYLE_ID_SERIES_LINE_BORDER_WIDTH, 1);
 
   if (use_canvas && border_width == 1) {
     return_value_if_fail(c != NULL, RET_BAD_PARAMS);
@@ -486,7 +486,7 @@ ret_t series_p_draw_line_area(widget_t* widget, vgcanvas_t* vg, style_t* style, 
   assert(index < fifo->size && index + size - 1 < fifo->size);
   return_value_if_true(fifo->size == 0 || size == 0, RET_OK);
 
-  color = style_get_color(style, AREA_FG_COLOR, trans);
+  color = style_get_color(style, STYLE_ID_SERIES_AREA_COLOR, trans);
 
   if (color.rgba.a) {
     d0 = d = (series_p_draw_data_t*)(fifo_at(fifo, index + size - 1));
@@ -588,8 +588,8 @@ ret_t series_p_draw_smooth_line(widget_t* widget, vgcanvas_t* vg, style_t* style
   assert(index < fifo->size && index + size - 1 < fifo->size);
   return_value_if_true(fifo->size == 0 || size == 0, RET_OK);
 
-  color = style_get_color(style, LINE_BORDER_COLOR, trans);
-  border_width = style_get_int(style, LINE_BORDER_WIDTH, 1);
+  color = style_get_color(style, STYLE_ID_SERIES_LINE_BORDER_COLOR, trans);
+  border_width = style_get_int(style, STYLE_ID_SERIES_LINE_BORDER_WIDTH, 1);
 
   if (color.rgba.a) {
     dprev = d = (series_p_draw_data_t*)(fifo_at(fifo, index + size - 1));
@@ -627,7 +627,7 @@ ret_t series_p_draw_smooth_line_colorful(widget_t* widget, vgcanvas_t* vg, style
   assert(index < fifo->size && index + size - 1 < fifo->size);
   return_value_if_true(fifo->size == 0 || size == 0, RET_OK);
 
-  border_width = style_get_int(style, LINE_BORDER_COLOR, 1);
+  border_width = style_get_int(style, STYLE_ID_SERIES_LINE_BORDER_COLOR, 1);
 
   vgcanvas_set_line_width(vg, border_width);
 
@@ -701,7 +701,7 @@ ret_t series_p_draw_smooth_line_area(widget_t* widget, vgcanvas_t* vg, style_t* 
   assert(index < fifo->size && index + size - 1 < fifo->size);
   return_value_if_true(fifo->size == 0 || size == 0, RET_OK);
 
-  color = style_get_color(style, SMOOTH_AREA_FG_COLOR, trans);
+  color = style_get_color(style, STYLE_ID_SERIES_SMOOTH_AREA_COLOR, trans);
 
   if (color.rgba.a) {
     dprev = d0 = d = (series_p_draw_data_t*)(fifo_at(fifo, index + size - 1));
@@ -839,10 +839,10 @@ ret_t series_p_draw_symbol(widget_t* widget, vgcanvas_t* vg, style_t* style, flo
   assert(index < fifo->size && index + size - 1 < fifo->size);
   return_value_if_true(fifo->size == 0 || size == 0, RET_OK);
 
-  fg_color = style_get_color(style, SYMBOL_FG_COLOR, trans);
-  bd_color = style_get_color(style, SYMBOL_BORDER_COLOR, trans);
-  border_width = style_get_int(style, SYMBOL_BORDER_WIDTH, 1);
-  image_name = style_get_str(style, SYMBOL_FG_IMAGE, NULL);
+  fg_color = style_get_color(style, STYLE_ID_SERIES_SYMBOL_BG_COLOR, trans);
+  bd_color = style_get_color(style, STYLE_ID_SERIES_SYMBOL_BORDER_COLOR, trans);
+  border_width = style_get_int(style, STYLE_ID_SERIES_SYMBOL_BORDER_WIDTH, 1);
+  image_name = style_get_str(style, STYLE_ID_SERIES_SYMBOL_IMAGE, NULL);
 
   if (image_name != NULL) {
     if (widget_load_image(widget, image_name, &img) != RET_OK) {
@@ -890,8 +890,8 @@ ret_t series_p_draw_symbol_colorful(widget_t* widget, vgcanvas_t* vg, style_t* s
   assert(index < fifo->size && index + size - 1 < fifo->size);
   return_value_if_true(fifo->size == 0 || size == 0, RET_OK);
 
-  bd_color = style_get_color(style, SYMBOL_BORDER_COLOR, trans);
-  border_width = style_get_int(style, SYMBOL_BORDER_WIDTH, 1);
+  bd_color = style_get_color(style, STYLE_ID_SERIES_SYMBOL_BORDER_COLOR, trans);
+  border_width = style_get_int(style, STYLE_ID_SERIES_SYMBOL_BORDER_WIDTH, 1);
 
   vgcanvas_set_stroke_color(vg, bd_color);
   vgcanvas_set_line_width(vg, border_width);

@@ -29,9 +29,32 @@ BEGIN_C_DECLS
 
 /**
  * @class line_series_t
- * @parent series_t
- * @annotation ["scriptable"]
+ * @parent widget_t
+ * @annotation ["scriptable","design","widget"]
  * 线形序列。
+ * 
+ * 在xml中使用"line\_series"标签创建扩展按钮控件。如：
+ *
+ * ```xml
+ * <!-- ui -->
+ * <line_series x="c" y="50" w="200" h="100" />
+ * ```
+ *
+ * 可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：
+ *
+ * ```xml
+ * <!-- style -->
+ * <line_series>
+ *  <style name="default">
+ *      <normal line_border_color="#69cf5c" line_border_width="1"   area_color="#69CF5C66"  smooth_area_color="#69CF5C66" symbol_border_color="#FFC393" symbol_color="#69CF5C"/>
+ *  </style>
+ * </line_series>
+ * <line_series_colorful>
+ *  <style name="default">
+ *      <normal line_border_color="#69cf5c" line_border_width="1"   area_color="#69cf5c66"  smooth_area_color="#69CF5C66" symbol_border_color="#FFC393" symbol_color="#69CF5C"/>
+ *  </style>
+ * </line_series_colorful>
+ * ```
  */
 typedef struct _line_series_t {
   series_t base;

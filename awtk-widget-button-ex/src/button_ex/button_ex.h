@@ -32,6 +32,25 @@ BEGIN_C_DECLS
  * @annotation ["scriptable","design","widget"]
  *
  * 扩展按钮。点击或离开按钮时，创建过度动画。
+ * 在xml中使用"button\_ex"标签创建扩展按钮控件。如：
+ *
+ * ```xml
+ * <!-- ui -->
+ * <button_ex x="c" y="50" w="24" h="100" />
+ * ```
+ *
+ * 可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：
+ * 
+ * ```xml
+ * <!-- style -->
+ * <button_ex>
+ *   <style name="default" border="all" border_color="#3F3F3F" font_size="36" round_radius="20" text_align_h="left" text_color="#FFFFFF" bg_color="#FAFAFA">
+ *     <normal/>
+ *      <over/>
+ *      <pressed/>
+ *   </style>
+ * </button_ex>
+ * ```
  */
 typedef struct _button_ex_t {
   widget_t widget;

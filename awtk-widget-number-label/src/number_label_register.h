@@ -36,6 +36,16 @@ BEGIN_C_DECLS
  */
 ret_t number_label_register(void);
 
+/**
+ * @method  number_label_supported_render_mode
+ * 获取支持的渲染模式。
+ *
+ * @annotation ["global"]
+ *
+ * @return {const char*} 返回渲染模式。
+ */
+const char* number_label_supported_render_mode(void);
+
 END_C_DECLS
 
 #endif /*TK_NUMBER_LABEL_REGISTER_H*/

@@ -33,14 +33,6 @@ BEGIN_C_DECLS
  */
 typedef struct _tooltip_line_params_t {
   /**
-   * style的名称。
-   */
-  char* style;
-  /**
-   * Style对象。
-   */
-  style_t* astyle;
-  /**
    * 是否显示。
    */
   uint8_t show : 1;
@@ -51,14 +43,6 @@ typedef struct _tooltip_line_params_t {
  * 指示序列点位置的点。
  */
 typedef struct _tooltip_symbol_params_t {
-  /**
-   * style的名称。
-   */
-  char* style;
-  /**
-   * Style对象。
-   */
-  style_t* astyle;
   /**
    * 是否显示。
    */
@@ -71,25 +55,10 @@ typedef struct _tooltip_symbol_params_t {
  */
 typedef struct _tooltip_tip_params_t {
   /**
-   * style的名称。
-   */
-  char* style;
-  /**
-   * Style对象。
-   */
-  style_t* astyle;
-  /**
    * 是否显示。
    */
   uint8_t show : 1;
 } tooltip_tip_params_t;
-
-/**
- * @enum widget_subpart_t
- * @annotation ["scriptable", "string"]
- * @prefix TOOLTIP_SUBPART_
- * 控件的子部件。
- */
 
 /**
  * @enum widget_prop_t
@@ -120,7 +89,7 @@ typedef struct _tooltip_tip_params_t {
  * @const TOOLTIP_PROP_LINE_SHOW
  * 指示序列点位置的线是否显示
  */
-#define TOOLTIP_PROP_LINE_SHOW "line.show"
+#define TOOLTIP_PROP_LINE_SHOW "line:show"
 
 /**
  * @const TOOLTIP_PROP_SYMBOL
@@ -132,7 +101,7 @@ typedef struct _tooltip_tip_params_t {
  * @const TOOLTIP_PROP_SYMBOL_SHOW
  * 指示序列点位置的点是否显示
  */
-#define TOOLTIP_PROP_SYMBOL_SHOW "symbol.show"
+#define TOOLTIP_PROP_SYMBOL_SHOW "symbol:show"
 
 /**
  * @const TOOLTIP_PROP_TIP
@@ -144,7 +113,7 @@ typedef struct _tooltip_tip_params_t {
  * @const TOOLTIP_PROP_TIP_SHOW
  * 提示文本是否显示
  */
-#define TOOLTIP_PROP_TIP_SHOW "tip.show"
+#define TOOLTIP_PROP_TIP_SHOW "tip:show"
 
 /**
  * @enum widget_type_t
@@ -160,40 +129,46 @@ typedef struct _tooltip_tip_params_t {
 #define WIDGET_TYPE_TOOLTIP "tooltip"
 
 /**
- * @const SYMBOL_BORDER_COLOR
+ * @enum style_tooltip_t
+ * @prefix STYLE_ID_TOOLTIP_
+ * @annotation ["scriptable", "string"]
+ * style常量定义。
+ */
+/**
+ * @const STYLE_ID_TOOLTIP_SYMBOL_BORDER_COLOR
  * 指示序列点位置的点的边框颜色
  */
-#define SYMBOL_BORDER_COLOR "symbol_border_color"
+#define STYLE_ID_TOOLTIP_SYMBOL_BORDER_COLOR "symbol_border_color"
 
 /**
- * @const SYMBOL_BORDER_WIDTH
+ * @const STYLE_ID_TOOLTIP_SYMBOL_BORDER_WIDTH
  * 指示序列点位置的点的边框宽度
  */
-#define SYMBOL_BORDER_WIDTH "symbol_border_width"
+#define STYLE_ID_TOOLTIP_SYMBOL_BORDER_WIDTH "symbol_border_width"
 
 /**
- * @const SYMBOL_FG_COLOR
- * 指示序列点位置的点的前景颜色
+ * @const STYLE_ID_TOOLTIP_SYMBOL_COLOR
+ * 指示序列点位置的点的颜色
  */
-#define SYMBOL_FG_COLOR "symbol_fg_color"
+#define STYLE_ID_TOOLTIP_SYMBOL_COLOR "symbol_color"
 
 /**
- * @const TIP_BORDER_COLOR
+ * @const STYLE_ID_TOOLTIP_BORDER_COLOR
  * 提示信息框的边框颜色
  */
-#define TIP_BORDER_COLOR "tip_border_color"
+#define STYLE_ID_TOOLTIP_BORDER_COLOR "tip_border_color"
 
 /**
- * @const TIP_BG_COLOR
+ * @const STYLE_ID_TOOLTIP__BG_COLOR
  * 提示信息框的背景颜色
  */
-#define TIP_BG_COLOR "tip_bg_color"
+#define STYLE_ID_TOOLTIP_BG_COLOR "tip_bg_color"
 
 /**
- * @const tip_border_width
+ * @const STYLE_ID_TIP_BORDER_WIDTH
  * 提示信息框的边框宽度
  */
-#define TIP_BORDER_WIDTH "tip_border_width"
+#define STYLE_ID_TOOLTIP_BORDER_WIDTH "tip_border_width"
 
 END_C_DECLS
 

@@ -78,20 +78,11 @@ static ret_t line_series_get_prop(widget_t* widget, const char* name, value_t* v
   } else if (tk_str_eq(name, SERIES_PROP_LINE_SMOOTH)) {
     value_set_bool(v, series->line.smooth);
     return RET_OK;
-  } else if (tk_str_eq(name, SERIES_PROP_LINE_STYLE)) {
-    value_set_str(v, series->line.style);
-    return RET_OK;
   } else if (tk_str_eq(name, SERIES_PROP_LINE_AREA_SHOW)) {
     value_set_bool(v, series->area.show);
     return RET_OK;
-  } else if (tk_str_eq(name, SERIES_PROP_LINE_AREA_STYLE)) {
-    value_set_str(v, series->area.style);
-    return RET_OK;
   } else if (tk_str_eq(name, SERIES_PROP_SYMBOL_SHOW)) {
     value_set_bool(v, series->symbol.show);
-    return RET_OK;
-  } else if (tk_str_eq(name, SERIES_PROP_SYMBOL_STYLE)) {
-    value_set_str(v, series->symbol.style);
     return RET_OK;
   } else if (tk_str_eq(name, SERIES_PROP_SYMBOL_SIZE)) {
     value_set_float(v, series->symbol.size);
@@ -280,11 +271,10 @@ ret_t line_series_colorful_set(widget_t* widget, uint32_t index, const void* dat
 }
 
 static const char* s_line_series_properties[] = {
-    SERIES_PROP_CAPACITY,        SERIES_PROP_UNIT_SIZE,       SERIES_PROP_COVERAGE,
-    SERIES_PROP_DISPLAY_MODE,    SERIES_PROP_VALUE_ANIMATION, SERIES_PROP_TITLE,
-    SERIES_PROP_LINE_STYLE,      SERIES_PROP_LINE_SHOW,       SERIES_PROP_LINE_SMOOTH,
-    SERIES_PROP_LINE_AREA_STYLE, SERIES_PROP_LINE_AREA_SHOW,  SERIES_PROP_SYMBOL_STYLE,
-    SERIES_PROP_SYMBOL_SIZE,     SERIES_PROP_SYMBOL_SHOW,     NULL};
+    SERIES_PROP_CAPACITY,     SERIES_PROP_UNIT_SIZE,       SERIES_PROP_COVERAGE,
+    SERIES_PROP_DISPLAY_MODE, SERIES_PROP_VALUE_ANIMATION, SERIES_PROP_TITLE,
+    SERIES_PROP_LINE_SHOW,    SERIES_PROP_LINE_SMOOTH,     SERIES_PROP_LINE_AREA_SHOW,
+    SERIES_PROP_SYMBOL_SIZE,  SERIES_PROP_SYMBOL_SHOW,     NULL};
 
 #define LINE_SERIES_WIDGET_VT                                                               \
   .count = series_p_count, .rset = series_p_rset, .push = series_p_push, .at = series_p_at, \
