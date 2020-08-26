@@ -29,9 +29,30 @@
 BEGIN_C_DECLS
 /**
  * @class usb_camera_t
- * @parent widget_t
+ * @parent mutable_image_t
  * @annotation ["scriptable","design","widget"]
  * USB 摄像头控件
+ * 
+ * 该控件为 USB 摄像头控件，默认支持 window 和 linux 的摄像头驱动，如果需要支持其他的平台驱动的话，请重载 src/usb_camera/devices/usb_camera_devices.h 的函数。
+ * 
+ * 在xml中使用"usb\_camera"标签创建usb\_camera控件。如：
+ *
+ * ```xml
+ * <!-- ui -->
+ * <usb_camera name="usb_camera" x="0" y="0" w="200" h="200"/>
+ * ```
+ *
+ * 可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：
+ *
+ * ```xml
+ * <!-- style -->
+ * <usb_camera>
+ *   <style name="default">
+ *     <normal />
+ *   </style>
+ * </usb_camera>
+ * ```
+ * 
  */
 typedef struct _usb_camera_t {
   mutable_image_t base;
@@ -82,8 +103,8 @@ typedef struct _usb_camera_t {
   bool_t is_play;
   bool_t is_open;
 
-  uint8_t *buff;
-  void *p_device;
+  uint8_t* buff;
+  void* p_device;
 
 } usb_camera_t;
 
@@ -99,7 +120,7 @@ typedef struct _usb_camera_t {
  *
  * @return {widget_t*} usb_camera对象。
  */
-widget_t *usb_camera_create(widget_t *parent, xy_t x, xy_t y, wh_t w, wh_t h);
+widget_t* usb_camera_create(widget_t* parent, xy_t x, xy_t y, wh_t w, wh_t h);
 
 /**
  * @method usb_camera_cast
@@ -109,7 +130,7 @@ widget_t *usb_camera_create(widget_t *parent, xy_t x, xy_t y, wh_t w, wh_t h);
  *
  * @return {widget_t*} usb_camera对象。
  */
-widget_t *usb_camera_cast(widget_t *widget);
+widget_t* usb_camera_cast(widget_t* widget);
 
 /**
  * @method usb_camera_set_camera_id
@@ -120,7 +141,7 @@ widget_t *usb_camera_cast(widget_t *widget);
  *
  * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
  */
-ret_t usb_camera_set_camera_id(widget_t *widget, uint32_t camera_id);
+ret_t usb_camera_set_camera_id(widget_t* widget, uint32_t camera_id);
 
 /**
  * @method usb_camera_set_camera_width
@@ -131,7 +152,7 @@ ret_t usb_camera_set_camera_id(widget_t *widget, uint32_t camera_id);
  *
  * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
  */
-ret_t usb_camera_set_camera_width(widget_t *widget, uint32_t width);
+ret_t usb_camera_set_camera_width(widget_t* widget, uint32_t width);
 
 /**
  * @method usb_camera_set_camera_height
@@ -142,7 +163,7 @@ ret_t usb_camera_set_camera_width(widget_t *widget, uint32_t width);
  *
  * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
  */
-ret_t usb_camera_set_camera_height(widget_t *widget, uint32_t height);
+ret_t usb_camera_set_camera_height(widget_t* widget, uint32_t height);
 
 /**
  * @method usb_camera_set_camera_mirror
@@ -153,7 +174,7 @@ ret_t usb_camera_set_camera_height(widget_t *widget, uint32_t height);
  *
  * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
  */
-ret_t usb_camera_set_camera_mirror(widget_t *widget, bool_t mirror);
+ret_t usb_camera_set_camera_mirror(widget_t* widget, bool_t mirror);
 
 /**
  * @method usb_camera_set_camera_width_and_height
@@ -165,8 +186,7 @@ ret_t usb_camera_set_camera_mirror(widget_t *widget, bool_t mirror);
  *
  * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
  */
-ret_t usb_camera_set_camera_width_and_height(widget_t *widget, uint32_t width,
-                                             uint32_t height);
+ret_t usb_camera_set_camera_width_and_height(widget_t* widget, uint32_t width, uint32_t height);
 
 /**
  * @method usb_cemera_open
@@ -176,7 +196,7 @@ ret_t usb_camera_set_camera_width_and_height(widget_t *widget, uint32_t width,
  *
  * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
  */
-ret_t usb_cemera_open(widget_t *widget);
+ret_t usb_cemera_open(widget_t* widget);
 
 /**
  * @method usb_cemera_play
@@ -186,7 +206,7 @@ ret_t usb_cemera_open(widget_t *widget);
  *
  * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
  */
-ret_t usb_cemera_play(widget_t *widget);
+ret_t usb_cemera_play(widget_t* widget);
 
 /**
  * @method usb_cemera_stop
@@ -196,7 +216,7 @@ ret_t usb_cemera_play(widget_t *widget);
  *
  * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
  */
-ret_t usb_cemera_stop(widget_t *widget);
+ret_t usb_cemera_stop(widget_t* widget);
 
 /**
  * @method usb_camera_close
@@ -206,7 +226,7 @@ ret_t usb_cemera_stop(widget_t *widget);
  *
  * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
  */
-ret_t usb_camera_close(widget_t *widget);
+ret_t usb_camera_close(widget_t* widget);
 
 /**
  * @method usb_camera_enum_all_devices
@@ -216,7 +236,7 @@ ret_t usb_camera_close(widget_t *widget);
  *
  * @return {ret_t} 成功返回列表，失败返回NULL。
  */
-slist_t *usb_camera_enum_all_devices(widget_t *widget);
+slist_t* usb_camera_enum_all_devices(widget_t* widget);
 
 /**
  * @method usb_camera_enum_device_all_ratio
@@ -226,7 +246,7 @@ slist_t *usb_camera_enum_all_devices(widget_t *widget);
  *
  * @return {ret_t}  成功返回列表，失败返回NULL。
  */
-slist_t *usb_camera_enum_device_all_ratio(widget_t *widget);
+slist_t* usb_camera_enum_device_all_ratio(widget_t* widget);
 
 /**
  * @method usb_cemera_is_play
@@ -236,7 +256,7 @@ slist_t *usb_camera_enum_device_all_ratio(widget_t *widget);
  *
  * @return {ret_t}  成功返回列表，失败返回NULL。
  */
-bool_t usb_cemera_is_play(widget_t *widget);
+bool_t usb_cemera_is_play(widget_t* widget);
 
 /**
  * @method usb_cemera_is_open
@@ -246,7 +266,7 @@ bool_t usb_cemera_is_play(widget_t *widget);
  *
  * @return {ret_t}  成功返回列表，失败返回NULL。
  */
-bool_t usb_cemera_is_open(widget_t *widget);
+bool_t usb_cemera_is_open(widget_t* widget);
 
 #define USB_CAMERA_PROP_MIRROR "mirror"
 #define USB_CAMERA_PROP_CAMERA_ID "camera_id"
@@ -255,7 +275,7 @@ bool_t usb_cemera_is_open(widget_t *widget);
 
 #define WIDGET_TYPE_USB_CAMERA "usb_camera"
 
-#define USB_CAMERA(widget) ((usb_camera_t *)(usb_camera_cast(WIDGET(widget))))
+#define USB_CAMERA(widget) ((usb_camera_t*)(usb_camera_cast(WIDGET(widget))))
 
 /*public for subclass and runtime type check*/
 TK_EXTERN_VTABLE(usb_camera);

@@ -57,21 +57,3 @@ ret_t chart_utils_object_parse(chart_utils_on_object_parse_t on_parse, void* ctx
 
   return RET_OK;
 }
-
-static ret_t _widget_get_window_theme(widget_t* widget, theme_t** win_theme,
-                                      theme_t** default_theme) {
-  value_t v;
-  widget_t* win = widget_get_window(widget);
-
-  return_value_if_fail(win != NULL, RET_BAD_PARAMS);
-
-  if (widget_get_prop(win, WIDGET_PROP_THEME_OBJ, &v) == RET_OK) {
-    *win_theme = (theme_t*)value_pointer(&v);
-  }
-
-  if (widget_get_prop(win, WIDGET_PROP_DEFAULT_THEME_OBJ, &v) == RET_OK) {
-    *default_theme = (theme_t*)value_pointer(&v);
-  }
-
-  return RET_OK;
-}

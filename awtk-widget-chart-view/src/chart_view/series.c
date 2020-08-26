@@ -219,7 +219,7 @@ widget_t* series_create(widget_t* parent, const widget_vtable_t* vt, xy_t x, xy_
 
   series->capacity = 10;
   series->unit_size = sizeof(float_t);
-  series->animation = 500;
+  series->value_animation = 500;
   series->need_reset_fifo = TRUE;
   series->coverage = 1;
 

@@ -18,7 +18,7 @@
  * 2020-06-16 Luo ZhiMing <luozhiming@zlg.cn> created
  *
  */
- 
+
 #ifndef TK_DIRTY_RECT_VIEW_ITEM_H
 #define TK_DIRTY_RECT_VIEW_ITEM_H
 
@@ -31,10 +31,29 @@ BEGIN_C_DECLS
  * @parent widget_t
  * @annotation ["scriptable","design","widget"]
  * 自定义脏矩形模块控件
+ *  
+ * 详细用法请看 awtk-widget-dirty-rect-view/docs/自定义分段式脏矩形控件.md。
+ * 在xml中使用"dirty\_rect\_view\_item"标签创建自定义脏矩形模块控件。如：
+ *
+ * ```xml
+ * <!-- ui -->
+ * <dirty_rect_view_item x="0" y="30" w="100" h="100" invalidate_background="true"/>
+ * ```
+ *
+ * 可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：
+ *
+ * ```xml
+ * <!-- style -->
+ * <dirty_rect_view_item>
+ *   <style name="default">
+ *     <normal />
+ *   </style>
+ * </dirty_rect_view_item>
+ * ```
  */
 typedef struct _dirty_rect_view_item_t {
   widget_t widget;
-  
+
   /**
    * @property {int32_t} invalidate_number
    * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable"]
@@ -45,7 +64,7 @@ typedef struct _dirty_rect_view_item_t {
   /**
    * @property {bool_t} invalidate_background
    * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable"]
-   * 刷新次数。
+   * 是否刷新该控件对应父集的背景区域（背景颜色或者背景贴图）。
    */
   bool_t invalidate_background;
 
@@ -63,8 +82,7 @@ typedef struct _dirty_rect_view_item_t {
  *
  * @return {widget_t*} 对象。
  */
-widget_t *dirty_rect_view_item_create(widget_t *parent, xy_t x, xy_t y, wh_t w,
-                                      wh_t h);
+widget_t* dirty_rect_view_item_create(widget_t* parent, xy_t x, xy_t y, wh_t w, wh_t h);
 
 /**
 * @method dirty_rect_view_item_set_invalidate_number
@@ -75,12 +93,11 @@ widget_t *dirty_rect_view_item_create(widget_t *parent, xy_t x, xy_t y, wh_t w,
 *
 * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
 */
-ret_t dirty_rect_view_item_set_invalidate_number(widget_t *widget,
-                                                 int32_t invalidate_number);
+ret_t dirty_rect_view_item_set_invalidate_number(widget_t* widget, int32_t invalidate_number);
 
 /**
 * @method dirty_rect_view_item_set_paint_background
-* 设置控件对应的 dirty_rect_view 控件的背景图区域。
+* 设置是否刷新其控件对应父集的背景区域（背景颜色或者背景贴图）。
 * @annotation ["scriptable"]
 * @param {widget_t*} widget 控件对象。
 * @param {bool_t}  invalidate_background 控件对应的 dirty_rect_view
@@ -88,8 +105,7 @@ ret_t dirty_rect_view_item_set_invalidate_number(widget_t *widget,
 *
 * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
 */
-ret_t dirty_rect_view_item_set_paint_background(widget_t *widget,
-                                                bool_t invalidate_background);
+ret_t dirty_rect_view_item_set_paint_background(widget_t* widget, bool_t invalidate_background);
 
 /**
 * @method dirty_rect_view_item_get_is_paint
@@ -99,17 +115,17 @@ ret_t dirty_rect_view_item_set_paint_background(widget_t *widget,
 *
 * @return {bool_t} 返回TRUE表示需要，否则表示不需要。
 */
-bool_t dirty_rect_view_item_get_is_paint(widget_t *widget);
+bool_t dirty_rect_view_item_get_is_paint(widget_t* widget);
 
 /**
 * @method dirty_rect_view_item_get_is_paint_background
-* 获取控件是否需要绘制控件对应的 dirty_rect_view 控件的背景图区域。
+* 获取是否刷新其控件对应父集的背景区域（背景颜色或者背景贴图）
 * @annotation ["scriptable"]
 * @param {widget_t*} widget 控件对象。。
 *
 * @return {bool_t} 返回TRUE表示需要，否则表示不需要。
 */
-bool_t dirty_rect_view_item_get_is_paint_background(widget_t *widget);
+bool_t dirty_rect_view_item_get_is_paint_background(widget_t* widget);
 
 /**
  * @method dirty_rect_view_item_cast
@@ -119,10 +135,10 @@ bool_t dirty_rect_view_item_get_is_paint_background(widget_t *widget);
  *
  * @return {widget_t*} dirty_rect_view_item对象。
  */
-widget_t *dirty_rect_view_item_cast(widget_t *widget);
+widget_t* dirty_rect_view_item_cast(widget_t* widget);
 
-#define DIRTY_RECT_VIEW_ITEM(widget)                                           \
-  ((dirty_rect_view_item_t *)(dirty_rect_view_item_cast(WIDGET(widget))))
+#define DIRTY_RECT_VIEW_ITEM(widget) \
+  ((dirty_rect_view_item_t*)(dirty_rect_view_item_cast(WIDGET(widget))))
 
 #define WIDGET_TYPE_DIRTY_RECT_VIEW_ITEM "dirty_rect_view_item"
 

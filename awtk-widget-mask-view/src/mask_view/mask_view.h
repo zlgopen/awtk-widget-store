@@ -1,7 +1,7 @@
 ﻿/**
  * File:   mask_view.h
  * Author: AWTK Develop Team
- * Brief:  前景为蒙板裁剪裁剪背景色的功能
+ * Brief:  蒙板裁剪控件
  *
  * Copyright (c) 2020 - 2020 Guangzhou ZHIYUAN Electronics Co.,Ltd.
  *
@@ -33,7 +33,33 @@ BEGIN_C_DECLS
  * @class mask_view_t
  * @parent widget_t
  * @annotation ["scriptable","design","widget"]
- * 前景为蒙板裁剪裁剪背景色的功能
+ * 蒙板裁剪控件
+ * 
+ * 该控件主要用于异形裁剪，通过子控件（mask\_view）来设置蒙板采样区和背景采样区，背景采样区会根据蒙板采样区的灰度来设置其透明通道的值来实现裁剪效果。
+ * 详细用法请看 awtk-widget-mask-view/docs/mask_view控件用法.md。
+ * 
+ * 在xml中使用"mask\_view"标签创建mask\_view控件。如：
+ *
+ * ```xml
+ * <!-- ui -->
+ *  <mask_view x="c" y="m" w="120" h="96" fg_interval_time="1000" bg_interval_time="16" >
+ *   <mask_view_item x="0" y="0" w="100%" h="100%" mask_view="true">
+ *   </mask_view_item>
+ *   <mask_view_item x="0" y="0" w="100%" h="100%" mask_view="false">
+ *   </mask_view_item>
+ * </mask_view>
+ * ```
+ *
+ * 可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：
+ *
+ * ```xml
+ * <!-- style -->
+ * <mask_view>
+ *   <style name="default">
+ *     <normal />
+ *   </style>
+ * </mask_view>
+ * ```
  */
 typedef struct _mask_view_t {
   widget_t widget;

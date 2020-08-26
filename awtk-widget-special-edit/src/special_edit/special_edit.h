@@ -31,27 +31,28 @@ BEGIN_C_DECLS
  * @annotation ["scriptable","design","widget"]
  * special_edit编辑框控件，对于一些没有触摸屏的设备，可通过设置键盘上的快捷键如：F7或F8，增加或者减小数值
  * 
- * 在xml中使用"special\_edit"标签创建扩展按钮控件。如：
+ * 在xml中使用"special\_edit"标签创建special\_edit控件。如：
  *
  * ```xml
  * <!-- ui -->
- * <special_edit x="c" y="50" w="100" h="50" />
+ * <special_edit x="0" y="0" w="160" h="28" min="0.00" max="150.00" text="1.23" float_dot="2" inc_fun_key="F1" dec_fun_key="F2"/>
  * ```
  *
  * 可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：
  * 
  * ```xml
  * <!-- style -->
- * <special_edit selected_fg_color="#020202" selected_text_color="#010101" selected_bg_color="#b5d7fd">
- *    <style name="default" border_color="#a0a0a0"  text_color="black" text_align_h="left">
- *       <normal     bg_color="#f0f0f0" />
- *         <focused    bg_color="#f0f0f0" border_color="black"/>
- *        <disable    bg_color="gray" text_color="#d0d0d0" />
- *        <error      bg_color="#f0f0f0" text_color="red" />
- *        <empty      bg_color="#f0f0f0" text_color="#a0a0a0" />
- *        <empty_focus bg_color="#f0f0f0" text_color="#a0a0a0" border_color="black"/>
- *    </style>
-</special_edit>  
+ * <special_edit>
+ *   <style name="default" bg_color="#F7F7F7" border_color="#C2C2C2" selected_bg_color="#B5D7FD" selected_text_color="#010101" text_color="#444444">
+ *     <normal/>
+ *     <disable bg_color="#F7F7F766" border_color="#C2C2C266" text_color="#44444466"/>
+ *     <empty text_color="#959494"/>
+ *     <empty_focus text_color="#959494"/>
+ *     <error border_color="#FF0000"/>
+ *     <focused border_color="#338FFF"/>
+ *     <over border_color="#338FFF"/>
+ *   </style>
+ * </special_edit>
  * ```
  */
 typedef struct _special_edit_t {

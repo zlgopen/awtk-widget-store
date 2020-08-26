@@ -943,9 +943,9 @@
       }
     ],
     "header": "usb_camera/usb_camera.h",
-    "desc": "USB 摄像头控件",
+    "desc": "USB 摄像头控件\n\n该控件为 USB 摄像头控件，默认支持 window 和 linux 的摄像头驱动，如果需要支持其他的平台驱动的话，请重载 src/usb_camera/devices/usb_camera_devices.h 的函数。\n\n在xml中使用\"usb\\_camera\"标签创建usb\\_camera控件。如：\n\n```xml\n<!-- ui -->\n<usb_camera name=\"usb_camera\" x=\"0\" y=\"0\" w=\"200\" h=\"200\"/>\n```\n\n可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：\n\n```xml\n<!-- style -->\n<usb_camera>\n<style name=\"default\">\n<normal />\n</style>\n</usb_camera>\n```",
     "name": "usb_camera_t",
-    "parent": "widget_t",
+    "parent": "mutable_image_t",
     "annotation": {
       "scriptable": true,
       "design": true,

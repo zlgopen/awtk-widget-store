@@ -28,7 +28,7 @@
 BEGIN_C_DECLS
 
 /**
- * @enum tooltip_line_params_t
+ * @class tooltip_line_params_t
  * 指示序列点位置的线。
  */
 typedef struct _tooltip_line_params_t {
@@ -39,7 +39,7 @@ typedef struct _tooltip_line_params_t {
 } tooltip_line_params_t;
 
 /**
- * @enum tooltip_symbol_params_t
+ * @class tooltip_symbol_params_t
  * 指示序列点位置的点。
  */
 typedef struct _tooltip_symbol_params_t {
@@ -50,7 +50,7 @@ typedef struct _tooltip_symbol_params_t {
 } tooltip_symbol_params_t;
 
 /**
- * @enum tooltip_tip_params_t
+ * @class tooltip_tip_params_t
  * 提示文本。
  */
 typedef struct _tooltip_tip_params_t {
@@ -147,28 +147,10 @@ typedef struct _tooltip_tip_params_t {
 #define STYLE_ID_TOOLTIP_SYMBOL_BORDER_WIDTH "symbol_border_width"
 
 /**
- * @const STYLE_ID_TOOLTIP_SYMBOL_COLOR
+ * @const STYLE_ID_TOOLTIP_SYMBOL_BG_COLOR
  * 指示序列点位置的点的颜色
  */
-#define STYLE_ID_TOOLTIP_SYMBOL_COLOR "symbol_color"
-
-/**
- * @const STYLE_ID_TOOLTIP_BORDER_COLOR
- * 提示信息框的边框颜色
- */
-#define STYLE_ID_TOOLTIP_BORDER_COLOR "tip_border_color"
-
-/**
- * @const STYLE_ID_TOOLTIP__BG_COLOR
- * 提示信息框的背景颜色
- */
-#define STYLE_ID_TOOLTIP_BG_COLOR "tip_bg_color"
-
-/**
- * @const STYLE_ID_TIP_BORDER_WIDTH
- * 提示信息框的边框宽度
- */
-#define STYLE_ID_TOOLTIP_BORDER_WIDTH "tip_border_width"
+#define STYLE_ID_TOOLTIP_SYMBOL_BG_COLOR "symbol_bg_color"
 
 END_C_DECLS
 

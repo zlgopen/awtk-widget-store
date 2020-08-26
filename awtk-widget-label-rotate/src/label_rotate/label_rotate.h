@@ -19,7 +19,6 @@
  *
  */
 
-
 #ifndef TK_LABEL_ROTATE_H
 #define TK_LABEL_ROTATE_H
 
@@ -39,30 +38,24 @@ typedef enum _label_rotate_orientation_t {
   LABEL_ROTATE_ORIENTATION_COUNT = LABEL_ROTATE_ORIENTATION_270 + 1,
 } label_rotate_orientation_t;
 
-static const char *LABEL_ROTATE_DIRECTION_STRING_LIST[] = {
-    "orientation_0", "orientation_90", "orientation_180", "orientation_270"};
+static const char* LABEL_ROTATE_DIRECTION_STRING_LIST[] = {"orientation_0", "orientation_90",
+                                                           "orientation_180", "orientation_270"};
 
 /**
  * @class label_rotate_t
  * @parent widget_t
  * @annotation ["scriptable","design","widget"]
  *
- * 文本控件。用于显示一行文本。
+ * 可旋转的文本控件，仅可显示一行文本。
  *
- * 如需自动换行请使用[rich\_text\_t](rich_text_t.md)控件。
- *
- * label_rotate\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于label_rotate\_t控件。
- *
- * 在xml中使用"label_rotate"标签创建文本控件。如：
+ * 在xml中使用"label_\rotate"标签创建文本控件。如：
  *
  * ```xml
- * <label_rotate style="center" text="center"/>
+ * <!-- ui -->
+ * <label_rotate text="label_rotate"/>
  * ```
  *
- * > 更多用法请参考：[label_rotate.xml](
- *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/label_rotate.xml)
- *
- * 在c代码中使用函数label_rotate\_create创建文本控件。如：
+ * 在c代码中使用函数label_\rotate\_create创建文本控件。如：
  *
  * ```c
  *  widget_t* label_rotate = label_rotate_create(win, 10, 10, 128, 30);
@@ -71,29 +64,25 @@ static const char *LABEL_ROTATE_DIRECTION_STRING_LIST[] = {
  *
  * > 创建之后，需要用widget\_set\_text或widget\_set\_text\_utf8设置文本内容。
  *
- * > 完整示例请参考：[label_rotate demo](
- *https://github.com/zlgopen/awtk-c-demos/blob/master/demos/label_rotate.c)
- *
  * 可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：
  *
  * ```xml
  * <!-- style -->
- *  <style name="left">
- *   <normal text_color="red" text_align_h="left" border_color="#a0a0a0" margin="4" />
- *  </style>
+ * <label_rotate>
+ *   <style name="default">
+ *     <normal text_color="#444444"/>
+ *     <disable text_color="#44444466"/>
+ *   </style>
+ * </label_rotate>
  * ```
- *
- * > 更多用法请参考：
- * [theme default](
- *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/styles/default.xml#L144)
- *
  */
 typedef struct _label_rotate_t {
   widget_t widget;
 
   /**
    * @property {int32_t} length
-   * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable"]
+   * @annotation ["set_prop","get_prop","readable","persitent","scriptable"]
+   * 该功能暂时没有效果
    * 显示字符的个数(小余0时全部显示)。
    * 主要用于动态改变显示字符的个数，来实现类似[拨号中...]的动画效果。
    */
@@ -102,7 +91,7 @@ typedef struct _label_rotate_t {
   /**
   * @property {label_rotate_orientation_t} orientation
   * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable"]
-  * 用于文本选择方向。
+  * 用于文本选择方向，可选方向有 0、90、180、270。
   */
   label_rotate_orientation_t orientation;
 
@@ -120,18 +109,18 @@ typedef struct _label_rotate_t {
  *
  * @return {widget_t*} 对象。
  */
-widget_t *label_rotate_create(widget_t *parent, xy_t x, xy_t y, wh_t w, wh_t h);
+widget_t* label_rotate_create(widget_t* parent, xy_t x, xy_t y, wh_t w, wh_t h);
 
 /**
  * @method label_rotate_set_length
- * 设置显示字符的个数(小余0时全部显示)。。
+ * 设置显示字符的个数(小余0时全部显示)。。（该功能暂时没有效果）
  * @annotation ["scriptable"]
  * @param {widget_t*} widget 控件对象。
  * @param {int32_t}  length 最大可显示字符个数。
  *
  * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
  */
-ret_t label_rotate_set_length(widget_t *widget, int32_t length);
+ret_t label_rotate_set_length(widget_t* widget, int32_t length);
 
 /**
 * @method label_rotate_set_orientation
@@ -142,8 +131,7 @@ ret_t label_rotate_set_length(widget_t *widget, int32_t length);
 *
 * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
 */
-ret_t label_rotate_set_orientation(widget_t *widget,
-                               label_rotate_orientation_t orientation);
+ret_t label_rotate_set_orientation(widget_t* widget, label_rotate_orientation_t orientation);
 
 /**
  * @method label_rotate_cast
@@ -153,9 +141,9 @@ ret_t label_rotate_set_orientation(widget_t *widget,
  *
  * @return {widget_t*} label_rotate对象。
  */
-widget_t *label_rotate_cast(widget_t *widget);
+widget_t* label_rotate_cast(widget_t* widget);
 
-#define LABEL_ROTATE(widget) ((label_rotate_t *)(label_rotate_cast(WIDGET(widget))))
+#define LABEL_ROTATE(widget) ((label_rotate_t*)(label_rotate_cast(WIDGET(widget))))
 
 #define WIDGET_TYPE_LABEL_ROTATE "label_rotate"
 

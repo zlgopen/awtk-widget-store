@@ -30,38 +30,61 @@ BEGIN_C_DECLS
  * @class tooltip_t
  * @parent widget_t
  * @annotation ["scriptable","design","widget"]
- * 提示信息控件。
- * 
- * 在xml中使用"tooltip"标签创建扩展按钮控件。如：
+ * 提示框控件，作为chart\_view的一个子部件使用，点击可改变游标位置，并显示该位置的序列信息。
+ *
+ * 在xml中使用"tooltip"标签创建tooltip控件。如：
  *
  * ```xml
  * <!-- ui -->
- * <tooltip x="c" y="50" w="100" h="100" />
+ * <tooltip x="c" y="50" w="100" h="100"/>
  * ```
  *
- * 可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：
+ * 可用通过style来设置控件的显示风格。其中，
+ * fg_color 用于设置表示位置的直线的颜色；
+ * fg_image 用于设置表示位置的直线的图片；
+ * fg_image_draw_type 用于设置表示位置的直线的图片的显示方式；
+ * bg_color 用于设置提示框的背景颜色；
+ * border_color 用于设置提示框的边框颜色；
+ * border_width 用于设置提示框的边框宽度；
+ * round_radius 用于设置提示框的圆角；
+ * text_color 用于设置提示信息的文本颜色；
+ * spacer 用于设置提示信息的文本的行距；
+ * font_name 用于设置提示信息的文本字体；
+ * font_size 用于设置提示信息的文本字体大小；
+ * symbol_bg_color 用于设置标记点的背景颜色；
+ * symbol_border_color 用于设置标记点的边框颜色；
+ * symbol_border_width 用于设置标记点的边框宽度；
+ * margin、margin_top等 用于设置提示框内文本与边框之间的间距。
+ * 如：
  *
  * ```xml
  * <!-- style -->
  * <tooltip>
- *  <style name="default">
- *      <normal fg_color="#ffffff" symbol_border_color="#007acc" symbol_border_width="3" symbol_color="#ffffff"  tip_bg_color="#ffffff80" tip_border_color="#ffffff" tip_border_width="3" margin="4" text_color="#ffffff"/>
- *  </style>
+ *   <style name="default">
+ *     <normal fg_color="#cccccc" bg_color="#26262666" text_color="#ffffff" round_radius="4"
+ * symbol_border_color="#262626" symbol_border_width="3" symbol_bg_color="#ffffff" margin="4"/>
+ *   </style>
  * </tooltip>
  * ```
  */
 typedef struct _tooltip_t {
   widget_t widget;
   /**
-   * 线参数。
+   * @property {tooltip_line_params_t} line
+   * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable:custom"]
+   * 标记线的参数，比如"{show:true}"。
    */
   tooltip_line_params_t line;
   /**
-   * 点参数。
+   * @property {tooltip_symbol_params_t} symbol
+   * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable:custom"]
+   * 标记点的参数，比如"{show:true}"。
    */
   tooltip_symbol_params_t symbol;
   /**
-   * 提示文本参数。
+   * @property {tooltip_tip_params_t} tip
+   * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable:custom"]
+   * 提示文本的参数，比如"{show:true}"。
    */
   tooltip_tip_params_t tip;
 
@@ -125,16 +148,6 @@ ret_t tooltip_move(widget_t* widget, xy_t x, xy_t y);
  * @return {widget_t*} tooltip_base对象。
  */
 widget_t* tooltip_cast(widget_t* widget);
-
-/**
- * @method tooltip_register
- * 注册tooltip控件。
- *
- * @annotation ["scriptable", "static"]
- *
- * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
- */
-ret_t tooltip_register(void);
 
 #define TOOLTIP(widget) ((tooltip_t*)(tooltip_cast(WIDGET(widget))))
 

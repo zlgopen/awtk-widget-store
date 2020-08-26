@@ -110,7 +110,7 @@
         "annotation": {
           "scriptable": true
         },
-        "desc": "设置控件对应的 dirty_rect_view 控件的背景图区域。\n控件的背景图区域。",
+        "desc": "设置是否刷新其控件对应父集的背景区域（背景颜色或者背景贴图）。\n控件的背景图区域。",
         "name": "dirty_rect_view_item_set_paint_background",
         "return": {
           "type": "ret_t",
@@ -146,7 +146,7 @@
         "annotation": {
           "scriptable": true
         },
-        "desc": "获取控件是否需要绘制控件对应的 dirty_rect_view 控件的背景图区域。",
+        "desc": "获取是否刷新其控件对应父集的背景区域（背景颜色或者背景贴图）",
         "name": "dirty_rect_view_item_get_is_paint_background",
         "return": {
           "type": "bool_t",
@@ -190,7 +190,7 @@
       },
       {
         "name": "invalidate_background",
-        "desc": "刷新次数。",
+        "desc": "是否刷新该控件对应父集的背景区域（背景颜色或者背景贴图）。",
         "type": "bool_t",
         "annotation": {
           "set_prop": true,
@@ -203,7 +203,7 @@
       }
     ],
     "header": "dirty_rect_view/dirty_rect_view_item.h",
-    "desc": "自定义脏矩形模块控件",
+    "desc": "自定义脏矩形模块控件\n\n详细用法请看 awtk-widget-dirty-rect-view/docs/自定义分段式脏矩形控件.md。\n在xml中使用\"dirty\\_rect\\_view\\_item\"标签创建自定义脏矩形模块控件。如：\n\n```xml\n<!-- ui -->\n<dirty_rect_view_item x=\"0\" y=\"30\" w=\"100\" h=\"100\" invalidate_background=\"true\"/>\n```\n\n可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：\n\n```xml\n<!-- style -->\n<dirty_rect_view_item>\n<style name=\"default\">\n<normal />\n</style>\n</dirty_rect_view_item>\n```",
     "name": "dirty_rect_view_item_t",
     "parent": "widget_t",
     "annotation": {
@@ -351,7 +351,7 @@
       }
     ],
     "header": "dirty_rect_view/dirty_rect_view.h",
-    "desc": "自定义脏矩形控件\n\n在xml中使用dirty\\_rect\\_view\"标签创建扩展按钮控件。如：\n\n```xml\n<!-- ui -->\n<dirty_rect_view x=\"c\" y=\"50\" w=\"24\" h=\"100\" />\n```",
+    "desc": "自定义脏矩形控件\n\n在父控件（dirty\\_rect\\_view）下只有 dirty\\_rect\\_view\\_item 的子控件才能刷新，而且只会刷新其子控件的区域，\n会根据子控件子集内容是否有改变来确定是否需要刷新，通过设置 dirty\\_rect\\_view\\_item 的子控件的大小来减低脏矩形的大小，让真正脏的区域刷新,\n详细用法请看 awtk-widget-dirty-rect-view/docs/自定义分段式脏矩形控件.md。\n\n在xml中使用\"dirty\\_rect\\_view\"标签创建dirty\\_rect\\_view控件。如：\n\n```xml\n<!-- ui -->\n<dirty_rect_view x=\"0\" y=\"0\" w=\"200\" h=\"200\" enable_dirty_rect_view=\"true\" lcd_buff_number=\"3\" >\n<dirty_rect_view_item name=\"dirty_rect_view_item\" x=\"0\" y=\"0\" w=\"50%\" h=\"50%\" invalidate_background=\"true\"/>\n</dirty_rect_view>\n```\n\n可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：\n\n```xml\n<!-- style -->\n<dirty_rect_view>\n<style name=\"default\">\n<normal />\n</style>\n</dirty_rect_view>\n```",
     "name": "dirty_rect_view_t",
     "parent": "widget_t",
     "annotation": {

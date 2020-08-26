@@ -31,82 +31,92 @@ BEGIN_C_DECLS
  * @class axis_t
  * @parent widget_t
  * @annotation ["scriptable","design","widget"]
- * 坐标轴控件。
+ * 坐标轴控件的基类。
  */
 typedef struct _axis_t {
   widget_t widget;
   /**
-   * @property {axis_type_t} type
+   * @property {axis_type_t} axis_type
    * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable"]
-   * 类型。
+   * 坐标轴的类型，可选项有 value、category。
    */
-  axis_type_t type;
+  axis_type_t axis_type;
   /**
    * @property {axis_at_type_t} at
    * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable"]
-   * 位置。
+   * 坐标轴的位置，可选项有 top、bottom、left、right，x 轴缺省为 bottom，y 轴缺省为 left。
    */
   axis_at_type_t at;
   /**
    * @property {float_t} min
    * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable"]
-   * 最小刻度。
+   * 量程的最小值。
    */
   float_t min;
   /**
    * @property {float_t} max
    * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable"]
-   * 最大刻度。
+   * 量程的最大值。
    */
   float_t max;
   /**
    * @property {darray_t*} data
-   * @annotation ["readable"]
-   * 刻度数据。
+   * @annotation ["set_prop","readable","persitent","design","scriptable:custom"]
+   * 显示的刻度值。
    */
   darray_t* data;
   /**
    * @property {axis_data_from_series_t} data_from_series
    * @annotation ["readable"]
-   * 刻度数据的生成器。
+   * 显示的刻度值生成器。
    */
   axis_data_from_series_t data_from_series;
   /**
    * @property {void*} data_from_series_ctx
    * @annotation ["readable"]
-   * 刻度数据生成时的上下文。
+   * 刻度值生成器的上下文。
    */
   void* data_from_series_ctx;
   /**
-   * 分隔线
+   * @property {axis_split_line_params_t} split_line
+   * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable"]
+   * 分割线的参数，比如"{show:true}"。
    */
   axis_split_line_params_t split_line;
   /**
-   * 刻度线
+   * @property {axis_tick_params_t} tick
+   * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable"]
+   * 刻度线的参数，比如"{show:true, align_with_label:true, inside:false}"。
    */
   axis_tick_params_t tick;
   /**
-   * 轴线
+   * @property {axis_line_params_t} line
+   * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable"]
+   * 轴线的参数，比如"{show:true, lengthen:20}"。
    */
   axis_line_params_t line;
   /**
-   * 刻度显示值
+   * @property {axis_label_params_t} label
+   * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable"]
+   * 刻度值的参数，比如"{show:true, inside:false}"。
    */
   axis_label_params_t label;
   /**
-   * 标题
+   * @property {axis_title_params_t} title
+   * @annotation ["set_prop","get_prop","readable","persitent","scriptable"]
+   * 标题的参数，比如"{show:false}"。
    */
   axis_title_params_t title;
   /**
-   * @property {uint32_t} offset
+   * @property {float_t} offset
    * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable"]
-   * 偏移位置。
+   * （相对于初始位置的）偏移（像素）。
    */
   float_t offset;
   /**
    * @property {bool_t} offset_percent
-   * @annotation ["readable"]
-   * 偏移位置是否为百分比值。
+   * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable"]
+   * （相对于初始位置的）偏移是否为百分比。
    */
   uint8_t offset_percent : 1;
   /**
@@ -118,19 +128,19 @@ typedef struct _axis_t {
   /**
    * @property {bool_t} data_fixed
    * @annotation ["readable"]
-   * 刻度数据是否固定。
+   * 刻度值是否固定。
    */
   uint8_t data_fixed : 1;
   /**
    * @property {bool_t} need_update_data
    * @annotation ["readable"]
-   * 刻度数据是否需要更新。
+   * 刻度值是否需要更新。
    */
   uint8_t need_update_data : 1;
   /**
    * @property {bool_t} painted_before
    * @annotation ["readable"]
-   * 是否需要在绘制前做额外处理。
+   * 是否已完成绘图的前置处理。
    */
   uint8_t painted_before : 1;
 
@@ -176,7 +186,7 @@ ret_t axis_on_destroy(widget_t* widget);
 
 /**
  * @method axis_on_paint_before
- * 绘图前的处理。
+ * 绘图的前置处理。
  * @annotation ["private"]
  * @param {widget_t*} widget widget对象。
  * @param {canvas_t*} c 画布对象。
@@ -198,7 +208,7 @@ ret_t axis_on_self_layout(widget_t* widget, rect_t* r);
 
 /**
  * @method axis_set_range
- * 设置坐标轴的刻度范围。
+ * 设置坐标轴的量程。
  * @annotation ["scriptable"]
  * @param {widget_t*} widget widget对象。
  * @param {float_t} min 最小值。
@@ -210,18 +220,41 @@ ret_t axis_set_range(widget_t* widget, float_t min, float_t max);
 
 /**
  * @method axis_get_range
- * 获取坐标轴的刻度范围。
+ * 获取坐标轴的量程。
  * @annotation ["scriptable"]
  * @param {widget_t*} widget widget对象。
  * @param {bool_t} is_series_axis 是否为指示序列位置的轴
  *
- * @return {float_t} 刻度范围。
+ * @return {float_t} 量程范围。
  */
 float_t axis_get_range(widget_t* widget, bool_t is_series_axis);
 
 /**
+ * @method axis_set_offset
+ * 设置坐标轴（相对初始位置的）偏移。
+ * @annotation ["scriptable"]
+ * @param {widget_t*} widget widget对象。
+ * @param {float_t} offset 偏移。
+ * @param {bool_t} percent 是否为百分比。
+ *
+ * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
+ */
+ret_t axis_set_offset(widget_t* widget, float_t offset, bool_t percent);
+
+/**
+ * @method axis_get_offset
+ * 获取坐标轴（相对初始位置的）偏移。
+ * @annotation ["scriptable"]
+ * @param {widget_t*} widget widget对象。
+ * @param {float_t} defval 默认值。
+ *
+ * @return {float_t} 偏移。
+ */
+float_t axis_get_offset(widget_t* widget, float_t defval);
+
+/**
  * @method axis_set_data
- * 设置坐标轴的刻度显示值。
+ * 设置坐标轴上显示的刻度值。
  * @annotation ["scriptable"]
  * @param {widget_t*} widget widget对象。
  * @param {const char*} data 显示值。

@@ -29,8 +29,8 @@ BEGIN_C_DECLS
 /**
  * @class series_t
  * @parent widget_t
- * @annotation ["scriptable","widget"]
- * 序列控件。
+ * @annotation ["scriptable","design","widget"]
+ * 序列控件的基类。
  */
 typedef struct _series_t {
   widget_t widget;
@@ -38,39 +38,39 @@ typedef struct _series_t {
   /**
    * @property {fifo_t*} fifo
    * @annotation ["readable"]
-   * 数据fifo。
+   * 序列fifo。
    */
   fifo_t* fifo;
   /**
    * @property {uint32_t} capacity
    * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable"]
-   * fifo的容量。
+   * 序列fifo的容量。
    */
   uint32_t capacity;
   /**
    * @property {uint32_t} unit_size
-   * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable"]
-   * fifo元素的大小。
+   * @annotation ["set_prop","get_prop","readable","persitent"]
+   * 序列值的大小。
    */
   uint32_t unit_size;
   /**
    * @property {uint32_t} offset
    * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable"]
-   * fifo的偏移量。
+   * 序列fifo（相对末尾）的偏移。
    */
   uint32_t offset;
   /**
    * @property {series_dispaly_mode_t} display_mode
    * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable"]
-   * 显示模式。
+   * 显示模式，可选项有 push、cover，缺省为 push。
    */
   series_dispaly_mode_t display_mode;
   /**
-   * @property {bool_t} animation
+   * @property {uint32_t} value_animation
    * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable"]
-   * 播放值更新动画。0表示禁止，非0表示动画持续事件。
+   * 序列值动画的持续时间，0表示不播放动画。
    */
-  uint32_t animation;
+  uint32_t value_animation;
   /**
    * @property {series_tooltip_format_t} tooltip_format
    * @annotation ["readable"]
@@ -107,6 +107,12 @@ typedef struct _series_t {
    * 序列的新周期点数。
    */
   uint32_t new_period;
+
+  /**
+   * @property {char*} value
+   * @annotation ["set_prop","design","scriptable:custom"]
+   * 以","分隔的一组序列值，不同类型的series其格式略有不同。
+   */
 
   /* private */
   float_t clip_range;

@@ -30,23 +30,27 @@ BEGIN_C_DECLS
  * @class pie_slice_t
  * @parent widget_t
  * @annotation ["scriptable","design","widget"]
- * 进度圆环控件。
+ * 进度圆环控件，须放到一个容器控件内。
  *
- * 在xml中使用"pie\_slice"标签创建扩展按钮控件。如：
+ * 在xml中使用"pie\_slice"标签创建pie\_slice控件。如：
  *
  * ```xml
  * <!-- ui -->
- * <pie_slice x="c" y="50" w="100" h="100" />
+ * <pie_slice name="pie_slice" w="100" h="100" max="360" start_angle="0" value="180"
+ * show_text="false"/>
  * ```
  *
- * 可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：
+ * 可用通过style来设置控件的显示风格。其中，
+ * fg_color 用于设置圆环的填充颜色；
+ * text_color 用于设置圆环进度的提示文本颜色。
+ * 如：
  *
  * ```xml
  * <!-- style -->
  * <pie_slice>
- *  <style name="default">
- *      <normal fg_color="#000000" text_color="#008000"/>
- *  </style>
+ *   <style name="default">
+ *     <normal fg_color="#a0a0a0" text_color="#213b4d"/>
+ *   </style>
  * </pie_slice>
  * ```
  */
@@ -293,16 +297,6 @@ ret_t pie_slice_set_exploded_4_others(widget_t* widget);
  * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
  */
 ret_t pie_slice_set_exploded_4_all(widget_t* widget);
-
-/**
- * @method pie_slice_register
- * 注册pie_slice控件。
- *
- * @annotation ["scriptable", "static"]
- *
- * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
- */
-ret_t pie_slice_register(void);
 
 #define PIE_SLICE_PROP_UNIT "unit"
 #define PIE_SLICE_PROP_inner_radius "inner_radius"

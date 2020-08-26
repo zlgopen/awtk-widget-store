@@ -1,5 +1,6 @@
 #include "awtk.h"
 #include "chart_view/chart_view.h"
+#include "chart_view/axis.h"
 #include "chart_view/line_series.h"
 #include "chart_view/bar_series.h"
 
@@ -329,7 +330,7 @@ ret_t on_series_push_rand_minmax_data(const timer_info_t* timer) {
   widget_t* win = WIDGET(timer->ctx);
   widget_t* chart_view = widget_lookup(win, "chartview", TRUE);
   if (chart_view) {
-    on_series_push_minmax_data(chart_view, 1);
+    on_series_push_minmax_data(chart_view, SAMPLE_COUNT_PER_DIV * 1000 / TIME_PER_DIV);
   }
   return RET_REPEAT;
 }

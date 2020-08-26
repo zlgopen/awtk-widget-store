@@ -21,7 +21,7 @@
 
 #include "chart_view.h"
 #include "axis.h"
-#include "series_p.h"
+#include "series.h"
 #include "tooltip.h"
 
 static widget_t* chart_view_get_series(widget_t* widget, uint32_t index) {
@@ -46,7 +46,7 @@ static ret_t chart_view_get_prop(widget_t* widget, const char* name, value_t* v)
   return_value_if_fail(chart_view != NULL && name != NULL && v != NULL, RET_BAD_PARAMS);
 
   if (tk_str_eq(name, CHART_VIEW_PROP_TOP_SERIES)) {
-    value_set_uint32(v, chart_view->top_series);
+    value_set_int32(v, chart_view->top_series);
     return RET_OK;
   }
 
@@ -445,13 +445,4 @@ widget_t* chart_view_cast(widget_t* widget) {
   return_value_if_fail(WIDGET_IS_INSTANCE_OF(widget, chart_view), NULL);
 
   return widget;
-}
-
-#include "base/widget_factory.h"
-
-ret_t chart_view_s_register(void) {
-  widget_factory_t* f = widget_factory();
-  widget_factory_register(f, WIDGET_TYPE_CHART_VIEW, chart_view_create);
-
-  return RET_OK;
 }

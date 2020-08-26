@@ -165,7 +165,16 @@ static ret_t pie_slice_on_event(widget_t* widget, event_t* e) {
 
 ret_t pie_slice_set_exploded(widget_t* widget) {
   pie_slice_t* pieslice = PIE_SLICE(widget);
+  int32_t pie_slice_count = 0;
   return_value_if_fail(pieslice != NULL, RET_BAD_PARAMS);
+
+  WIDGET_FOR_EACH_CHILD_BEGIN(widget->parent, iter, i)
+  if (tk_str_eq(widget_get_type(iter), WIDGET_TYPE_PIE_SLICE)) {
+    ++pie_slice_count;
+  }
+  WIDGET_FOR_EACH_CHILD_END();
+  return_value_if_fail(pie_slice_count > 1, RET_BAD_PARAMS);
+
 
   char param[100];
   int32_t x_to = 0;
@@ -512,11 +521,4 @@ widget_t* pie_slice_cast(widget_t* widget) {
   return_value_if_fail(widget != NULL && widget->vt == &s_pie_slice_vtable, NULL);
 
   return widget;
-}
-
-ret_t pie_slice_register(void) {
-  widget_factory_t* f = widget_factory();
-  widget_factory_register(f, WIDGET_TYPE_PIE_SLICE, pie_slice_create);
-
-  return RET_OK;
 }

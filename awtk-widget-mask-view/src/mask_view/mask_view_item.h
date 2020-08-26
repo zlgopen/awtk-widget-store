@@ -31,6 +31,27 @@ BEGIN_C_DECLS
  * @parent widget_t
  * @annotation ["scriptable","design","widget"]
  * mask_view 控件的采样区域
+ * 
+ * 该控件主要用于蒙板裁剪控件的采样区域，通过属性 mask_view 来表示蒙板采样区（mask_view="true"）还是背景区（mask_view="false"）。
+ * 详细用法请看 awtk-widget-mask-view/docs/mask_view控件用法.md。
+ * 
+ * 在xml中使用"mask\_view\_item"标签创建mask\_view\_item控件。如：
+ *
+ * ```xml
+ * <!-- ui -->
+ * <mask_view_item x="0" y="0" w="100%" h="100%" mask_view="true" />
+ * ```
+ *
+ * 可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：
+ *
+ * ```xml
+ * <!-- style -->
+ * <mask_view_item>
+ *   <style name="default">
+ *     <normal />
+ *   </style>
+ * </mask_view_item>
+ * ```
  */
 typedef struct _mask_view_item_t {
   widget_t widget;

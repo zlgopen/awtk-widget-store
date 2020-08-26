@@ -31,7 +31,7 @@ static ret_t x_axis_update_data_tick(widget_t* widget) {
   axis_t* axis = AXIS(widget);
   return_value_if_fail(axis != NULL && axis->data != NULL, RET_BAD_PARAMS);
 
-  divnr = axis->type == AXIS_TYPE_VALUE ? (axis->data->size - 1) : axis->data->size;
+  divnr = axis->axis_type == AXIS_TYPE_VALUE ? (axis->data->size - 1) : axis->data->size;
   range = axis->draw_rect.w - 1;
 
   for (i = 0; i < axis->data->size; i++) {
@@ -69,6 +69,7 @@ static ret_t x_axis_on_self_layout(widget_t* widget, rect_t* r) {
   w_layout = self_layouter_get_param_float(widget->self_layout, "w", 0);
   axis->draw_rect.x = x_layout != 0 ? widget->x : r->x;
   axis->draw_rect.w = w_layout != 0 ? widget->w : r->w;
+
   if (axis->at == AXIS_AT_TOP) {
     axis->draw_rect.y = r->y;
     axis->draw_rect.h = -(widget->h == 0 ? 1 : widget->h);
@@ -78,6 +79,8 @@ static ret_t x_axis_on_self_layout(widget_t* widget, rect_t* r) {
     axis->draw_rect.h = widget->h == 0 ? 1 : widget->h;
     axis->split_line.line_len = -r->h;
   }
+
+  axis->need_update_data = TRUE;
 
   return RET_OK;
 }
@@ -91,7 +94,7 @@ static float_t x_axis_measure_series_interval(widget_t* widget) {
   vrange = axis_get_range(widget, TRUE);
   prange = axis->draw_rect.w;
 
-  if (axis->type == AXIS_TYPE_CATEGORY) {
+  if (axis->axis_type == AXIS_TYPE_CATEGORY) {
     assert(vrange > 0);
     return prange / vrange;
   } else {
@@ -121,7 +124,7 @@ ret_t x_axis_measure_series(widget_t* widget, void* measure_params, fifo_t* src,
   srange = axis_get_range(params->series_axis, TRUE);
   sinterval = axis_measure_series_interval(params->series_axis);
   sinterval = AXIS(params->series_axis)->inverse ? sinterval : -sinterval;
-  soffset = AXIS(params->series_axis)->type == AXIS_TYPE_CATEGORY ? (sinterval / 2) : 0;
+  soffset = AXIS(params->series_axis)->axis_type == AXIS_TYPE_CATEGORY ? (sinterval / 2) : 0;
 
   if (tk_abs(sinterval) >= 1.0) {
     for (i = 0; i < nr; i++) {
@@ -205,16 +208,16 @@ ret_t x_axis_draw_tick(axis_t* axis, canvas_t* c) {
   color_t trans = color_init(0, 0, 0, 0);
   color_t color = style_get_color(style, STYLE_ID_AXIS_TICK_COLOR, trans);
   const char* image_name = style_get_str(style, STYLE_ID_AXIS_TICK_IMAGE, NULL);
-  image_draw_type_t draw_type =
-      (image_draw_type_t)style_get_int(style, STYLE_ID_FG_IMAGE_DRAW_TYPE, IMAGE_DRAW_PATCH3_X);
-  int32_t axis_offset = widget_get_prop_int(WIDGET(axis), AXIS_PROP_OFFSET, 0);
+  image_draw_type_t draw_type = (image_draw_type_t)style_get_int(
+      style, STYLE_ID_AXIS_TICK_IMAGE_DRAW_TYPE, IMAGE_DRAW_PATCH3_X);
+  int32_t axis_offset = axis_get_offset(WIDGET(axis), 0);
   rect_t r = rect_init(0, axis->draw_rect.y + axis_offset, 1, AXIS_DEFAULT_TICK_LEN);
   const axis_data_t** labels = (const axis_data_t**)(axis->data->elms);
   float_t offset = 0;
   uint32_t i;
   uint32_t nr = axis->data->size;
 
-  if (axis->type == AXIS_TYPE_CATEGORY && axis->tick.align_with_label) {
+  if (axis->axis_type == AXIS_TYPE_CATEGORY && axis->tick.align_with_label) {
     offset = (nr > 1 ? (labels[1]->tick - labels[0]->tick) : axis->draw_rect.w) / 2.0;
     nr--;
   }
@@ -251,7 +254,7 @@ ret_t x_axis_draw_tick(axis_t* axis, canvas_t* c) {
       }
     }
 
-    if (axis->type == AXIS_TYPE_CATEGORY && !axis->tick.align_with_label) {
+    if (axis->axis_type == AXIS_TYPE_CATEGORY && !axis->tick.align_with_label) {
       if (axis->inverse) {
         r.x = axis->draw_rect.x;
       } else {
@@ -280,7 +283,7 @@ ret_t x_axis_draw_line(axis_t* axis, canvas_t* c) {
   const char* image_name = style_get_str(style, STYLE_ID_FG_IMAGE, NULL);
   image_draw_type_t draw_type =
       (image_draw_type_t)style_get_int(style, STYLE_ID_FG_IMAGE_DRAW_TYPE, IMAGE_DRAW_PATCH3_X);
-  int32_t axis_offset = widget_get_prop_int(WIDGET(axis), AXIS_PROP_OFFSET, 0);
+  int32_t axis_offset = axis_get_offset(WIDGET(axis), 0);
   rect_t r = rect_init(axis->draw_rect.x, axis->draw_rect.y + axis_offset, axis->draw_rect.w, 1);
 
   r.x -= axis->line.lengthen;
@@ -307,8 +310,8 @@ ret_t x_axis_draw_split_line(axis_t* axis, canvas_t* c) {
   color_t trans = color_init(0, 0, 0, 0);
   color_t color = style_get_color(style, STYLE_ID_AXIS_SPLIT_LINE_COLOR, trans);
   const char* image_name = style_get_str(style, STYLE_ID_AXIS_SPLIT_LINE_IMAGE, NULL);
-  image_draw_type_t draw_type =
-      (image_draw_type_t)style_get_int(style, STYLE_ID_FG_IMAGE_DRAW_TYPE, IMAGE_DRAW_PATCH3_X);
+  image_draw_type_t draw_type = (image_draw_type_t)style_get_int(
+      style, STYLE_ID_AXIS_SPLIT_LINE_IMAGE_DRAW_TYPE, IMAGE_DRAW_PATCH3_X);
   rect_t r = rect_init(0, axis->draw_rect.y, 1, axis->split_line.line_len);
   const axis_data_t** labels = (const axis_data_t**)(axis->data->elms);
   uint32_t i;
@@ -340,7 +343,7 @@ ret_t x_axis_draw_split_line(axis_t* axis, canvas_t* c) {
       }
     }
 
-    if (axis->type == AXIS_TYPE_CATEGORY && !axis->tick.align_with_label) {
+    if (axis->axis_type == AXIS_TYPE_CATEGORY && !axis->tick.align_with_label) {
       if (axis->inverse) {
         r.x = axis->draw_rect.x;
       } else {
@@ -367,10 +370,9 @@ ret_t x_axis_draw_label(axis_t* axis, canvas_t* c) {
   color_t color = style_get_color(style, STYLE_ID_TEXT_COLOR, trans);
   const char* font_name = style_get_str(style, STYLE_ID_FONT_NAME, NULL);
   uint16_t font_size = style_get_int(style, STYLE_ID_FONT_SIZE, TK_DEFAULT_FONT_SIZE);
-  int32_t margin = style_get_int(style, STYLE_ID_MARGIN, 0);
-  float_t spacer = 0;
+  float_t spacer = style_get_int(style, STYLE_ID_SPACER, 0);
   float_t offset = 0;
-  int32_t axis_offset = widget_get_prop_int(WIDGET(axis), AXIS_PROP_OFFSET, 0);
+  int32_t axis_offset = axis_get_offset(WIDGET(axis), 0);
   rect_t r = rect_init(0, axis->draw_rect.y + axis_offset, axis->draw_rect.w, font_size);
   const axis_data_t** labels = (const axis_data_t**)(axis->data->elms);
   uint32_t i;
@@ -379,15 +381,15 @@ ret_t x_axis_draw_label(axis_t* axis, canvas_t* c) {
     r.w = labels[1]->tick - labels[0]->tick;
   }
 
-  if (axis->type == AXIS_TYPE_VALUE) {
+  if (axis->axis_type == AXIS_TYPE_VALUE) {
     offset = -r.w / 2;
-  } else if (axis->type == AXIS_TYPE_CATEGORY) {
+  } else if (axis->axis_type == AXIS_TYPE_CATEGORY) {
     r.w = axis->inverse ? -r.w : r.w;
   }
 
   spacer =
       (axis->tick.show && !(axis->tick.inside ^ axis->label.inside) ? AXIS_DEFAULT_TICK_LEN : 0) +
-      margin;
+      spacer;
 
   if ((axis->at == AXIS_AT_TOP && !axis->label.inside) ||
       ((axis->at == AXIS_AT_AUTO || axis->at == AXIS_AT_BOTTOM) && axis->label.inside)) {
@@ -462,6 +464,7 @@ static const char* s_x_axis_properties[] = {WIDGET_PROP_MIN,
                                             AXIS_PROP_TYPE,
                                             AXIS_PROP_AT,
                                             AXIS_PROP_OFFSET,
+                                            AXIS_PROP_OFFSET_PERCENT,
                                             AXIS_PROP_SPLIT_LINE_SHOW,
                                             AXIS_PROP_LINE_SHOW,
                                             AXIS_PROP_TICK_SHOW,
@@ -501,13 +504,4 @@ widget_t* x_axis_cast(widget_t* widget) {
   return_value_if_fail(WIDGET_IS_INSTANCE_OF(widget, x_axis), NULL);
 
   return widget;
-}
-
-#include "base/widget_factory.h"
-
-ret_t x_axis_register(void) {
-  widget_factory_t* f = widget_factory();
-  widget_factory_register(f, WIDGET_TYPE_X_AXIS, x_axis_create);
-
-  return RET_OK;
 }

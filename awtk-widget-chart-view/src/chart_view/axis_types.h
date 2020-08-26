@@ -153,55 +153,65 @@ typedef struct _axis_vtable_t {
 /**
  * @enum axis_type_t
  * @annotation ["scriptable"]
+ * @prefix AXIS_TYPE_
  * 坐标轴类型。
  */
 typedef enum _axis_type_t {
   /**
    * @const AXIS_TYPE_CATEGORY
    * 种类坐标轴, 用于表示坐标点的类别，坐标点默认在interval内居中。
+   * @alias category
    */
   AXIS_TYPE_CATEGORY = 0,
   /**
    * @const AXIS_TYPE_VALUE
    * 值坐标轴, 用于表示坐标点的值, 坐标点默认在interval的边缘。
+   * @alias value
    */
   AXIS_TYPE_VALUE
 } axis_type_t;
 
 /**
  * @enum axis_at_type_t
+ * @annotation ["scriptable"]
+ * @prefix AXIS_AT_
  * 坐标轴位置。
  */
 typedef enum _axis_at_type_t {
   /**
    * @const AXIS_AT_AUTO
    * 自动选择位置。
+   * @alias auto
    */
   AXIS_AT_AUTO = 0,
   /**
    * @const AXIS_AT_LEFT
    * 水平左边。
+   * @alias left
    */
   AXIS_AT_LEFT = 1,
   /**
    * @const AXIS_AT_RIGHT
+   * @alias right
    * 水平右边。
    */
   AXIS_AT_RIGHT = 2,
   /**
    * @const AXIS_AT_TOP
    * 垂直顶部。
+   * @alias top
    */
   AXIS_AT_TOP = 3,
   /**
    * @const AXIS_AT_BOTTOM
    * 垂直低部。
+   * @alias bottom
    */
   AXIS_AT_BOTTOM = 4
 } axis_at_type_t;
 
 /**
- * @enum axis_label_params_t
+ * @class axis_label_params_t
  * 轴上标尺的刻度值。
  */
 typedef struct _axis_label_params_t {
@@ -216,7 +226,7 @@ typedef struct _axis_label_params_t {
 } axis_label_params_t;
 
 /**
- * @enum axis_title_params_t
+ * @class axis_title_params_t
  * 轴上的标题。
  */
 typedef struct _axis_title_params_t {
@@ -231,7 +241,7 @@ typedef struct _axis_title_params_t {
 } axis_title_params_t;
 
 /**
- * @enum axis_tick_params_t
+ * @class axis_tick_params_t
  * 轴上的刻度线。
  */
 typedef struct _axis_tick_params_t {
@@ -250,7 +260,7 @@ typedef struct _axis_tick_params_t {
 } axis_tick_params_t;
 
 /**
- * @enum axis_line_params_t
+ * @class axis_line_params_t
  * 轴线。
  */
 typedef struct _axis_line_params_t {
@@ -265,7 +275,7 @@ typedef struct _axis_line_params_t {
 } axis_line_params_t;
 
 /**
- * @enum axis_split_line_params_t
+ * @class axis_split_line_params_t
  * 坐标系上的分割线。
  */
 typedef struct _axis_split_line_params_t {
@@ -338,6 +348,12 @@ ret_t axis_data_destroy(axis_data_t* data);
  * 坐标轴的偏移
  */
 #define AXIS_PROP_OFFSET "offset"
+
+/**
+ * @const AXIS_PROP_OFFSET_PERCENT
+ * 坐标轴的偏移是否为百分比
+ */
+#define AXIS_PROP_OFFSET_PERCENT "offset_percent"
 
 /**
  * @const AXIS_PROP_DATA
@@ -419,6 +435,12 @@ ret_t axis_data_destroy(axis_data_t* data);
  */
 
 /**
+ * @const WIDGET_TYPE_AXIS
+ * 坐标轴。
+ */
+#define WIDGET_TYPE_AXIS "axis"
+
+/**
  * @const WIDGET_TYPE_X_AXIS
  * x坐标轴。
  */
@@ -438,27 +460,39 @@ ret_t axis_data_destroy(axis_data_t* data);
  */
 /**
  * @const STYLE_ID_AXIS_SPLIT_LINE_COLOR
- * 坐标轴分割线颜色。
+ * 坐标轴分割线的颜色。
  */
 #define STYLE_ID_AXIS_SPLIT_LINE_COLOR "split_line_color"
 
 /**
  * @const STYLE_ID_AXIS_SPLIT_LINE_IMAGE
- * 坐标轴的图片。
+ * 坐标轴分割线的图片。
  */
 #define STYLE_ID_AXIS_SPLIT_LINE_IMAGE "split_line_image"
 
 /**
+ * @const STYLE_ID_AXIS_SPLIT_LINE_IMAGE
+ * 坐标轴分割线的图片的显示方式。
+ */
+#define STYLE_ID_AXIS_SPLIT_LINE_IMAGE_DRAW_TYPE "split_line_image_draw_type"
+
+/**
  * @const STYLE_ID_AXIS_TICK_COLOR
- * 坐标轴刻度线颜色。
+ * 坐标轴刻度线的颜色。
  */
 #define STYLE_ID_AXIS_TICK_COLOR "tick_color"
 
 /**
  * @const STYLE_ID_AXIS_TICK_IMAGE
- * 坐标轴刻度线颜色。
+ * 坐标轴刻度线的图片。
  */
 #define STYLE_ID_AXIS_TICK_IMAGE "tick_image"
+
+/**
+ * @const STYLE_ID_AXIS_TICK_IMAGE
+ * 坐标轴刻度线的图片的显示方式。
+ */
+#define STYLE_ID_AXIS_TICK_IMAGE_DRAW_TYPE "tick_image_draw_type"
 
 END_C_DECLS
 

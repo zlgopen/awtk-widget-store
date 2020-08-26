@@ -76,10 +76,62 @@ float_t axis_get_range(widget_t* widget, bool_t is_series_axis) {
   axis_t* axis = AXIS(widget);
   return_value_if_fail(axis != NULL, 0.0);
 
-  if (axis->type == AXIS_TYPE_VALUE && axis->max != axis->min) {
+  if (axis->axis_type == AXIS_TYPE_VALUE && axis->max != axis->min) {
     return tk_abs(axis->max - axis->min) + (is_series_axis ? 1 : 0);
   } else {
     return (float_t)(axis->data->size);
+  }
+}
+
+ret_t axis_set_offset(widget_t* widget, float_t offset, bool_t percent) {
+  axis_t* axis = AXIS(widget);
+  return_value_if_fail(axis != NULL, RET_BAD_PARAMS);
+
+  axis->offset = offset;
+  axis->offset_percent = percent;
+
+  return RET_OK;
+}
+
+static ret_t axis_calc_series_rect(widget_t* widget, rect_t* r) {
+  style_t* style;
+  int32_t margin = 0;
+  int32_t margin_left = 0;
+  int32_t margin_right = 0;
+  int32_t margin_top = 0;
+  int32_t margin_bottom = 0;
+  return_value_if_fail(widget != NULL && r != NULL, RET_BAD_PARAMS);
+
+  style = widget->astyle;
+  return_value_if_fail(style != NULL, RET_BAD_PARAMS);
+
+  margin = style_get_int(style, STYLE_ID_MARGIN, 0);
+  margin_top = style_get_int(style, STYLE_ID_MARGIN_TOP, margin);
+  margin_left = style_get_int(style, STYLE_ID_MARGIN_LEFT, margin);
+  margin_right = style_get_int(style, STYLE_ID_MARGIN_RIGHT, margin);
+  margin_bottom = style_get_int(style, STYLE_ID_MARGIN_BOTTOM, margin);
+
+  r->x = margin_left;
+  r->y = margin_top;
+  r->w = widget->w - margin_left - margin_right;
+  r->h = widget->h - margin_top - margin_bottom;
+  return RET_OK;
+}
+
+float_t axis_get_offset(widget_t* widget, float_t defval) {
+  axis_t* axis = AXIS(widget);
+  return_value_if_fail(axis != NULL, defval);
+
+  if (!axis->offset_percent) {
+    return axis->offset;
+  } else {
+    rect_t r = rect_init(0, 0, 0, 0);
+    axis_calc_series_rect(widget->parent, &r);
+    if (tk_str_eq(widget_get_type(widget), WIDGET_TYPE_X_AXIS)) {
+      return (axis->offset * r.h / 100);
+    } else {
+      return (axis->offset * r.w / 100);
+    }
   }
 }
 

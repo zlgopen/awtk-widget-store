@@ -84,12 +84,12 @@ static ret_t axis_set_type(axis_t* axis, const value_t* v) {
   if (v->type == VALUE_TYPE_STRING) {
     const char* str = value_str(v);
     if (tk_str_eq(str, "value")) {
-      axis->type = AXIS_TYPE_VALUE;
+      axis->axis_type = AXIS_TYPE_VALUE;
     } else if (tk_str_eq(str, "category")) {
-      axis->type = AXIS_TYPE_CATEGORY;
+      axis->axis_type = AXIS_TYPE_CATEGORY;
     }
   } else {
-    axis->type = (axis_type_t)value_int(v);
+    axis->axis_type = (axis_type_t)value_int(v);
   }
 
   return RET_OK;
@@ -106,61 +106,11 @@ static ret_t axis_set_at(axis_t* axis, const value_t* v) {
       axis->at = AXIS_AT_LEFT;
     } else if (tk_str_eq(str, "right")) {
       axis->at = AXIS_AT_RIGHT;
+    } else {
+      axis->at = AXIS_AT_AUTO;
     }
   } else {
     axis->at = (axis_at_type_t)value_int(v);
-  }
-
-  return RET_OK;
-}
-
-static ret_t axis_calc_series_rect(widget_t* widget, rect_t* r) {
-  style_t* style;
-  int32_t margin = 0;
-  int32_t margin_left = 0;
-  int32_t margin_right = 0;
-  int32_t margin_top = 0;
-  int32_t margin_bottom = 0;
-  return_value_if_fail(widget != NULL && r != NULL, RET_BAD_PARAMS);
-
-  style = widget->astyle;
-  return_value_if_fail(style != NULL, RET_BAD_PARAMS);
-
-  margin = style_get_int(style, STYLE_ID_MARGIN, 0);
-  margin_top = style_get_int(style, STYLE_ID_MARGIN_TOP, margin);
-  margin_left = style_get_int(style, STYLE_ID_MARGIN_LEFT, margin);
-  margin_right = style_get_int(style, STYLE_ID_MARGIN_RIGHT, margin);
-  margin_bottom = style_get_int(style, STYLE_ID_MARGIN_BOTTOM, margin);
-
-  r->x = margin_left;
-  r->y = margin_top;
-  r->w = widget->w - margin_left - margin_right;
-  r->h = widget->h - margin_top - margin_bottom;
-  return RET_OK;
-}
-
-ret_t axis_set_offset(axis_t* axis, const char* v) {
-  assert(axis != NULL && v != NULL);
-
-  axis->offset = tk_atof(v);
-  axis->offset_percent = strchr(v, '%') == NULL ? FALSE : TRUE;
-
-  return RET_OK;
-}
-
-ret_t axis_get_offset(axis_t* axis, value_t* v) {
-  assert(axis != NULL && v != NULL);
-
-  if (!axis->offset_percent) {
-    value_set_float(v, axis->offset);
-  } else {
-    rect_t r = rect_init(0, 0, 0, 0);
-    axis_calc_series_rect(WIDGET(axis)->parent, &r);
-    if (tk_str_eq(widget_get_type(WIDGET(axis)), WIDGET_TYPE_X_AXIS)) {
-      value_set_float(v, axis->offset * r.h / 100);
-    } else {
-      value_set_float(v, axis->offset * r.w / 100);
-    }
   }
 
   return RET_OK;
@@ -171,7 +121,7 @@ ret_t axis_p_get_prop(widget_t* widget, const char* name, value_t* v) {
   return_value_if_fail(axis != NULL && name != NULL && v != NULL, RET_BAD_PARAMS);
 
   if (tk_str_eq(name, AXIS_PROP_TYPE)) {
-    value_set_int(v, axis->type);
+    value_set_int(v, axis->axis_type);
     return RET_OK;
   } else if (tk_str_eq(name, AXIS_PROP_AT)) {
     value_set_int(v, axis->at);
@@ -183,7 +133,11 @@ ret_t axis_p_get_prop(widget_t* widget, const char* name, value_t* v) {
     value_set_float(v, axis->max);
     return RET_OK;
   } else if (tk_str_eq(name, AXIS_PROP_OFFSET)) {
-    return axis_get_offset(axis, v);
+    value_set_float(v, axis->offset);
+    return RET_OK;
+  } else if (tk_str_eq(name, AXIS_PROP_OFFSET_PERCENT)) {
+    value_set_bool(v, axis->offset_percent);
+    return RET_OK;
   } else if (tk_str_eq(name, AXIS_PROP_INVERSE)) {
     value_set_bool(v, axis->inverse);
     return RET_OK;
@@ -222,7 +176,11 @@ ret_t axis_p_set_prop(widget_t* widget, const char* name, const value_t* v) {
     axis->max = value_float(v);
     return RET_OK;
   } else if (tk_str_eq(name, AXIS_PROP_OFFSET)) {
-    return axis_set_offset(axis, value_str(v));
+    axis->offset = value_double(v);
+    return RET_OK;
+  } else if (tk_str_eq(name, AXIS_PROP_OFFSET_PERCENT)) {
+    axis->offset_percent = value_bool(v);
+    return RET_OK;
   } else if (tk_str_eq(name, AXIS_PROP_DATA)) {
     return axis_set_data(widget, value_str(v));
   } else if (tk_str_eq(name, AXIS_PROP_INVERSE)) {

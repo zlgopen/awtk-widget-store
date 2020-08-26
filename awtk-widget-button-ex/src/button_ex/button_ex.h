@@ -31,12 +31,12 @@ BEGIN_C_DECLS
  * @parent widget_t
  * @annotation ["scriptable","design","widget"]
  *
- * 扩展按钮。点击或离开按钮时，创建过度动画。
- * 在xml中使用"button\_ex"标签创建扩展按钮控件。如：
+ * 扩展按钮控件。点击可弹出或收起内部的子控件。
+ * 在xml中使用"button\_ex"标签创建扩展控件。如：
  *
  * ```xml
  * <!-- ui -->
- * <button_ex x="c" y="50" w="24" h="100" />
+ * <button_ex x="c" y="50" w="70" h="35" new_h="200"/>
  * ```
  *
  * 可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：
@@ -46,8 +46,8 @@ BEGIN_C_DECLS
  * <button_ex>
  *   <style name="default" border="all" border_color="#3F3F3F" font_size="36" round_radius="20" text_align_h="left" text_color="#FFFFFF" bg_color="#FAFAFA">
  *     <normal/>
- *      <over/>
- *      <pressed/>
+ *     <over/>
+ *     <pressed/>
  *   </style>
  * </button_ex>
  * ```
@@ -62,14 +62,8 @@ typedef struct _button_ex_t {
    */
   xy_t new_h;
 
-  /**
-   * @property {xy_t} old_h
-   * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable"]
-   * 旧的高度。
-   */
-  xy_t old_h;
-
   /*private*/
+  xy_t old_h;
   int32_t timer_id;
   bool_t dragged;
   point_t down;

@@ -195,7 +195,7 @@ ret_t tooltip_draw_symbol(widget_t* widget, canvas_t* c) {
   point_t p;
   int32_t index;
   color_t trans = color_init(0, 0, 0, 0);
-  color_t fg_color, bd_color;
+  color_t bg_color, bd_color;
   float_t border_width;
   style_t* style;
   tooltip_t* tooltip = TOOLTIP(widget);
@@ -205,14 +205,14 @@ ret_t tooltip_draw_symbol(widget_t* widget, canvas_t* c) {
   style = widget->astyle;
   return_value_if_fail(style != NULL, RET_BAD_PARAMS);
 
-  fg_color = style_get_color(style, STYLE_ID_TOOLTIP_SYMBOL_COLOR, trans);
+  bg_color = style_get_color(style, STYLE_ID_TOOLTIP_SYMBOL_BG_COLOR, trans);
   bd_color = style_get_color(style, STYLE_ID_TOOLTIP_SYMBOL_BORDER_COLOR, trans);
   border_width = style_get_int(style, STYLE_ID_TOOLTIP_SYMBOL_BORDER_WIDTH, 1);
 
-  if (fg_color.rgba.a || bd_color.rgba.a) {
+  if (bg_color.rgba.a || bd_color.rgba.a) {
     vgcanvas_save(vg);
     vgcanvas_translate(vg, c->ox, c->oy);
-    vgcanvas_set_fill_color(vg, fg_color);
+    vgcanvas_set_fill_color(vg, bg_color);
     vgcanvas_set_stroke_color(vg, bd_color);
     vgcanvas_set_line_width(vg, border_width);
 
@@ -229,7 +229,7 @@ ret_t tooltip_draw_symbol(widget_t* widget, canvas_t* c) {
           vgcanvas_begin_path(vg);
           _VGCANVAS_ARC(vg, p.x, p.y, 5, 0, 2 * M_PI, FALSE);
 
-          if (fg_color.rgba.a) {
+          if (bg_color.rgba.a) {
             vgcanvas_fill(vg);
           }
 
@@ -346,9 +346,9 @@ ret_t tooltip_draw_tip(widget_t* widget, canvas_t* c) {
   margin_left = style_get_int(style, STYLE_ID_MARGIN_LEFT, margin);
   margin_right = style_get_int(style, STYLE_ID_MARGIN_RIGHT, margin);
   margin_bottom = style_get_int(style, STYLE_ID_MARGIN_BOTTOM, margin);
-  bg_color = style_get_color(style, STYLE_ID_TOOLTIP_BG_COLOR, trans);
-  bd_color = style_get_color(style, STYLE_ID_TOOLTIP_BORDER_COLOR, trans);
-  border_width = style_get_int(style, STYLE_ID_TOOLTIP_BORDER_WIDTH, 1);
+  bg_color = style_get_color(style, STYLE_ID_BG_COLOR, trans);
+  bd_color = style_get_color(style, STYLE_ID_BORDER_COLOR, trans);
+  border_width = style_get_int(style, STYLE_ID_BORDER_WIDTH, 1);
   radius = style_get_int(style, STYLE_ID_ROUND_RADIUS, 0);
   text_color = style_get_color(style, STYLE_ID_TEXT_COLOR, trans);
   font_name = style_get_str(style, STYLE_ID_FONT_NAME, NULL);
@@ -424,6 +424,18 @@ ret_t tooltip_draw_tip(widget_t* widget, canvas_t* c) {
   return RET_OK;
 }
 
+static ret_t tooltip_on_paint_background(widget_t* widget, canvas_t* c) {
+  (void)widget;
+  (void)c;
+  return RET_OK;
+}
+
+static ret_t tooltip_on_paint_border(widget_t* widget, canvas_t* c) {
+  (void)widget;
+  (void)c;
+  return RET_OK;
+}
+
 static ret_t tooltip_on_paint_self(widget_t* widget, canvas_t* c) {
   bool_t vertical = tooltip_is_series_vertical(widget);
   tooltip_t* tooltip = TOOLTIP(widget);
@@ -489,7 +501,9 @@ TK_DECL_VTABLE(tooltip) = {.size = sizeof(tooltip_t),
                            .create = tooltip_create_default,
                            .set_prop = tooltip_set_prop,
                            .get_prop = tooltip_get_prop,
+                           .on_paint_background = tooltip_on_paint_background,
                            .on_paint_self = tooltip_on_paint_self,
+                           .on_paint_border = tooltip_on_paint_border,
                            .on_destroy = tooltip_on_destroy};
 
 widget_t* tooltip_create(widget_t* parent, const widget_vtable_t* vt, xy_t x, xy_t y, wh_t w,
@@ -509,15 +523,6 @@ widget_t* tooltip_cast(widget_t* widget) {
   return_value_if_fail(widget_is_tooltip(widget), NULL);
 
   return widget;
-}
-
-#include "base/widget_factory.h"
-
-ret_t tooltip_register(void) {
-  widget_factory_t* f = widget_factory();
-  widget_factory_register(f, WIDGET_TYPE_TOOLTIP, tooltip_create_default);
-
-  return RET_OK;
 }
 
 bool_t widget_is_tooltip(widget_t* widget) {

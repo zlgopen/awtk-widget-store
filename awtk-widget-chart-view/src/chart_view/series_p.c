@@ -337,9 +337,9 @@ ret_t series_p_minmax_draw_data_set_xy(void* dst, float_t series, fifo_t* value,
   series_p_minmax_draw_data_t* d = (series_p_minmax_draw_data_t*)dst;
   series_minmax_data_t* v = (series_minmax_data_t*)(fifo_at(value, value_index));
   d->ymin = (v->min - value_min) / value_range * pixel_range;
-  d->ymin = inverse ? -d->ymin : d->ymin;
+  d->ymin = inverse ? d->ymin : -d->ymin;
   d->ymax = (v->max - value_min) / value_range * pixel_range;
-  d->ymax = inverse ? -d->ymax : d->ymax;
+  d->ymax = inverse ? d->ymax : -d->ymax;
   d->xmin = d->xmax = series;
   return RET_OK;
 }
@@ -627,7 +627,7 @@ ret_t series_p_draw_smooth_line_colorful(widget_t* widget, vgcanvas_t* vg, style
   assert(index < fifo->size && index + size - 1 < fifo->size);
   return_value_if_true(fifo->size == 0 || size == 0, RET_OK);
 
-  border_width = style_get_int(style, STYLE_ID_SERIES_LINE_BORDER_COLOR, 1);
+  border_width = style_get_int(style, STYLE_ID_SERIES_LINE_BORDER_WIDTH, 1);
 
   vgcanvas_set_line_width(vg, border_width);
 
@@ -701,7 +701,7 @@ ret_t series_p_draw_smooth_line_area(widget_t* widget, vgcanvas_t* vg, style_t* 
   assert(index < fifo->size && index + size - 1 < fifo->size);
   return_value_if_true(fifo->size == 0 || size == 0, RET_OK);
 
-  color = style_get_color(style, STYLE_ID_SERIES_SMOOTH_AREA_COLOR, trans);
+  color = style_get_color(style, STYLE_ID_SERIES_AREA_COLOR, trans);
 
   if (color.rgba.a) {
     dprev = d0 = d = (series_p_draw_data_t*)(fifo_at(fifo, index + size - 1));
@@ -829,7 +829,7 @@ ret_t series_p_draw_smooth_line_area_colorful(widget_t* widget, vgcanvas_t* vg, 
 ret_t series_p_draw_symbol(widget_t* widget, vgcanvas_t* vg, style_t* style, float_t ox, float_t oy,
                            fifo_t* fifo, uint32_t index, uint32_t size, float_t symbol_size) {
   color_t trans = color_init(0, 0, 0, 0);
-  color_t fg_color, bd_color;
+  color_t bg_color, bd_color;
   float_t border_width;
   bitmap_t img;
   const char* image_name;
@@ -839,10 +839,10 @@ ret_t series_p_draw_symbol(widget_t* widget, vgcanvas_t* vg, style_t* style, flo
   assert(index < fifo->size && index + size - 1 < fifo->size);
   return_value_if_true(fifo->size == 0 || size == 0, RET_OK);
 
-  fg_color = style_get_color(style, STYLE_ID_SERIES_SYMBOL_BG_COLOR, trans);
+  bg_color = style_get_color(style, STYLE_ID_SERIES_SYMBOL_BG_COLOR, trans);
   bd_color = style_get_color(style, STYLE_ID_SERIES_SYMBOL_BORDER_COLOR, trans);
   border_width = style_get_int(style, STYLE_ID_SERIES_SYMBOL_BORDER_WIDTH, 1);
-  image_name = style_get_str(style, STYLE_ID_SERIES_SYMBOL_IMAGE, NULL);
+  image_name = style_get_str(style, STYLE_ID_SERIES_SYMBOL_BG_IMAGE, NULL);
 
   if (image_name != NULL) {
     if (widget_load_image(widget, image_name, &img) != RET_OK) {
@@ -850,9 +850,9 @@ ret_t series_p_draw_symbol(widget_t* widget, vgcanvas_t* vg, style_t* style, flo
     }
   }
 
-  if (fg_color.rgba.a || bd_color.rgba.a || image_name != NULL) {
+  if (bg_color.rgba.a || bd_color.rgba.a || image_name != NULL) {
     d = (series_p_draw_data_t*)(fifo_at(fifo, index));
-    vgcanvas_set_fill_color(vg, fg_color);
+    vgcanvas_set_fill_color(vg, bg_color);
     vgcanvas_set_stroke_color(vg, bd_color);
     vgcanvas_set_line_width(vg, border_width);
 
@@ -861,7 +861,7 @@ ret_t series_p_draw_symbol(widget_t* widget, vgcanvas_t* vg, style_t* style, flo
       vgcanvas_begin_path(vg);
       _VGCANVAS_ARC(vg, ox + d->x, oy + d->y, symbol_size, 0, 2 * M_PI, FALSE);
 
-      if (fg_color.rgba.a) {
+      if (bg_color.rgba.a) {
         vgcanvas_fill(vg);
       }
 
@@ -1054,7 +1054,6 @@ uint32_t series_p_count(widget_t* widget) {
 ret_t series_p_set_with_animator(widget_t* widget, uint32_t index, const void* data, uint32_t nr,
                                  series_animator_create_t create_animator) {
   widget_t* axis;
-  uint32_t range;
   fifo_t* fifo;
   series_t* series = SERIES(widget);
   return_value_if_fail(series != NULL && data != NULL && nr > 0, RET_BAD_PARAMS);
@@ -1064,13 +1063,8 @@ ret_t series_p_set_with_animator(widget_t* widget, uint32_t index, const void* d
   return_value_if_fail(fifo != NULL && fifo->capacity > 0, RET_BAD_PARAMS);
 
   axis = widget_get_prop_pointer(widget, SERIES_PROP_SERIES_AXIS);
-  return_value_if_fail(axis != NULL, RET_BAD_PARAMS);
-
-  range = (uint32_t)(axis_get_range(axis, TRUE));
-  return_value_if_fail(range != 0, RET_BAD_PARAMS);
 
   if (index + nr > fifo->size) {
-    series->new_period = (series->new_period + index + nr - fifo->size) % range;
     fifo_npush(fifo, NULL, index + nr - fifo->size);
     if (nr >= fifo->capacity) {
       index = 0;
@@ -1079,23 +1073,28 @@ ret_t series_p_set_with_animator(widget_t* widget, uint32_t index, const void* d
     }
   }
 
-  if (series->animation != 0 && create_animator != NULL) {
+  if (axis == NULL || series->value_animation == 0 || create_animator == NULL) {
+    fifo_set(fifo, index, data, nr);
+    widget_invalidate(widget, NULL);
+  } else {
     widget_animator_t* wa = NULL;
+    uint32_t range = (uint32_t)(axis_get_range(axis, TRUE));
+    return_value_if_fail(range != 0, RET_BAD_PARAMS);
 
     widget_destroy_animator(widget, NULL);
 
+    if (index + nr > fifo->size) {
+      series->new_period = (series->new_period + index + nr - fifo->size) % range;
+    }
     series->clip_range = 0;
 
-    wa = create_animator(widget, series->animation, 0, SERIES_ANIMATION_EASING);
+    wa = create_animator(widget, series->value_animation, 0, SERIES_ANIMATION_EASING);
     assert(wa != NULL);
     chart_animator_fifo_value_set_params(wa, fifo, index, data, nr, range);
 
     if (series->inited) {
       widget_animator_start(wa);
     }
-  } else {
-    fifo_set(fifo, index, data, nr);
-    widget_invalidate(widget, NULL);
   }
 
   return RET_OK;
@@ -1121,7 +1120,6 @@ ret_t series_p_rset(widget_t* widget, uint32_t index, const void* data, uint32_t
 
 ret_t series_p_push(widget_t* widget, const void* data, uint32_t nr) {
   fifo_t* fifo;
-  uint32_t range;
   widget_t* axis;
   series_t* series = SERIES(widget);
   return_value_if_fail(series != NULL && data != NULL && nr > 0, RET_BAD_PARAMS);
@@ -1133,41 +1131,43 @@ ret_t series_p_push(widget_t* widget, const void* data, uint32_t nr) {
   axis = widget_get_prop_pointer(widget, SERIES_PROP_SERIES_AXIS);
   return_value_if_fail(axis != NULL, RET_BAD_PARAMS);
 
-  range = (uint32_t)(axis_get_range(axis, TRUE));
-  return_value_if_fail(range != 0, RET_BAD_PARAMS);
-
-  series->new_period = (series->new_period + nr) % range;
-  if (series->new_period == 0) {
-    series->new_period = range;
-  }
-
   fifo_npush(fifo, data, nr);
 
-  if (AXIS(axis)->data_from_series != NULL) {
-    AXIS(axis)->need_update_data = TRUE;
-  }
+  if (axis != NULL) {
+    uint32_t range = (uint32_t)(axis_get_range(axis, TRUE));
+    return_value_if_fail(range != 0, RET_BAD_PARAMS);
 
-  if (series->animation != 0 && fifo->size > 1) {
-    widget_animator_t* wa = NULL;
-
-    widget_destroy_animator(widget, NULL);
-
-    series->clip_range = tk_min(series->new_period, tk_min(range, tk_min(nr, fifo->capacity)));
-
-    wa = widget_animator_prop_create(widget, series->animation, 100, SERIES_ANIMATION_EASING,
-                                     SERIES_PROP_CLIP_RANGE);
-    assert(wa != NULL);
-    widget_animator_prop_set_params(wa, series->clip_range, 0);
-
-    if (series->inited) {
-      widget_animator_start(wa);
+    series->new_period = (series->new_period + nr) % range;
+    if (series->new_period == 0) {
+      series->new_period = range;
     }
 
-    // cover类型的最大offset与clip_range有关，故更新防止溢出
-    if (series->display_mode == SERIES_DISPLAY_COVER) {
-      uint32_t offset_max = series_p_get_offset_max(widget);
-      if (series->offset > offset_max) {
-        series->offset = offset_max;
+    if (AXIS(axis)->data_from_series != NULL) {
+      AXIS(axis)->need_update_data = TRUE;
+    }
+
+    if (series->value_animation != 0 && fifo->size > 1) {
+      widget_animator_t* wa = NULL;
+
+      widget_destroy_animator(widget, NULL);
+
+      series->clip_range = tk_min(series->new_period, tk_min(range, tk_min(nr, fifo->capacity)));
+
+      wa = widget_animator_prop_create(widget, series->value_animation, 100,
+                                       SERIES_ANIMATION_EASING, SERIES_PROP_CLIP_RANGE);
+      assert(wa != NULL);
+      widget_animator_prop_set_params(wa, series->clip_range, 0);
+
+      if (series->inited) {
+        widget_animator_start(wa);
+      }
+
+      // cover类型的最大offset与clip_range有关，故更新防止溢出
+      if (series->display_mode == SERIES_DISPLAY_COVER) {
+        uint32_t offset_max = series_p_get_offset_max(widget);
+        if (series->offset > offset_max) {
+          series->offset = offset_max;
+        }
       }
     }
   }
@@ -1309,7 +1309,7 @@ int32_t series_p_relative_index_of_point_in(widget_t* widget, xy_t x, xy_t y, bo
   }
 
   sinterval = axis_measure_series_interval(saxis);
-  if (AXIS(saxis)->type == AXIS_TYPE_VALUE) {
+  if (AXIS(saxis)->axis_type == AXIS_TYPE_VALUE) {
     soffset = sinterval / 2;
   }
 
@@ -1382,7 +1382,7 @@ ret_t series_p_to_local(widget_t* widget, uint32_t index, point_t* p) {
   sinterval = axis_measure_series_interval(saxis);
   vrange = axis_get_range(vaxis, FALSE);
   vmin = v->min * v->max < 0 ? 0 : v->min;
-  if (s->type == AXIS_TYPE_CATEGORY) {
+  if (s->axis_type == AXIS_TYPE_CATEGORY) {
     soffset = sinterval / 2;
   }
 
@@ -1392,12 +1392,14 @@ ret_t series_p_to_local(widget_t* widget, uint32_t index, point_t* p) {
     series->vt->draw_data_info->set_as_axis12(draw_data, 0, series->fifo, index, vmin, vrange,
                                               v->draw_rect.h, v->inverse);
     p->y = o.y + series->vt->draw_data_info->get_axis2(draw_data);
-    p->x = s->inverse ? (o.x - offset * sinterval - soffset) : (o.x + offset * sinterval + soffset);
+    p->x = s->inverse ? (o.x - offset * sinterval - soffset + 1)
+                      : (o.x + offset * sinterval + soffset - 1);
   } else {
     series->vt->draw_data_info->set_as_axis21(draw_data, 0, series->fifo, index, vmin, vrange,
                                               v->draw_rect.w, v->inverse);
     p->x = o.x + series->vt->draw_data_info->get_axis1(draw_data);
-    p->y = s->inverse ? (o.y + offset * sinterval + soffset) : (o.y - offset * sinterval - soffset);
+    p->y = s->inverse ? (o.y + offset * sinterval + soffset - 1)
+                      : (o.y - offset * sinterval - soffset + 1);
   }
 
   TKMEM_FREE(draw_data);
@@ -1458,7 +1460,7 @@ static ret_t series_p_set_new_period_internal(widget_t* widget, uint32_t period,
   return_value_if_fail(range != 0 && period <= range, RET_BAD_PARAMS);
 
   if (series->new_period != period) {
-    if (series->animation == 0 || !animat) {
+    if (series->value_animation == 0 || !animat) {
       series->new_period = period;
     } else {
       widget_animator_t* wa = NULL;
@@ -1467,7 +1469,7 @@ static ret_t series_p_set_new_period_internal(widget_t* widget, uint32_t period,
 
       series->clip_range = 0;
 
-      wa = widget_animator_prop_create(widget, series->animation, 0, SERIES_ANIMATION_EASING,
+      wa = widget_animator_prop_create(widget, series->value_animation, 0, SERIES_ANIMATION_EASING,
                                        SERIES_PROP_NEW_PERIOD);
       assert(wa != NULL);
       widget_animator_prop_set_params(wa, series->new_period, period);
@@ -1508,7 +1510,7 @@ ret_t series_p_get_prop(widget_t* widget, const char* name, value_t* v) {
     value_set_int(v, series->display_mode);
     return RET_OK;
   } else if (tk_str_eq(name, SERIES_PROP_VALUE_ANIMATION)) {
-    value_set_uint32(v, series->animation);
+    value_set_uint32(v, series->value_animation);
     return RET_OK;
   } else if (tk_str_eq(name, SERIES_PROP_NEW_PERIOD)) {
     value_set_uint32(v, series->new_period);
@@ -1545,7 +1547,7 @@ ret_t series_p_set_prop(widget_t* widget, const char* name, const value_t* v) {
     }
     return RET_OK;
   } else if (tk_str_eq(name, SERIES_PROP_VALUE_ANIMATION)) {
-    series->animation = value_uint32(v);
+    series->value_animation = value_uint32(v);
     return RET_OK;
   } else if (tk_str_eq(name, SERIES_PROP_NEW_PERIOD)) {
     return series_p_set_new_period_internal(widget, value_uint32(v), FALSE);
@@ -1559,7 +1561,7 @@ ret_t series_p_set_prop(widget_t* widget, const char* name, const value_t* v) {
 widget_t* series_p_lookup_series_axis(widget_t* widget, const char* name) {
   return_value_if_fail(widget != NULL && widget->parent != NULL, NULL);
 
-  if (name == NULL) {
+  if (name == NULL || name[0] == '\0') {
     return widget_lookup_by_type(widget->parent, WIDGET_TYPE_X_AXIS, FALSE);
   } else {
     return widget_lookup(widget->parent, name, FALSE);
@@ -1569,7 +1571,7 @@ widget_t* series_p_lookup_series_axis(widget_t* widget, const char* name) {
 widget_t* series_p_lookup_value_axis(widget_t* widget, const char* name) {
   return_value_if_fail(widget != NULL && widget->parent != NULL, NULL);
 
-  if (name == NULL) {
+  if (name == NULL || name[0] == '\0') {
     return widget_lookup_by_type(widget->parent, WIDGET_TYPE_Y_AXIS, FALSE);
   } else {
     return widget_lookup(widget->parent, name, FALSE);
@@ -1589,7 +1591,7 @@ ret_t series_p_get_origin_point(widget_t* widget, widget_t* saxis, widget_t* vax
   sruler = &(s->draw_rect);
   inverse = s->inverse ^ inverse;
 
-  if (v->type == AXIS_TYPE_VALUE && v->max * v->min < 0) {
+  if (v->axis_type == AXIS_TYPE_VALUE && v->max * v->min < 0) {
     voffset = -v->min / axis_get_range(vaxis, FALSE);
   }
 
@@ -1624,7 +1626,7 @@ static ret_t series_p_delay_start_animator(void* ctx, event_t* e) {
 ret_t series_p_start_animator_when_inited(widget_t* widget) {
   series_t* series = SERIES(widget);
   return_value_if_fail(series != NULL, RET_BAD_PARAMS);
-  return_value_if_true(series->animation == 0, RET_OK);
+  return_value_if_true(series->value_animation == 0, RET_OK);
   return_value_if_true(
       widget_animator_manager_find(widget_animator_manager(), widget, NULL) == NULL, RET_OK);
 

@@ -22,9 +22,8 @@
 #ifndef TK_CHART_VIEW_H
 #define TK_CHART_VIEW_H
 
-#include "awtk.h"
-#include "axis.h"
-#include "series.h"
+#include "base/widget.h"
+#include "base/widget_animator.h"
 
 BEGIN_C_DECLS
 
@@ -32,13 +31,24 @@ BEGIN_C_DECLS
  * @class chart_view_t
  * @parent widget_t
  * @annotation ["scriptable","design","widget"]
- * chart view
- * 
- * 在xml中使用"chart\_view"标签创建扩展按钮控件。如：
+ * 图表容器控件。
+ *
+ * 在xml中使用"chart\_view"标签创建图表容器控件，内部可添加axis、series、tooltip等控件。如：
  *
  * ```xml
  * <!-- ui -->
- * <chart_view x="c" y="50" w="200" h="100" />
+ * <chart_view name="chartview" x="6%" y="13%" w="400" h="200">
+ *   <x_axis name="x_axis" axis_type="value" min="0" max="9" tick="{show:true}"
+ * split_line="{show:true}" label="{show:true}" data="[1,2,3,4,5,6,7,8,9,10]"/>
+ *   <y_axis name="y_axis" axis_type="value" min="0" max="140" tick="{show:true}"
+ * split_line="{show:true}" label="{show:true}" data="[0,20,40,60,80,100,120,140]"/>
+ *   <bar_series name="bar_series" text="s1" capacity="10" value_animation="500"
+ * value="15,75,40,60,140,80,100,120,25,90"/>
+ *   <line_series name="line_series" text="s2" capacity="10" value_animation="500"
+ * line="{smooth:true}" area="{show:true}" symbol="{show:true}"
+ * value="15,75,40,60,140,80,100,120,25,90"/>
+ *   <tooltip name="tooltip" />
+ * </chart_view>
  * ```
  *
  * 可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：
@@ -46,9 +56,9 @@ BEGIN_C_DECLS
  * ```xml
  * <!-- style -->
  * <chart_view>
- *  <style name="default">
- *      <normal margin_bottom="20" margin_left="55" margin_right="55" margin_top="20"/>
- *  </style>
+ *   <style name="default">
+ *     <normal margin_bottom="20" margin_left="20" margin_right="10" margin_top="10"/>
+ *   </style>
  * </chart_view>
  * ```
  */
@@ -107,16 +117,6 @@ ret_t chart_view_set_top_series(widget_t* widget, int32_t index);
 widget_t* chart_view_cast(widget_t* widget);
 
 /**
- * @method chart_view_s_register
- * 注册chart_view控件。
- *
- * @annotation ["scriptable", "static"]
- *
- * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
- */
-ret_t chart_view_s_register(void);
-
-/**
  * @enum widget_prop_t
  * @annotation ["scriptable", "string"]
  * @prefix CHART_VIEW_PROP_
@@ -138,11 +138,14 @@ ret_t chart_view_s_register(void);
 
 /**
  * @const WIDGET_TYPE_CHART_VIEW
- * chart_view。
+ * 图表容器控件。
  */
 #define WIDGET_TYPE_CHART_VIEW "chart_view"
 
 #define CHART_VIEW(widget) ((chart_view_t*)(chart_view_cast(WIDGET(widget))))
+
+/*public for subclass and runtime type check*/
+TK_EXTERN_VTABLE(chart_view);
 
 END_C_DECLS
 

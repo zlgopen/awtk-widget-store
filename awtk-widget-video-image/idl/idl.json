@@ -203,7 +203,7 @@
       }
     ],
     "header": "video_image/video_image.h",
-    "desc": "帧间差异视频播放控件",
+    "desc": "帧间差异视频播放控件\n\n由于该控件使用的视频是特别资源，需要 diff_image_to_video_gen.exe 工具生成的\n所以详细用法请看 awtk-widget-calendar-month/docs/video_image控件用法.md。\n\n在xml中使用\"video\\_image\"标签创建video\\_image控件。如：\n\n```xml\n<!-- ui -->\n<video_image x=\"0\" y=\"0\" w=\"200\" h=\"200\" />\n```\n\n可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：\n\n```xml\n<!-- style -->\n<video_image>\n<style name=\"default\">\n<normal />\n</style>\n</video_image>\n```",
     "name": "video_image_t",
     "parent": "widget_t",
     "annotation": {

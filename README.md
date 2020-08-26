@@ -6,7 +6,6 @@
 - awtk-widget-chart-view控件：包含常用的曲线图、柱状图和饼图控件
 - awtk-widget-date-picker控件：日期选择控件
 - awtk-widget-label-rotate控件：可以90、180、270度旋转的文本控件
-- awtk-widget-list-menu控件： 滑动列表菜单控件
 - awtk-widget-mask-view控件：蒙板裁剪控件，可以实现异形进度条
 - awtk-widget-number-label 控件：显示大小混排数字的控件
 - awtk-widget-qr控件：显示二维码控件
@@ -37,10 +36,6 @@
 ##### awtk-widget-label-rotate
 
 ![](awtk-widget-label-rotate\docs\images\ui.jpg) 
-
-##### awtk-widget-list-menu
-
-![](awtk-widget-list-menu\docs\ui.png) 
 
 ##### awtk-widget-mask-view
 

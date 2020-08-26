@@ -35,16 +35,19 @@ typedef enum _series_dispaly_mode_t {
   /**
    * @const SERIES_DISPLAY_AUTO
    * 自动选择。
+   * @alias auto
    */
   SERIES_DISPLAY_AUTO = 0,
   /**
    * @const SERIES_DISPLAY_PUSH
    * 推进式（从右向左推进）。
+   * @alias push
    */
   SERIES_DISPLAY_PUSH = 1,
   /**
-   * @const SERIES_DISPLAY_PUSH
+   * @const SERIES_DISPLAY_COVER
    * 覆盖式（从左向右循环覆盖, 类似心电图）。
+   * @alias cover
    */
   SERIES_DISPLAY_COVER = 2,
 } series_dispaly_mode_t;
@@ -344,6 +347,12 @@ typedef struct _series_vtable_t {
  */
 
 /**
+ * @const WIDGET_TYPE_SERIES
+ * 序列。
+ */
+#define WIDGET_TYPE_SERIES "series"
+
+/**
  * @const WIDGET_TYPE_LINE_SERIES
  * 线形序列。
  */
@@ -375,49 +384,44 @@ typedef struct _series_vtable_t {
  */
 /**
  * @const STYLE_ID_SERIES_LINE_BORDER_COLOR
- * 序列形成的曲线边框颜色
+ * 序列曲线的颜色
  */
 #define STYLE_ID_SERIES_LINE_BORDER_COLOR "line_border_color"
 
 /**
  * @const STYLE_ID_SERIES_LINE_BORDER_WIDTH
- * 序列形成的曲线边框宽度
+ * 序列曲线的宽度
  */
 #define STYLE_ID_SERIES_LINE_BORDER_WIDTH "line_border_width"
 
 /**
  * @const STYLE_ID_SERIES_AREA_COLOR
- * 序列的曲线与轴围成的区域颜色
+ * 序列曲线与轴围成的区域的颜色
  */
 #define STYLE_ID_SERIES_AREA_COLOR "area_color"
 
 /**
- * @const STYLE_ID_SERIES_SYMBOL_BORDER_COLOR
- * 序列点的标记边框颜色
+ * @const STYLE_ID_SERIES_SYMBOL_BG_IMAGE
+ * 序列点的图片
  */
-#define STYLE_ID_SERIES_SYMBOL_BORDER_COLOR "symbol_border_color"
+#define STYLE_ID_SERIES_SYMBOL_BG_IMAGE "symbol_bg_image"
 
 /**
  * @const STYLE_ID_SERIES_SYMBOL_BG_COLOR
- * 序列点的标记颜色
+ * 序列点的背景颜色
  */
 #define STYLE_ID_SERIES_SYMBOL_BG_COLOR "symbol_bg_color"
 
 /**
+ * @const STYLE_ID_SERIES_SYMBOL_BORDER_COLOR
+ * 序列点的边框颜色
+ */
+#define STYLE_ID_SERIES_SYMBOL_BORDER_COLOR "symbol_border_color"
+
+/**
  * @const STYLE_ID_SERIES_SYMBOL_BORDER_WIDTH
- * 序列点的标记边框宽度
+ * 序列点的边框宽度
  */
 #define STYLE_ID_SERIES_SYMBOL_BORDER_WIDTH "symbol_border_width"
 
-/**
- * @const STYLE_ID_SERIES_SYMBOL_IMAGE
- * 序列点的标记图片
- */
-#define STYLE_ID_SERIES_SYMBOL_IMAGE "symbol_image"
-
-/**
- * @const STYLE_ID_SERIES_SMOOTH_AREA_COLOR
- * 序列的曲线与轴围成的平滑区域颜色
- */
-#define STYLE_ID_SERIES_SMOOTH_AREA_COLOR "smooth_area_color"
 #endif /*TK_SERIES_TYPES_H*/

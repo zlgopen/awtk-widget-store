@@ -139,23 +139,10 @@
           "design": true,
           "scriptable": true
         }
-      },
-      {
-        "name": "old_h",
-        "desc": "旧的高度。",
-        "type": "xy_t",
-        "annotation": {
-          "set_prop": true,
-          "get_prop": true,
-          "readable": true,
-          "persitent": true,
-          "design": true,
-          "scriptable": true
-        }
       }
     ],
     "header": "button_ex/button_ex.h",
-    "desc": "扩展按钮。点击或离开按钮时，创建过度动画。\n在xml中使用\"button\\_ex\"标签创建扩展按钮控件。如：\n\n```xml\n<!-- ui -->\n<button_ex x=\"c\" y=\"50\" w=\"24\" h=\"100\" />\n```\n\n可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：\n\n```xml\n<!-- style -->\n<button_ex>\n<style name=\"default\" border=\"all\" border_color=\"#3F3F3F\" font_size=\"36\" round_radius=\"20\" text_align_h=\"left\" text_color=\"#FFFFFF\" bg_color=\"#FAFAFA\">\n<normal/>\n<over/>\n<pressed/>\n</style>\n</button_ex>\n```",
+    "desc": "扩展按钮控件。点击可弹出或收起内部的子控件。\n在xml中使用\"button\\_ex\"标签创建扩展控件。如：\n\n```xml\n<!-- ui -->\n<button_ex x=\"c\" y=\"50\" w=\"70\" h=\"35\" new_h=\"200\"/>\n```\n\n可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：\n\n```xml\n<!-- style -->\n<button_ex>\n<style name=\"default\" border=\"all\" border_color=\"#3F3F3F\" font_size=\"36\" round_radius=\"20\" text_align_h=\"left\" text_color=\"#FFFFFF\" bg_color=\"#FAFAFA\">\n<normal/>\n<over/>\n<pressed/>\n</style>\n</button_ex>\n```",
     "name": "button_ex_t",
     "parent": "widget_t",
     "annotation": {

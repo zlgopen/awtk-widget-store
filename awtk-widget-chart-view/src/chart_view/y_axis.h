@@ -28,25 +28,41 @@ BEGIN_C_DECLS
 
 /**
  * @class y_axis_t
- * @parent widget_t
+ * @parent axis_t
  * @annotation ["scriptable","design","widget"]
- * y坐标轴控件。
- * 
- * 在xml中使用"y\_axis"标签创建扩展按钮控件。如：
+ * y 轴控件，作为chart\_view的一个子部件使用。
+ *
+ * 在xml中使用"y\_axis"标签创建 y 轴控件。如：
  *
  * ```xml
  * <!-- ui -->
- * <y_axis x="c" y="50" w="2" h="100" />
+ * <y_axis name="y_axis" w="2" h="100" axis_type="value" min="0" max="140" tick="{show:true}"
+ * split_line="{show:true}" label="{show:true}" data="[0,20,40,60,80,100,120,140]"/>
  * ```
  *
- * 可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：
+ * 可用通过style来设置控件的显示风格。其中，
+ * spacer 用于设置刻度值与轴线之间的间距；
+ * font_name 用于设置刻度值的字体；
+ * font_size 用于设置刻度值的字体大小；
+ * text_color 用于设置刻度值的文本颜色；
+ * fg_color 用于设置轴线的颜色；
+ * fg_image 用于设置轴线的图片；
+ * fg_image_draw_type 用于设置轴线的图片的显示方式；
+ * tick_color 用于设置刻度线的颜色；
+ * tick_image 用于设置刻度线的图片；
+ * tick_image_draw_type 用于设置刻度线的图片的显示方式；
+ * split_line_color 用于设置分割线的颜色；
+ * split_line_image 用于设置分割线的图片；
+ * split_line_image_draw_type 用于设置分割线的图片的显示方式。
+ * 如：
  *
  * ```xml
  * <!-- style -->
  * <y_axis>
- *  <style name="default">
- *      <normal text_color="#a1d8ef" font_size="20" split_line_color="#213b4d" tick_color="#294b63" fg_color="#294b63" />
- *  </style>
+ *   <style name="default">
+ *     <normal text_color="#444444" font_size="16" split_line_color="#c2c2c2" tick_color="#c2c2c2"
+ * fg_color="#c2c2c2"/>
+ *   </style>
  * </y_axis>
  * ```
  */
@@ -90,17 +106,10 @@ widget_t* y_axis_create(widget_t* widget, xy_t x, xy_t y, wh_t w, wh_t h);
  */
 widget_t* y_axis_cast(widget_t* widget);
 
-/**
- * @method y_axis_register
- * 注册y_axis控件。
- *
- * @annotation ["scriptable", "static"]
- *
- * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
- */
-ret_t y_axis_register(void);
-
 #define Y_AXIS(widget) ((y_axis_t*)(y_axis_cast(WIDGET(widget))))
+
+/*public for subclass and runtime type check*/
+TK_EXTERN_VTABLE(y_axis);
 
 END_C_DECLS
 

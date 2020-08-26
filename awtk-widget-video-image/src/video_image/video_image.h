@@ -30,6 +30,27 @@ BEGIN_C_DECLS
  * @parent widget_t
  * @annotation ["scriptable","design","widget"]
  * 帧间差异视频播放控件
+ * 
+ * 由于该控件使用的视频是特别资源，需要 diff_image_to_video_gen.exe 工具生成的
+ * 所以详细用法请看 awtk-widget-calendar-month/docs/video_image控件用法.md。
+ * 
+ * 在xml中使用"video\_image"标签创建video\_image控件。如：
+ *
+ * ```xml
+ * <!-- ui -->
+ * <video_image x="0" y="0" w="200" h="200" />
+ * ```
+ *
+ * 可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：
+ *
+ * ```xml
+ * <!-- style -->
+ * <video_image>
+ *   <style name="default">
+ *     <normal />
+ *   </style>
+ * </video_image>
+ * ```
  */
 typedef struct _video_image_t {
   widget_t widget;
@@ -39,7 +60,7 @@ typedef struct _video_image_t {
    * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable"]
    * 视频名字。
    */
-  char *video_name;
+  char* video_name;
 
   /**
    * @property {bool_t} auto_play
@@ -67,7 +88,7 @@ typedef struct _video_image_t {
   uint32_t frame_number_max;
   uint32_t frame_number_curr;
 
-  asset_info_t *video_asset_info;
+  asset_info_t* video_asset_info;
 
 } video_image_t;
 
@@ -83,7 +104,7 @@ typedef struct _video_image_t {
  *
  * @return {widget_t*} video_image对象。
  */
-widget_t *video_image_create(widget_t *parent, xy_t x, xy_t y, wh_t w, wh_t h);
+widget_t* video_image_create(widget_t* parent, xy_t x, xy_t y, wh_t w, wh_t h);
 
 /**
  * @method video_image_cast
@@ -93,7 +114,7 @@ widget_t *video_image_create(widget_t *parent, xy_t x, xy_t y, wh_t w, wh_t h);
  *
  * @return {widget_t*} video_image对象。
  */
-widget_t *video_image_cast(widget_t *widget);
+widget_t* video_image_cast(widget_t* widget);
 
 /**
  * @method video_image_set_video_name
@@ -104,7 +125,7 @@ widget_t *video_image_cast(widget_t *widget);
  *
  * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
  */
-ret_t video_image_set_video_name(widget_t *widget, const char *video_name);
+ret_t video_image_set_video_name(widget_t* widget, const char* video_name);
 
 /**
  * @method video_image_set_auto_play
@@ -115,7 +136,7 @@ ret_t video_image_set_video_name(widget_t *widget, const char *video_name);
  *
  * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
  */
-ret_t video_image_set_auto_play(widget_t *widget, bool_t auto_play);
+ret_t video_image_set_auto_play(widget_t* widget, bool_t auto_play);
 
 /**
  * @method video_image_set_delay_paly
@@ -126,7 +147,7 @@ ret_t video_image_set_auto_play(widget_t *widget, bool_t auto_play);
  *
  * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
  */
-ret_t video_image_set_delay_paly(widget_t *widget, uint32_t delay_paly);
+ret_t video_image_set_delay_paly(widget_t* widget, uint32_t delay_paly);
 
 #define VIDEO_IMAGE_PROP_VIDEO_NAME "video_name"
 #define VIDEO_IMAGE_PROP_AUTO_PLAY "auto_play"
@@ -134,8 +155,7 @@ ret_t video_image_set_delay_paly(widget_t *widget, uint32_t delay_paly);
 
 #define WIDGET_TYPE_VIDEO_IMAGE "video_image"
 
-#define VIDEO_IMAGE(widget)                                                    \
-  ((video_image_t *)(video_image_cast(WIDGET(widget))))
+#define VIDEO_IMAGE(widget) ((video_image_t*)(video_image_cast(WIDGET(widget))))
 
 /*public for subclass and runtime type check*/
 TK_EXTERN_VTABLE(video_image);
