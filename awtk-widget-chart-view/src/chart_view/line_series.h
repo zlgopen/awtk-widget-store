@@ -47,9 +47,11 @@ BEGIN_C_DECLS
  * line_border_width 用于设置序列曲线的宽度；
  * area_color 用于设置序列曲线与坐标轴围成的区域的颜色；
  * symbol_bg_image 用于设置序列点的背景图片；
+ * symbol_bg_image_draw_type 用于设置序列点的背景图片的显示方式；
  * symbol_bg_color 用于设置序列点的背景颜色；
  * symbol_border_color 用于设置序列点的边框颜色；
- * symbol_border_width 用于设置序列点的边框宽度。
+ * symbol_border_width 用于设置序列点的边框宽度；
+ * symbol_round_radius 用于设置序列点的圆角。
  * 如：
  *
  * ```xml
@@ -57,7 +59,7 @@ BEGIN_C_DECLS
  * <line_series>
  *   <style name="default">
  *     <normal line_border_color="#338fff" line_border_width="1" area_color="#338fff66"
- * symbol_border_color="#338fff" symbol_bg_color="#ffffff"/>
+ * symbol_border_color="#338fff" symbol_bg_color="#ffffff" symbol_round_radius="4"/>
  *   </style>
  * </line_series>
  * ```

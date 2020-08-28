@@ -66,7 +66,13 @@ static ret_t video_image_init_bitmap(video_image_t *video_image) {
 
     ret = diff_to_image_video_image_init(
         video_asset_info->data, video_asset_info->size, &(video_image->bitmap));
-
+#ifdef WITH_NANOVG_GPU
+    if (ret == RET_OK && video_image->bitmap.format != BITMAP_FMT_RGBA8888) {
+      ret = RET_FAIL;
+      video_image_bitmap_dispose(&video_image->bitmap);
+      // assert(!"opengl only supported video's format RGBA8888");
+    }
+#endif
     if (ret == RET_OK) {
       video_image->frame_interval = *video_image->bitmap.gif_delays;
       video_image->frame_number_max = video_image->bitmap.gif_frame_h;
@@ -74,6 +80,8 @@ static ret_t video_image_init_bitmap(video_image_t *video_image) {
 
       video_image->is_ready = TRUE;
       video_image->is_playing = FALSE;
+    } else {
+      video_image->is_ready = FALSE;
     }
     return ret;
   }
@@ -139,14 +147,11 @@ static ret_t video_image_set_prop(widget_t *widget, const char *name,
                        RET_BAD_PARAMS);
 
   if (tk_str_eq(VIDEO_IMAGE_PROP_VIDEO_NAME, name)) {
-    video_image_set_video_name(widget, value_str(v));
-    return RET_OK;
+    return video_image_set_video_name(widget, value_str(v));
   } else if (tk_str_eq(VIDEO_IMAGE_PROP_AUTO_PLAY, name)) {
-    video_image_set_auto_play(widget, value_bool(v));
-    return RET_OK;
+    return video_image_set_auto_play(widget, value_bool(v));
   } else if (tk_str_eq(VIDEO_IMAGE_PROP_DELAY_PALY, name)) {
-    video_image_set_delay_paly(widget, value_uint32(v));
-    return RET_OK;
+    return video_image_set_delay_paly(widget, value_uint32(v));
   }
 
   return RET_NOT_FOUND;

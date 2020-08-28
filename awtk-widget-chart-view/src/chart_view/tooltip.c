@@ -47,7 +47,9 @@ void tooltip_parse_symbol_params(void* ctx, const char* name, const value_t* v) 
   tooltip_t* tooltip = TOOLTIP(ctx);
   ENSURE(tooltip != NULL && name != NULL && v != NULL);
 
-  if (tk_str_eq(name, "show")) {
+  if (tk_str_eq(name, "size")) {
+    tooltip->symbol.size = value_float(v);
+  } else if (tk_str_eq(name, "show")) {
     tooltip->symbol.show = value_bool(v);
   }
 }
@@ -191,16 +193,22 @@ ret_t tooltip_draw_line(widget_t* widget, canvas_t* c, bool_t vertical) {
   return RET_OK;
 }
 
-ret_t tooltip_draw_symbol(widget_t* widget, canvas_t* c) {
+ret_t tooltip_draw_symbol(widget_t* widget, canvas_t* c, uint32_t symbol_size) {
+  rect_t r;
   point_t p;
   int32_t index;
   color_t trans = color_init(0, 0, 0, 0);
   color_t bg_color, bd_color;
   float_t border_width;
+  uint32_t radius;
+  bitmap_t img;
+  bitmap_t* pimg = &img;
+  const char* image_name;
+  image_draw_type_t draw_type;
   style_t* style;
   tooltip_t* tooltip = TOOLTIP(widget);
-  vgcanvas_t* vg = canvas_get_vgcanvas(c);
-  return_value_if_fail(tooltip != NULL && vg != NULL, RET_BAD_PARAMS);
+  return_value_if_true(symbol_size == 0, RET_OK);
+  return_value_if_fail(tooltip != NULL && c != NULL, RET_BAD_PARAMS);
 
   style = widget->astyle;
   return_value_if_fail(style != NULL, RET_BAD_PARAMS);
@@ -208,14 +216,18 @@ ret_t tooltip_draw_symbol(widget_t* widget, canvas_t* c) {
   bg_color = style_get_color(style, STYLE_ID_TOOLTIP_SYMBOL_BG_COLOR, trans);
   bd_color = style_get_color(style, STYLE_ID_TOOLTIP_SYMBOL_BORDER_COLOR, trans);
   border_width = style_get_int(style, STYLE_ID_TOOLTIP_SYMBOL_BORDER_WIDTH, 1);
+  radius = style_get_int(style, STYLE_ID_TOOLTIP_SYMBOL_ROUND_RADIUS, 0);
+  image_name = style_get_str(style, STYLE_ID_TOOLTIP_SYMBOL_BG_IMAGE, NULL);
+  draw_type = (image_draw_type_t)style_get_int(style, STYLE_ID_TOOLTIP_SYMBOL_BG_IMAGE_DRAW_TYPE,
+                                               IMAGE_DRAW_CENTER);
 
-  if (bg_color.rgba.a || bd_color.rgba.a) {
-    vgcanvas_save(vg);
-    vgcanvas_translate(vg, c->ox, c->oy);
-    vgcanvas_set_fill_color(vg, bg_color);
-    vgcanvas_set_stroke_color(vg, bd_color);
-    vgcanvas_set_line_width(vg, border_width);
+  if (image_name != NULL) {
+    if (image_name[0] == '\0' || widget_load_image(widget, image_name, pimg) != RET_OK) {
+      pimg = NULL;
+    }
+  }
 
+  if (bg_color.rgba.a || bd_color.rgba.a || pimg != NULL) {
     WIDGET_FOR_EACH_CHILD_BEGIN(widget->parent, iter, i)
     if (widget_is_series(iter)) {
       p = tooltip->down;
@@ -226,22 +238,14 @@ ret_t tooltip_draw_symbol(widget_t* widget, canvas_t* c) {
         widget_to_local(widget, &p);
 
         if (p.x == tooltip->down.x || p.y == tooltip->down.y) {
-          vgcanvas_begin_path(vg);
-          _VGCANVAS_ARC(vg, p.x, p.y, 5, 0, 2 * M_PI, FALSE);
-
-          if (bg_color.rgba.a) {
-            vgcanvas_fill(vg);
-          }
-
-          if (bd_color.rgba.a) {
-            vgcanvas_stroke(vg);
-          }
+          r = rect_init(p.x - symbol_size, p.y - symbol_size, symbol_size * 2 + 1,
+                        symbol_size * 2 + 1);
+          chart_utils_draw_a_symbol(c, &r, bg_color, bd_color, border_width, radius, pimg,
+                                    draw_type);
         }
       }
     }
     WIDGET_FOR_EACH_CHILD_END()
-
-    vgcanvas_restore(vg);
   }
 
   return RET_OK;
@@ -444,10 +448,18 @@ static ret_t tooltip_on_paint_self(widget_t* widget, canvas_t* c) {
   return_value_if_true(!tooltip->moved, RET_OK);
   return_value_if_true(!tooltip_is_in_series(widget), RET_OK);
 
-  tooltip_draw_line(widget, c, vertical);
+  if (tooltip->line.show) {
+    tooltip_draw_line(widget, c, vertical);
+  }
+
   if (tooltip->wa_move == NULL) {
-    tooltip_draw_symbol(widget, c);
-    tooltip_draw_tip(widget, c);
+    if (tooltip->symbol.show) {
+      tooltip_draw_symbol(widget, c, tooltip->symbol.size);
+    }
+
+    if (tooltip->tip.show) {
+      tooltip_draw_tip(widget, c);
+    }
   }
 
   return RET_OK;
@@ -511,6 +523,11 @@ widget_t* tooltip_create(widget_t* parent, const widget_vtable_t* vt, xy_t x, xy
   widget_t* widget = widget_create(parent, vt, x, y, w, h);
   tooltip_t* tooltip = TOOLTIP(widget);
   return_value_if_fail(tooltip != NULL, NULL);
+
+  tooltip->line.show = TRUE;
+  tooltip->tip.show = TRUE;
+  tooltip->symbol.show = TRUE;
+  tooltip->symbol.size = 3;
 
   return widget;
 }

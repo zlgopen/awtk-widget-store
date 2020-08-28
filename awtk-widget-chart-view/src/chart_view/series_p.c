@@ -30,14 +30,9 @@
 #include "x_axis.h"
 #include "y_axis.h"
 
-#ifdef WITH_NANOVG_SOFT
 #include "../base/wuxiaolin_draw_line.inc"
 #define _CANVAS_DRAW_LINE(c, x1, y1, x2, y2) \
   wuxiaolin_draw_line(c, c->ox + (x1), c->oy + (y1), c->ox + (x2), c->oy + (y2))
-#define WITH_CANVAS_DRAW_LINE
-#else
-#define _CANVAS_DRAW_LINE
-#endif /*WITH_NANOVG_SOFT*/
 
 #define _COLOR_BLACK color_init(0, 0, 0, 0xff)
 #define _COLOR_TRANS color_init(0, 0, 0, 0)
@@ -351,11 +346,9 @@ ret_t series_p_draw_line(widget_t* widget, canvas_t* c, vgcanvas_t* vg, style_t*
   float_t border_width;
   int32_t i;
   series_p_draw_data_t* d = NULL;
-#ifdef WITH_CANVAS_DRAW_LINE
-  bool_t use_canvas = TRUE;
-#else
-  bool_t use_canvas = FALSE;
-#endif
+  bool_t use_canvas =
+      c->lcd->type != LCD_VGCANVAS;  // 非 OpenGL 下默认使用打点的形式画线，以提高效率
+
   assert(widget != NULL && style != NULL && fifo != NULL);
   assert(index < fifo->size && index + size - 1 < fifo->size);
   return_value_if_true(fifo->size == 0 || size == 0, RET_OK);
@@ -407,11 +400,9 @@ ret_t series_p_draw_line_colorful(widget_t* widget, canvas_t* c, vgcanvas_t* vg,
   int32_t i;
   series_p_colorful_draw_data_t* d = NULL;
   series_p_colorful_draw_data_t* dprev = NULL;
-#ifdef WITH_CANVAS_DRAW_LINE
-  bool_t use_canvas = TRUE;
-#else
-  bool_t use_canvas = FALSE;
-#endif
+  bool_t use_canvas =
+      c->lcd->type != LCD_VGCANVAS;  // 非 OpenGL 下默认使用打点的形式画线，以提高效率
+
   assert(widget != NULL && style != NULL && fifo != NULL);
   assert(index < fifo->size && index + size - 1 < fifo->size);
   return_value_if_true(fifo->size == 0 || size == 0, RET_OK);
@@ -482,8 +473,9 @@ ret_t series_p_draw_line_area(widget_t* widget, vgcanvas_t* vg, style_t* style, 
   int32_t i;
   series_p_draw_data_t* d = NULL;
   series_p_draw_data_t* d0 = NULL;
-  assert(widget != NULL && vg != NULL && style != NULL && fifo != NULL);
+  assert(widget != NULL && style != NULL && fifo != NULL);
   assert(index < fifo->size && index + size - 1 < fifo->size);
+  return_value_if_fail(vg != NULL, RET_BAD_PARAMS);
   return_value_if_true(fifo->size == 0 || size == 0, RET_OK);
 
   color = style_get_color(style, STYLE_ID_SERIES_AREA_COLOR, trans);
@@ -519,8 +511,9 @@ ret_t series_p_draw_line_area_colorful(widget_t* widget, vgcanvas_t* vg, style_t
   series_p_colorful_draw_data_t* d = NULL;
   series_p_colorful_draw_data_t* d0 = NULL;
   series_p_colorful_draw_data_t* dprev = NULL;
-  assert(widget != NULL && vg != NULL && style != NULL && fifo != NULL);
+  assert(widget != NULL && style != NULL && fifo != NULL);
   assert(index < fifo->size && index + size - 1 < fifo->size);
+  return_value_if_fail(vg != NULL, RET_BAD_PARAMS);
   return_value_if_true(fifo->size == 0 || size == 0, RET_OK);
 
   dprev = d0 = d = (series_p_colorful_draw_data_t*)(fifo_at(fifo, index + size - 1));
@@ -584,8 +577,9 @@ ret_t series_p_draw_smooth_line(widget_t* widget, vgcanvas_t* vg, style_t* style
   int32_t i;
   series_p_draw_data_t* d = NULL;
   series_p_draw_data_t* dprev = NULL;
-  assert(widget != NULL && vg != NULL && style != NULL && fifo != NULL);
+  assert(widget != NULL && style != NULL && fifo != NULL);
   assert(index < fifo->size && index + size - 1 < fifo->size);
+  return_value_if_fail(vg != NULL, RET_BAD_PARAMS);
   return_value_if_true(fifo->size == 0 || size == 0, RET_OK);
 
   color = style_get_color(style, STYLE_ID_SERIES_LINE_BORDER_COLOR, trans);
@@ -623,8 +617,9 @@ ret_t series_p_draw_smooth_line_colorful(widget_t* widget, vgcanvas_t* vg, style
   int32_t i;
   series_p_colorful_draw_data_t* d = NULL;
   series_p_colorful_draw_data_t* dprev = NULL;
-  assert(widget != NULL && vg != NULL && style != NULL && fifo != NULL);
+  assert(widget != NULL && style != NULL && fifo != NULL);
   assert(index < fifo->size && index + size - 1 < fifo->size);
+  return_value_if_fail(vg != NULL, RET_BAD_PARAMS);
   return_value_if_true(fifo->size == 0 || size == 0, RET_OK);
 
   border_width = style_get_int(style, STYLE_ID_SERIES_LINE_BORDER_WIDTH, 1);
@@ -697,8 +692,9 @@ ret_t series_p_draw_smooth_line_area(widget_t* widget, vgcanvas_t* vg, style_t* 
   series_p_draw_data_t* d = NULL;
   series_p_draw_data_t* d0 = NULL;
   series_p_draw_data_t* dprev = NULL;
-  assert(widget != NULL && vg != NULL && style != NULL && fifo != NULL);
+  assert(widget != NULL && style != NULL && fifo != NULL);
   assert(index < fifo->size && index + size - 1 < fifo->size);
+  return_value_if_fail(vg != NULL, RET_BAD_PARAMS);
   return_value_if_true(fifo->size == 0 || size == 0, RET_OK);
 
   color = style_get_color(style, STYLE_ID_SERIES_AREA_COLOR, trans);
@@ -740,8 +736,9 @@ ret_t series_p_draw_smooth_line_area_colorful(widget_t* widget, vgcanvas_t* vg, 
   series_p_colorful_draw_data_t* d = NULL;
   series_p_colorful_draw_data_t* d0 = NULL;
   series_p_colorful_draw_data_t* dprev = NULL;
-  assert(widget != NULL && vg != NULL && style != NULL && fifo != NULL);
+  assert(widget != NULL && style != NULL && fifo != NULL);
   assert(index < fifo->size && index + size - 1 < fifo->size);
+  return_value_if_fail(vg != NULL, RET_BAD_PARAMS);
   return_value_if_true(fifo->size == 0 || size == 0, RET_OK);
 
   dprev = d0 = d = (series_p_colorful_draw_data_t*)(fifo_at(fifo, index + size - 1));
@@ -826,94 +823,88 @@ ret_t series_p_draw_smooth_line_area_colorful(widget_t* widget, vgcanvas_t* vg, 
   return RET_OK;
 }
 
-ret_t series_p_draw_symbol(widget_t* widget, vgcanvas_t* vg, style_t* style, float_t ox, float_t oy,
+ret_t series_p_draw_symbol(widget_t* widget, canvas_t* c, style_t* style, float_t ox, float_t oy,
                            fifo_t* fifo, uint32_t index, uint32_t size, float_t symbol_size) {
+  rect_t r;
   color_t trans = color_init(0, 0, 0, 0);
   color_t bg_color, bd_color;
   float_t border_width;
+  uint32_t radius;
   bitmap_t img;
+  bitmap_t* pimg = &img;
   const char* image_name;
+  image_draw_type_t draw_type;
   int32_t i;
   series_p_draw_data_t* d = NULL;
-  assert(widget != NULL && vg != NULL && style != NULL && fifo != NULL);
+  assert(widget != NULL && c != NULL && style != NULL && fifo != NULL);
   assert(index < fifo->size && index + size - 1 < fifo->size);
-  return_value_if_true(fifo->size == 0 || size == 0, RET_OK);
+  return_value_if_true(fifo->size == 0 || size == 0 || symbol_size == 0, RET_OK);
 
   bg_color = style_get_color(style, STYLE_ID_SERIES_SYMBOL_BG_COLOR, trans);
   bd_color = style_get_color(style, STYLE_ID_SERIES_SYMBOL_BORDER_COLOR, trans);
   border_width = style_get_int(style, STYLE_ID_SERIES_SYMBOL_BORDER_WIDTH, 1);
+  radius = style_get_int(style, STYLE_ID_SERIES_SYMBOL_ROUND_RADIUS, 0);
   image_name = style_get_str(style, STYLE_ID_SERIES_SYMBOL_BG_IMAGE, NULL);
+  draw_type = (image_draw_type_t)style_get_int(style, STYLE_ID_SERIES_SYMBOL_BG_IMAGE_DRAW_TYPE,
+                                               IMAGE_DRAW_CENTER);
 
   if (image_name != NULL) {
-    if (widget_load_image(widget, image_name, &img) != RET_OK) {
-      image_name = NULL;
+    if (image_name[0] == '\0' || widget_load_image(widget, image_name, pimg) != RET_OK) {
+      pimg = NULL;
     }
   }
 
-  if (bg_color.rgba.a || bd_color.rgba.a || image_name != NULL) {
-    d = (series_p_draw_data_t*)(fifo_at(fifo, index));
-    vgcanvas_set_fill_color(vg, bg_color);
-    vgcanvas_set_stroke_color(vg, bd_color);
-    vgcanvas_set_line_width(vg, border_width);
-
+  if (bg_color.rgba.a || bd_color.rgba.a || pimg != NULL) {
     for (i = index; i < index + size; i++) {
       d = (series_p_draw_data_t*)(fifo_at(fifo, i));
-      vgcanvas_begin_path(vg);
-      _VGCANVAS_ARC(vg, ox + d->x, oy + d->y, symbol_size, 0, 2 * M_PI, FALSE);
+      r = rect_init(ox + d->x - symbol_size, oy + d->y - symbol_size, symbol_size * 2 + 1,
+                    symbol_size * 2 + 1);
 
-      if (bg_color.rgba.a) {
-        vgcanvas_fill(vg);
-      }
-
-      if (bd_color.rgba.a) {
-        vgcanvas_stroke(vg);
-      }
-
-      if (image_name != NULL) {
-        vgcanvas_paint(vg, FALSE, &img);
-      }
+      chart_utils_draw_a_symbol(c, &r, bg_color, bd_color, border_width, radius, pimg, draw_type);
     }
   }
 
   return RET_OK;
 }
 
-ret_t series_p_draw_symbol_colorful(widget_t* widget, vgcanvas_t* vg, style_t* style, float_t ox,
+ret_t series_p_draw_symbol_colorful(widget_t* widget, canvas_t* c, style_t* style, float_t ox,
                                     float_t oy, fifo_t* fifo, uint32_t index, uint32_t size,
                                     float_t symbol_size) {
+  rect_t r;
   color_t trans = color_init(0, 0, 0, 0);
   color_t bd_color;
   float_t border_width;
+  uint32_t radius;
+  bitmap_t img;
+  bitmap_t* pimg = &img;
+  const char* image_name;
+  image_draw_type_t draw_type;
   int32_t i;
   series_p_colorful_draw_data_t* d = NULL;
-  assert(widget != NULL && vg != NULL && style != NULL && fifo != NULL);
+  assert(c != NULL);
+  assert(widget != NULL && style != NULL && fifo != NULL);
   assert(index < fifo->size && index + size - 1 < fifo->size);
-  return_value_if_true(fifo->size == 0 || size == 0, RET_OK);
+  return_value_if_true(fifo->size == 0 || size == 0 || symbol_size == 0, RET_OK);
 
   bd_color = style_get_color(style, STYLE_ID_SERIES_SYMBOL_BORDER_COLOR, trans);
   border_width = style_get_int(style, STYLE_ID_SERIES_SYMBOL_BORDER_WIDTH, 1);
+  radius = style_get_int(style, STYLE_ID_SERIES_SYMBOL_ROUND_RADIUS, 0);
+  image_name = style_get_str(style, STYLE_ID_SERIES_SYMBOL_BG_IMAGE, NULL);
+  draw_type = (image_draw_type_t)style_get_int(style, STYLE_ID_SERIES_SYMBOL_BG_IMAGE_DRAW_TYPE,
+                                               IMAGE_DRAW_CENTER);
 
-  vgcanvas_set_stroke_color(vg, bd_color);
-  vgcanvas_set_line_width(vg, border_width);
-
-  d = (series_p_colorful_draw_data_t*)(fifo_at(fifo, index));
+  if (image_name != NULL) {
+    if (image_name[0] == '\0' || widget_load_image(widget, image_name, &img) != RET_OK) {
+      pimg = NULL;
+    }
+  }
 
   for (i = index; i < index + size; i++) {
     d = (series_p_colorful_draw_data_t*)(fifo_at(fifo, i));
+    r = rect_init(ox + d->x - symbol_size, oy + d->y - symbol_size, symbol_size * 2 + 1,
+                  symbol_size * 2 + 1);
 
-    if (d->c.rgba.a || bd_color.rgba.a) {
-      vgcanvas_set_fill_color(vg, d->c);
-      vgcanvas_begin_path(vg);
-      _VGCANVAS_ARC(vg, ox + d->x, oy + d->y, symbol_size, 0, 2 * M_PI, FALSE);
-
-      if (d->c.rgba.a) {
-        vgcanvas_fill(vg);
-      }
-
-      if (bd_color.rgba.a) {
-        vgcanvas_stroke(vg);
-      }
-    }
+    chart_utils_draw_a_symbol(c, &r, d->c, bd_color, border_width, radius, pimg, draw_type);
   }
 
   return RET_OK;
@@ -924,9 +915,13 @@ static ret_t series_p_draw_data_to_rect(void* data, float_t ox, float_t oy, uint
   series_p_draw_data_t* d = (series_p_draw_data_t*)(data);
   assert(d != NULL && r != NULL);
   if (vertical) {
-    *r = rect_init(ox + d->x, oy, bar_width, d->y);
+    xy_t y = oy;
+    wh_t h = d->y + (d->y >= 0 ? 1 : -1);
+    *r = rect_init(ox + d->x, y, bar_width, h);
   } else {
-    *r = rect_init(ox, oy + d->y, d->x, bar_width);
+    xy_t x = ox;
+    wh_t w = d->x + (d->x >= 0 ? 1 : -1);
+    *r = rect_init(x, oy + d->y, w, bar_width);
   }
   return RET_OK;
 }
@@ -936,9 +931,11 @@ static ret_t series_p_minmax_draw_data_to_rect(void* data, float_t ox, float_t o
   series_p_minmax_draw_data_t* d = (series_p_minmax_draw_data_t*)(data);
   assert(d != NULL && r != NULL);
   if (vertical) {
-    *r = rect_init(ox + d->xmin, oy + d->ymin, bar_width, d->ymax - d->ymin + 1);
+    wh_t h = d->ymax >= d->ymin ? (d->ymax - d->ymin + 1) : -(d->ymin - d->ymax + 1);
+    *r = rect_init(ox + d->xmin, oy + d->ymin, bar_width, h);
   } else {
-    *r = rect_init(ox + d->xmin, oy + d->ymin, d->xmax - d->xmin + 1, bar_width);
+    wh_t w = d->xmax >= d->xmin ? (d->xmax - d->xmin + 1) : -(d->xmin - d->xmax + 1);
+    *r = rect_init(ox + d->xmin, oy + d->ymin, w, bar_width);
   }
   return RET_OK;
 }
@@ -1392,14 +1389,12 @@ ret_t series_p_to_local(widget_t* widget, uint32_t index, point_t* p) {
     series->vt->draw_data_info->set_as_axis12(draw_data, 0, series->fifo, index, vmin, vrange,
                                               v->draw_rect.h, v->inverse);
     p->y = o.y + series->vt->draw_data_info->get_axis2(draw_data);
-    p->x = s->inverse ? (o.x - offset * sinterval - soffset + 1)
-                      : (o.x + offset * sinterval + soffset - 1);
+    p->x = s->inverse ? (o.x - offset * sinterval - soffset) : (o.x + offset * sinterval + soffset);
   } else {
     series->vt->draw_data_info->set_as_axis21(draw_data, 0, series->fifo, index, vmin, vrange,
                                               v->draw_rect.w, v->inverse);
     p->x = o.x + series->vt->draw_data_info->get_axis1(draw_data);
-    p->y = s->inverse ? (o.y + offset * sinterval + soffset - 1)
-                      : (o.y - offset * sinterval - soffset + 1);
+    p->y = s->inverse ? (o.y + offset * sinterval + soffset) : (o.y - offset * sinterval - soffset);
   }
 
   TKMEM_FREE(draw_data);
@@ -1596,11 +1591,11 @@ ret_t series_p_get_origin_point(widget_t* widget, widget_t* saxis, widget_t* vax
   }
 
   if (tk_str_eq(widget_get_type(saxis), WIDGET_TYPE_X_AXIS)) {
-    voffset = voffset * vruler->h;
+    voffset = voffset * (vruler->h - 1);
     p->x = inverse ? (sruler->x + sruler->w - 1) : sruler->x;
     p->y = v->inverse ? (vruler->y + voffset) : (vruler->y + vruler->h - 1 - voffset);
   } else {
-    voffset = voffset * vruler->w;
+    voffset = voffset * (vruler->w - 1);
     p->y = inverse ? sruler->y : (sruler->y + sruler->h - 1);
     p->x = v->inverse ? (vruler->x + vruler->w - 1 - voffset) : (vruler->x + voffset);
   }

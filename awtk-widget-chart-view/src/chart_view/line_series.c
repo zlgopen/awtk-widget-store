@@ -145,7 +145,7 @@ static ret_t line_series_set_value(widget_t* widget, const char* value) {
 
   tokenizer_init(&tokenizer, value, strlen(value), ",");
 
-  while (tokenizer_has_more(&tokenizer)) {
+  while (tokenizer_has_more(&tokenizer) && fifo->size < fifo->capacity) {
     token = tokenizer_next(&tokenizer);
     v = tk_atof(token);
     fifo_push(fifo, &v);
@@ -190,24 +190,26 @@ ret_t line_series_draw_one_series(widget_t* widget, canvas_t* c, float_t ox, flo
                                   series_p_draw_smooth_line_area_t draw_smooth_area,
                                   series_p_draw_symbol_t draw_symbol) {
   rect_t r_save;
-  rect_t r = *clip_rect;
-  vgcanvas_t* vg;
+  rect_t r;
+  vgcanvas_t* vg = canvas_get_vgcanvas(c);
   line_series_t* series = LINE_SERIES(widget);
   bool_t vertical = series_p_is_vertical(widget);
   return_value_if_fail(series != NULL, RET_BAD_PARAMS);
 
   canvas_get_clip_rect(c, &r_save);
 
+  r = rect_intersect(chart_utils_rect_fix(clip_rect), &r_save);
+
   if (series->line.show || series->area.show) {
     canvas_set_clip_rect(c, &r);
 
-    vg = canvas_get_vgcanvas(c);
-    assert(vg != NULL);
-    vgcanvas_save(vg);
-    vgcanvas_translate(vg, c->ox, c->oy);
+    if (vg != NULL) {
+      vgcanvas_save(vg);
+      vgcanvas_translate(vg, c->ox, c->oy);
 
-    // 加0.5, 避免色块边缘出现虚化（注意, 色块的区域为rect(x + 0.5, y + 0.5, w, h)）
-    vgcanvas_translate(vg, 0.5, 0.5);
+      // 加0.5, 避免色块边缘出现虚化（注意, 色块的区域为rect(x + 0.5, y + 0.5, w, h)）
+      vgcanvas_translate(vg, 0.5, 0.5);
+    }
 
     if (series->line.show) {
       if (series->line.smooth) {
@@ -225,7 +227,9 @@ ret_t line_series_draw_one_series(widget_t* widget, canvas_t* c, float_t ox, flo
       }
     }
 
-    vgcanvas_restore(vg);
+    if (vg != NULL) {
+      vgcanvas_restore(vg);
+    }
   }
 
   if (series->symbol.show) {
@@ -248,13 +252,7 @@ ret_t line_series_draw_one_series(widget_t* widget, canvas_t* c, float_t ox, flo
     }
 
     canvas_set_clip_rect(c, &r);
-
-    vg = canvas_get_vgcanvas(c);
-    assert(vg != NULL);
-    vgcanvas_save(vg);
-    vgcanvas_translate(vg, c->ox, c->oy);
-    draw_symbol(widget, vg, widget->astyle, ox, oy, fifo, index, size, series->symbol.size);
-    vgcanvas_restore(vg);
+    draw_symbol(widget, c, widget->astyle, ox, oy, fifo, index, size, series->symbol.size);
   }
 
   canvas_set_clip_rect(c, &r_save);

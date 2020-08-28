@@ -10,5 +10,5 @@ ARGUMENTS['LCD'] = '800_480'
 helper = app.Helper(ARGUMENTS);
 helper.set_dll_def('src/video_image.def').set_libs(['video_image']).call(DefaultEnvironment)
 
-SConscriptFiles = ['src/SConscript', 'demos/SConscript', 'tests/SConscript']
+SConscriptFiles = ['src/SConscript', 'demos/SConscript', 'tools/diff_image_to_video_gen/SConscript', 'tests/SConscript']
 SConscript(SConscriptFiles)

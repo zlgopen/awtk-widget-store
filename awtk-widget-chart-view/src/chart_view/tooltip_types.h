@@ -40,9 +40,13 @@ typedef struct _tooltip_line_params_t {
 
 /**
  * @class tooltip_symbol_params_t
- * 指示序列点位置的点。
+ * 标记点。
  */
 typedef struct _tooltip_symbol_params_t {
+  /**
+   * 大小
+   */
+  float_t size;
   /**
    * 是否显示。
    */
@@ -93,13 +97,13 @@ typedef struct _tooltip_tip_params_t {
 
 /**
  * @const TOOLTIP_PROP_SYMBOL
- * 指示序列点位置的点
+ * 标记点
  */
 #define TOOLTIP_PROP_SYMBOL "symbol"
 
 /**
  * @const TOOLTIP_PROP_SYMBOL_SHOW
- * 指示序列点位置的点是否显示
+ * 标记点是否显示
  */
 #define TOOLTIP_PROP_SYMBOL_SHOW "symbol:show"
 
@@ -136,21 +140,39 @@ typedef struct _tooltip_tip_params_t {
  */
 /**
  * @const STYLE_ID_TOOLTIP_SYMBOL_BORDER_COLOR
- * 指示序列点位置的点的边框颜色
+ * 标记点的边框颜色
  */
 #define STYLE_ID_TOOLTIP_SYMBOL_BORDER_COLOR "symbol_border_color"
 
 /**
  * @const STYLE_ID_TOOLTIP_SYMBOL_BORDER_WIDTH
- * 指示序列点位置的点的边框宽度
+ * 标记点的边框宽度
  */
 #define STYLE_ID_TOOLTIP_SYMBOL_BORDER_WIDTH "symbol_border_width"
 
 /**
  * @const STYLE_ID_TOOLTIP_SYMBOL_BG_COLOR
- * 指示序列点位置的点的颜色
+ * 标记点的颜色
  */
 #define STYLE_ID_TOOLTIP_SYMBOL_BG_COLOR "symbol_bg_color"
+
+/**
+ * @const STYLE_ID_TOOLTIP_SYMBOL_ROUND_RADIUS
+ * 标记点的圆角半径
+ */
+#define STYLE_ID_TOOLTIP_SYMBOL_ROUND_RADIUS "symbol_round_radius"
+
+/**
+ * @const STYLE_ID_TOOLTIP_SYMBOL_BG_IMAGE
+ * 标记点的背景图片
+ */
+#define STYLE_ID_TOOLTIP_SYMBOL_BG_IMAGE "symbol_bg_image"
+
+/**
+ * @const STYLE_ID_TOOLTIP_SYMBOL_BG_IMAGE_DRAW_TYPE
+ * 标记点的背景图片的显示方式
+ */
+#define STYLE_ID_TOOLTIP_SYMBOL_BG_IMAGE_DRAW_TYPE "symbol_bg_image_draw_type"
 
 END_C_DECLS
 

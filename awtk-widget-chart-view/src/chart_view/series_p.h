@@ -101,9 +101,9 @@ typedef ret_t (*series_p_draw_smooth_line_t)(widget_t* widget, vgcanvas_t* vg, s
 typedef ret_t (*series_p_draw_smooth_line_area_t)(widget_t* widget, vgcanvas_t* vg, style_t* style,
                                                   float_t ox, float_t oy, fifo_t* fifo,
                                                   uint32_t index, uint32_t size, bool_t vertical);
-typedef ret_t (*series_p_draw_symbol_t)(widget_t* widget, vgcanvas_t* vg, style_t* style,
-                                        float_t ox, float_t oy, fifo_t* fifo, uint32_t index,
-                                        uint32_t size, float_t symbol_size);
+typedef ret_t (*series_p_draw_symbol_t)(widget_t* widget, canvas_t* c, style_t* style, float_t ox,
+                                        float_t oy, fifo_t* fifo, uint32_t index, uint32_t size,
+                                        float_t symbol_size);
 
 ret_t series_p_draw_line(widget_t* widget, canvas_t* c, vgcanvas_t* vg, style_t* style, float_t ox,
                          float_t oy, fifo_t* fifo, uint32_t index, uint32_t size);
@@ -128,9 +128,9 @@ ret_t series_p_draw_smooth_line_area(widget_t* widget, vgcanvas_t* vg, style_t* 
 ret_t series_p_draw_smooth_line_area_colorful(widget_t* widget, vgcanvas_t* vg, style_t* style,
                                               float_t ox, float_t oy, fifo_t* fifo, uint32_t index,
                                               uint32_t size, bool_t vertical);
-ret_t series_p_draw_symbol(widget_t* widget, vgcanvas_t* vg, style_t* style, float_t ox, float_t oy,
+ret_t series_p_draw_symbol(widget_t* widget, canvas_t* c, style_t* style, float_t ox, float_t oy,
                            fifo_t* fifo, uint32_t index, uint32_t size, float_t symbol_size);
-ret_t series_p_draw_symbol_colorful(widget_t* widget, vgcanvas_t* vg, style_t* style, float_t ox,
+ret_t series_p_draw_symbol_colorful(widget_t* widget, canvas_t* c, style_t* style, float_t ox,
                                     float_t oy, fifo_t* fifo, uint32_t index, uint32_t size,
                                     float_t symbol_size);
 ret_t series_p_draw_bar(widget_t* widget, canvas_t* c, vgcanvas_t* vg, style_t* style, float_t ox,

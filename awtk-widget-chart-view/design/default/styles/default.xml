@@ -10,23 +10,23 @@
 </y_axis>
 <tooltip>
   <style name="default">
-    <normal fg_color="#ffffff" symbol_border_color="#007acc" symbol_border_width="3" symbol_bg_color="#ffffff" bg_color="#ffffff80" border_color="#ffffff" border_width="3" margin="4" text_color="#ffffff"/>
+    <normal fg_color="#ffffff" symbol_border_color="#007acc" symbol_border_width="3" symbol_bg_color="#ffffff" symbol_round_radius="5" bg_color="#ffffff80" border_color="#ffffff" border_width="3" margin="4" text_color="#ffffff"/>
   </style>
 </tooltip>
 <line_series>
   <style name="default">
-    <normal line_border_color="#69cf5c" line_border_width="1" area_color="#69CF5C66" symbol_border_color="#FFC393" symbol_bg_color="#69CF5C"/>
+    <normal line_border_color="#69cf5c" line_border_width="1" area_color="#69CF5C66" symbol_border_color="#FFC393" symbol_bg_color="#69CF5C" symbol_round_radius="5"/>
   </style>
   <style name="s1">
-    <normal line_border_color="#69cf5c" line_border_width="1" area_color="#69cf5c66" symbol_border_color="#ffc393" symbol_bg_color="#69cf5c"/>
+    <normal line_border_color="#69cf5c" line_border_width="1" area_color="#69cf5c66" symbol_border_color="#ffc393" symbol_bg_color="#69cf5c" symbol_round_radius="5"/>
   </style>
   <style name="s2">
-    <normal line_border_color="#36b3c3" line_border_width="1" area_color="#36b3c366" symbol_border_color="#ffc393" symbol_bg_color="#36b3c3"/>
+    <normal line_border_color="#36b3c3" line_border_width="1" area_color="#36b3c366" symbol_border_color="#ffc393" symbol_bg_color="#36b3c3" symbol_round_radius="5"/>
   </style>
 </line_series>
 <line_series_colorful>
   <style name="default">
-    <normal line_border_color="#69cf5c" line_border_width="1" area_color="#69cf5c66" symbol_border_color="#FFC393" symbol_bg_color="#69CF5C"/>
+    <normal line_border_color="#69cf5c" line_border_width="1" area_color="#69cf5c66" symbol_border_color="#FFC393" symbol_bg_color="#69CF5C" symbol_round_radius="5"/>
   </style>
 </line_series_colorful>
 <bar_series>

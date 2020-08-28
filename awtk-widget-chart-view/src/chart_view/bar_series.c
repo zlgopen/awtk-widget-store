@@ -95,7 +95,7 @@ static ret_t bar_series_set_value(widget_t* widget, const char* value) {
 
   tokenizer_init(&tokenizer, value, strlen(value), ",");
 
-  while (tokenizer_has_more(&tokenizer)) {
+  while (tokenizer_has_more(&tokenizer) && fifo->size < fifo->capacity) {
     token = tokenizer_next(&tokenizer);
     v = tk_atof(token);
     fifo_push(fifo, &v);
@@ -175,9 +175,6 @@ static ret_t bar_series_calc_layout(widget_t* widget, bool_t vertical, float_t* 
     WIDGET_FOR_EACH_CHILD_END()
   }
 
-  // 从刻度的下一个像素点开始计算
-  *offset += 1;
-
   if ((!vertical) ^ AXIS(saxis)->inverse) {
     *bar_width = -(*bar_width);
     *offset = -(*offset);
@@ -256,14 +253,21 @@ ret_t bar_series_on_paint_internal(widget_t* widget, canvas_t* c, float_t ox, fl
   }
 
   canvas_get_clip_rect(c, &r_save);
+
+  r = rect_intersect(chart_utils_rect_fix(&r), &r_save);
   canvas_set_clip_rect(c, &r);
 
   vg = canvas_get_vgcanvas(c);
-  assert(vg != NULL);
-  vgcanvas_save(vg);
+  if (vg != NULL) {
+    vgcanvas_save(vg);
+  }
+
   series_p_draw_bar(widget, c, vg, widget->astyle, ox + xoffset, oy + yoffset, fifo, index, size,
                     bar_width, vertical, minmax);
-  vgcanvas_restore(vg);
+
+  if (vg != NULL) {
+    vgcanvas_restore(vg);
+  }
 
   canvas_set_clip_rect(c, &r_save);
 

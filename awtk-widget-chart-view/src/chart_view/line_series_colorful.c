@@ -54,7 +54,7 @@ static ret_t line_series_colorful_set_value(widget_t* widget, const char* value)
 
   tokenizer_init(&tokenizer, value, strlen(value), ",");
 
-  while (tokenizer_has_more(&tokenizer)) {
+  while (tokenizer_has_more(&tokenizer) && fifo->size < fifo->capacity) {
     token = tokenizer_next(&tokenizer);
     if (token[0] == '#') {
       v.c = color_parse(token);

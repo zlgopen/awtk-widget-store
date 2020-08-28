@@ -46,15 +46,18 @@ BEGIN_C_DECLS
  *
  * 可用通过style来设置控件的显示风格。其中，
  * line_border_width 用于设置序列曲线的宽度；
+ * symbol_bg_image 用于设置序列点的背景图片；
+ * symbol_bg_image_draw_type 用于设置序列点的背景图片的显示方式；
  * symbol_border_color 用于设置序列点的边框颜色；
- * symbol_border_width 用于设置序列点的边框宽度。
+ * symbol_border_width 用于设置序列点的边框宽度；
+ * symbol_round_radius 用于设置序列点的圆角。
  * 如：
  *
  * ```xml
  * <!-- style -->
  * <line_series_colorful>
  *   <style name="default">
- *     <normal line_border_width="1" symbol_border_color="#ffc393"/>
+ *     <normal line_border_width="1" symbol_border_color="#ffc393" symbol_round_radius="4"/>
  *   </style>
  * </line_series_colorful>
  * ```

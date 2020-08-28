@@ -64,6 +64,12 @@ typedef void (*chart_utils_on_object_parse_t)(void* ctx, const char* name, const
 ret_t chart_utils_object_parse(chart_utils_on_object_parse_t on_parse, void* ctx,
                                const char* object);
 
+rect_t* chart_utils_rect_fix(rect_t* rect);
+
+ret_t chart_utils_draw_a_symbol(canvas_t* c, rect_t* r, color_t bg, color_t bd,
+                                uint32_t border_width, uint32_t radius, bitmap_t* img,
+                                image_draw_type_t draw_type);
+
 END_C_DECLS
 
 #endif /*TK_CHART_UTILS_H*/

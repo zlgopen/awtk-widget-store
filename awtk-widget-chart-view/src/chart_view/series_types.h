@@ -402,9 +402,15 @@ typedef struct _series_vtable_t {
 
 /**
  * @const STYLE_ID_SERIES_SYMBOL_BG_IMAGE
- * 序列点的图片
+ * 序列点的背景图片
  */
 #define STYLE_ID_SERIES_SYMBOL_BG_IMAGE "symbol_bg_image"
+
+/**
+ * @const STYLE_ID_SERIES_SYMBOL_BG_IMAGE_DRAW_TYPE
+ * 序列点的背景图片的显示方式
+ */
+#define STYLE_ID_SERIES_SYMBOL_BG_IMAGE_DRAW_TYPE "symbol_bg_image_draw_type"
 
 /**
  * @const STYLE_ID_SERIES_SYMBOL_BG_COLOR
@@ -423,5 +429,11 @@ typedef struct _series_vtable_t {
  * 序列点的边框宽度
  */
 #define STYLE_ID_SERIES_SYMBOL_BORDER_WIDTH "symbol_border_width"
+
+/**
+ * @const STYLE_ID_SERIES_SYMBOL_BORDER_WIDTH
+ * 序列点的圆角半径
+ */
+#define STYLE_ID_SERIES_SYMBOL_ROUND_RADIUS "symbol_round_radius"
 
 #endif /*TK_SERIES_TYPES_H*/

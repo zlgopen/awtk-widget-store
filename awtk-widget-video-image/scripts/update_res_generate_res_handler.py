@@ -1,13 +1,23 @@
 ﻿#!/usr/bin/python
 
 import os
+import sys
 import platform
+import awtk_locator as locator
+
+sys.path.insert(0, locator.AWTK_ROOT)
+
+import awtk_config as awtk
 
 # 序列帧的文件名格式
 video_image_format="s%02d"
 
 # 视频文件保存的颜色格式，需要对应 LCD 的类型
-video_image_bitmap_format="BGR565"
+if os.environ['NANOVG_BACKEND'] == 'AGGE' or os.environ['NANOVG_BACKEND'] == 'AGG' or os.environ['VGCANVAS'] == 'CAIRO':
+  video_image_bitmap_format="BGR565"
+else :
+  video_image_bitmap_format="RGBA8888"
+print("video_image_bitmap_format:", video_image_bitmap_format);
 
 # 序列帧的帧间延迟时间（每一帧的时间间隔，单位为毫秒）
 video_image_delay=80

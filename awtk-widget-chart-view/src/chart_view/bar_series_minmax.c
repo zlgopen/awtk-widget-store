@@ -50,7 +50,7 @@ static ret_t bar_series_minmax_set_value(widget_t* widget, const char* value) {
 
   tokenizer_init(&tokenizer, value, strlen(value), ",");
 
-  while (tokenizer_has_more(&tokenizer)) {
+  while (tokenizer_has_more(&tokenizer) && fifo->size < fifo->capacity) {
     token = tokenizer_next(&tokenizer);
     v.min = tk_atof(token);
 

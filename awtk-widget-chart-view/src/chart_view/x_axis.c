@@ -120,7 +120,7 @@ ret_t x_axis_measure_series(widget_t* widget, void* measure_params, fifo_t* src,
 
   vmin = axis->max * axis->min > 0 ? axis->min : 0;
   vrange = axis_get_range(widget, FALSE);
-  prange = axis->draw_rect.w;
+  prange = axis->draw_rect.w - 1;
   srange = axis_get_range(params->series_axis, TRUE);
   sinterval = axis_measure_series_interval(params->series_axis);
   sinterval = AXIS(params->series_axis)->inverse ? sinterval : -sinterval;

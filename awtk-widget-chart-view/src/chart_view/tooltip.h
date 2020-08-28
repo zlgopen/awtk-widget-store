@@ -51,9 +51,12 @@ BEGIN_C_DECLS
  * spacer 用于设置提示信息的文本的行距；
  * font_name 用于设置提示信息的文本字体；
  * font_size 用于设置提示信息的文本字体大小；
+ * symbol_bg_image 用于设置标记点的背景图片；
+ * symbol_bg_image_draw_type 用于设置标记点的背景图片的显示方式；
  * symbol_bg_color 用于设置标记点的背景颜色；
  * symbol_border_color 用于设置标记点的边框颜色；
  * symbol_border_width 用于设置标记点的边框宽度；
+ * symbol_round_radius 用于设置标记点的圆角；
  * margin、margin_top等 用于设置提示框内文本与边框之间的间距。
  * 如：
  *
@@ -62,7 +65,8 @@ BEGIN_C_DECLS
  * <tooltip>
  *   <style name="default">
  *     <normal fg_color="#cccccc" bg_color="#26262666" text_color="#ffffff" round_radius="4"
- * symbol_border_color="#262626" symbol_border_width="3" symbol_bg_color="#ffffff" margin="4"/>
+ * symbol_border_color="#262626" symbol_border_width="3" symbol_bg_color="#ffffff"
+ * symbol_round_radius="4" margin="4"/>
  *   </style>
  * </tooltip>
  * ```
@@ -78,7 +82,7 @@ typedef struct _tooltip_t {
   /**
    * @property {tooltip_symbol_params_t} symbol
    * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable:custom"]
-   * 标记点的参数，比如"{show:true}"。
+   * 标记点的参数，比如"{show:true, size:3}"。
    */
   tooltip_symbol_params_t symbol;
   /**
