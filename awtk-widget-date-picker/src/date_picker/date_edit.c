@@ -171,9 +171,14 @@ static ret_t date_edit_on_pick_clicked(void* ctx, event_t* e) {
   widget_t* widget = WIDGET(ctx);
   date_edit_t* date_edit = DATE_EDIT(widget);
   widget_t* win = window_open("date_picker");
-  widget_t* wm = widget_get_window_manager(widget);
-  widget_t* date = widget_lookup(win, DATE_EDIT_CHILD_DATE, TRUE);
-  widget_t* picker = widget_lookup_by_type(win, WIDGET_TYPE_DATE_PICKER, TRUE);
+  widget_t* wm;
+  widget_t* date;
+  widget_t* picker;
+  return_value_if_fail(win != NULL, RET_FAIL);
+
+  wm = widget_get_window_manager(widget);
+  date = widget_lookup(win, DATE_EDIT_CHILD_DATE, TRUE);
+  picker = widget_lookup_by_type(win, WIDGET_TYPE_DATE_PICKER, TRUE);
 
   widget_to_screen(widget, &p);
 
