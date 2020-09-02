@@ -205,6 +205,7 @@ ret_t line_series_draw_one_series(widget_t* widget, canvas_t* c, float_t ox, flo
 
     if (vg != NULL) {
       vgcanvas_save(vg);
+      vgcanvas_clip_rect(vg, (float_t)r.x, (float_t)r.y, (float_t)r.w, (float_t)r.h);
       vgcanvas_translate(vg, c->ox, c->oy);
 
       // 加0.5, 避免色块边缘出现虚化（注意, 色块的区域为rect(x + 0.5, y + 0.5, w, h)）

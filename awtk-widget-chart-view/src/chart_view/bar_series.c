@@ -236,7 +236,7 @@ ret_t bar_series_on_paint_internal(widget_t* widget, canvas_t* c, float_t ox, fl
   float_t xoffset = 0;
   float_t yoffset = 0;
   float_t bar_width;
-  vgcanvas_t* vg;
+  vgcanvas_t* vg = canvas_get_vgcanvas(c);
   rect_t r_save;
   rect_t r = *clip_rect;
   bool_t vertical = series_p_is_vertical(widget);
@@ -257,9 +257,9 @@ ret_t bar_series_on_paint_internal(widget_t* widget, canvas_t* c, float_t ox, fl
   r = rect_intersect(chart_utils_rect_fix(&r), &r_save);
   canvas_set_clip_rect(c, &r);
 
-  vg = canvas_get_vgcanvas(c);
   if (vg != NULL) {
     vgcanvas_save(vg);
+    vgcanvas_clip_rect(vg, (float_t)r.x, (float_t)r.y, (float_t)r.w, (float_t)r.h);
   }
 
   series_p_draw_bar(widget, c, vg, widget->astyle, ox + xoffset, oy + yoffset, fifo, index, size,
