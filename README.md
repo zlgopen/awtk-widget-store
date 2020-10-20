@@ -9,9 +9,7 @@
 - awtk-widget-mask-view控件：蒙板裁剪控件，可以实现异形进度条
 - awtk-widget-number-label 控件：显示大小混排数字的控件
 - awtk-widget-qr控件：显示二维码控件
-- awtk-widget-special-edit控件：支持按键微调修改数值的EDIT控件
 - awtk-widget-table-view控件：支持大批量数据显示的表格控件
-- awtk-widget-dirty-rect-view控件：脏矩形分区容器控件，用于优化界面的刷新效率
 - awtk-widget-usb-camera 控件：Windows和Linux下USB摄像头图像显示控件
 - awtk-widget-video-image 控件：视频动画播放控件，针对小资源平台优化的快速解码方案
 
@@ -35,24 +33,20 @@
 
 ##### awtk-widget-label-rotate
 
-![](awtk-widget-label-rotate\docs\images\ui.jpg) 
+![](awtk-widget-label-rotate\docs\images\ui.jpg)
 
 ##### awtk-widget-mask-view
 
-![](awtk-widget-mask-view\docs\image\mask_view.png) 
+![](awtk-widget-mask-view\docs\image\mask_view.png)
 
 ##### awtk-widget-number-label
 
-![](awtk-widget-number-label\docs\images\ui.jpg) 
+![](awtk-widget-number-label\docs\images\ui.jpg)
 
 ##### awtk-widget-qr
 
-![](awtk-widget-qr\docs\images\demo.png) 
-
-##### awtk-widget-special-edit
-
-![](awtk-widget-special-edit\docs\ui.png)  
+![](awtk-widget-qr\docs\images\demo.png)
 
 ##### awtk-widget-table-view
 
-![](awtk-widget-table-view\docs\images\ui.png) 
+![](awtk-widget-table-view\docs\images\ui.png)
