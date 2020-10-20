@@ -20,5 +20,25 @@ TEST(NumberLabel, props) {
   ASSERT_EQ(number_label->decimal_font_size_scale, 0.6);
   ASSERT_EQ(widget_get_prop(w, NUMBER_LABEL_PROP_DECIMAL_FONT_SIZE_SCALE, &v), RET_OK);
   
+  value_set_double(&v, 1.1);
+  widget_set_prop(w, WIDGET_PROP_MIN, &v);
+  ASSERT_EQ(number_label->min, 1.1);
+  ASSERT_EQ(widget_get_prop(w, WIDGET_PROP_MIN, &v), RET_OK);
+  
+  value_set_double(&v, 10.1);
+  widget_set_prop(w, WIDGET_PROP_MAX, &v);
+  ASSERT_EQ(number_label->max, 10.1);
+  ASSERT_EQ(widget_get_prop(w, WIDGET_PROP_MAX, &v), RET_OK);
+  
+  value_set_double(&v, 0.1);
+  widget_set_prop(w, WIDGET_PROP_STEP, &v);
+  ASSERT_EQ(number_label->step, 0.1);
+  ASSERT_EQ(widget_get_prop(w, WIDGET_PROP_STEP, &v), RET_OK);
+  
+  value_set_bool(&v, TRUE);
+  widget_set_prop(w, WIDGET_PROP_READONLY, &v);
+  ASSERT_EQ(number_label->readonly, TRUE);
+  ASSERT_EQ(widget_get_prop(w, WIDGET_PROP_READONLY, &v), RET_OK);
+  
   widget_destroy(w);
 }

@@ -30,9 +30,6 @@
 #include "base/widget_factory.h"
 #include "base/window_manager.h"
 
-
-
-#ifdef WITH_NANOVG_GPU
 static int ox = 0;
 static int oy = 0;
 static lcd_draw_text_t label_draw_text = NULL;
@@ -40,7 +37,7 @@ static lcd_draw_text_t label_draw_text = NULL;
 static ret_t label_rotate_lcd_draw_text(lcd_t* lcd, const wchar_t* str, uint32_t nr, xy_t x, xy_t y) {
   return label_draw_text(lcd, str, nr, x - ox, y - oy);
 }
-#else
+
 static rect_t *label_rotate_canvas_fix_rect(const rect_t *r, rect_t *o) {
   if (r != NULL) {
     *o = *r;
@@ -128,20 +125,12 @@ static ret_t label_rotate_special_draw_glyph_impl(widget_t *widget, canvas_t *c,
 static ret_t label_rotate_special_draw_glyph(widget_t *widget, canvas_t *c,
                                          glyph_t *g, xy_t x, xy_t y) {
   rect_t src;
-  xy_t dx = 0;
-  xy_t dy = 0;
-  xy_t clip_top = c->clip_top - c->oy;
-  xy_t clip_left = c->clip_left - c->ox;
-
-  dx = tk_max(x, clip_left);
-  dy = tk_max(y, clip_top);
-
-  src.x = dx - x;
-  src.y = dy - y;
+  src.x = 0;
+  src.y = 0;
   src.w = g->w;
   src.h = g->h;
 
-  return label_rotate_special_draw_glyph_impl(widget, c, g, &src, dx, dy);
+  return label_rotate_special_draw_glyph_impl(widget, c, g, &src, x, y);
 }
 
 static ret_t label_rotate_special_draw_text(widget_t *widget, canvas_t *c,
@@ -309,8 +298,6 @@ static ret_t label_rotate_draw_text(widget_t *widget, canvas_t *c, wstr_t *text)
   return RET_OK;
 }
 
-#endif
-
 static ret_t label_rotate_set_text_style(widget_t* widget, canvas_t* c) {
   style_t* style = widget->astyle;
   color_t trans = color_init(0, 0, 0, 0);
@@ -328,51 +315,48 @@ static ret_t label_rotate_set_text_style(widget_t* widget, canvas_t* c) {
 }
 
 static ret_t label_rotate_on_paint_self(widget_t *widget, canvas_t *c) {
-#ifdef WITH_NANOVG_GPU
   ret_t ret = RET_OK;
   vgcanvas_t* vg = NULL;
   float_t rotation = 0.0f;
   float_t anchor_x = widget->w * 0.5f;
   float_t anchor_y = widget->h * 0.5f;
   label_rotate_t *label_rotate = LABEL_ROTATE(widget);
-#endif
 
   if (widget->text.size > 0 && style_is_valid(widget->astyle)) {
     wstr_t str_text = widget->text;
     label_rotate_set_text_style(widget, c);
+    if (c->lcd->type == LCD_VGCANVAS) {
+      vg = canvas_get_vgcanvas(c);
+      vgcanvas_save(vg);
+      switch (label_rotate->orientation) {
+      case LABEL_ROTATE_ORIENTATION_90:
+        rotation = TK_D2R(90);
+        break;
+      case LABEL_ROTATE_ORIENTATION_270:
+        rotation = TK_D2R(270);
+        break;
+      case LABEL_ROTATE_ORIENTATION_180:
+        rotation = TK_D2R(180);
+        break;
+      default:
+        break;
+      }
+      ox = c->ox;
+      oy = c->oy;
+      vgcanvas_translate(vg, c->ox, c->oy);
+      vgcanvas_translate(vg, anchor_x, anchor_y);
+      vgcanvas_rotate(vg, rotation);
+      vgcanvas_translate(vg, -anchor_x, -anchor_y);
 
-#ifdef WITH_NANOVG_GPU
-    vg = canvas_get_vgcanvas(c);
-    vgcanvas_save(vg);
-    switch (label_rotate->orientation) {
-    case LABEL_ROTATE_ORIENTATION_90:
-      rotation = TK_D2R(90);
-      break;
-    case LABEL_ROTATE_ORIENTATION_270:
-      rotation = TK_D2R(270);
-      break;
-    case LABEL_ROTATE_ORIENTATION_180:
-      rotation = TK_D2R(180);
-      break;
-    default:
-      break;
+      label_draw_text = c->lcd->draw_text;
+      c->lcd->draw_text = label_rotate_lcd_draw_text;
+      ret = widget_paint_helper(widget, c, NULL, &str_text);
+      c->lcd->draw_text = label_draw_text;
+      vgcanvas_restore(vg);
+      return ret;
+    } else {
+      return label_rotate_draw_text(widget, c, &str_text);
     }
-    ox = c->ox;
-    oy = c->oy;
-    vgcanvas_translate(vg, c->ox, c->oy);
-    vgcanvas_translate(vg, anchor_x, anchor_y);
-    vgcanvas_rotate(vg, rotation);
-    vgcanvas_translate(vg, -anchor_x, -anchor_y);
-
-    label_draw_text = c->lcd->draw_text;
-    c->lcd->draw_text = label_rotate_lcd_draw_text;
-    ret = widget_paint_helper(widget, c, NULL, &str_text);
-    c->lcd->draw_text = label_draw_text;
-    vgcanvas_restore(vg);
-    return ret;
-#else
-    return label_rotate_draw_text(widget, c, &str_text);
-#endif
   }
 
   return RET_OK;

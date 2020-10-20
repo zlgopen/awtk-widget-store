@@ -30,9 +30,5 @@ ret_t label_rotate_register(void) {
 }
 
 const char* label_rotate_supported_render_mode(void) {
-#ifdef WITH_NANOVG_GPU
-  return "OpenGL";
-#else
-  return "AGGE-BGR565|AGGE-BGRA8888|AGGE-MONO";
-#endif
+  return "OpenGL|AGGE-BGR565|AGGE-BGRA8888|AGGE-MONO";
 }

@@ -3,24 +3,34 @@
 import os
 import sys
 import platform
-import awtk_locator as locator
-
-sys.path.insert(0, locator.AWTK_ROOT)
-
-import awtk_config as awtk
 
 # 序列帧的文件名格式
 video_image_format="s%02d"
 
 # 视频文件保存的颜色格式，需要对应 LCD 的类型
-if os.environ['NANOVG_BACKEND'] == 'AGGE' or os.environ['NANOVG_BACKEND'] == 'AGG' or os.environ['VGCANVAS'] == 'CAIRO':
-  video_image_bitmap_format="BGR565"
-else :
-  video_image_bitmap_format="RGBA8888"
-print("video_image_bitmap_format:", video_image_bitmap_format);
+video_image_bitmap_format="RGBA8888"
 
 # 序列帧的帧间延迟时间（每一帧的时间间隔，单位为毫秒）
 video_image_delay=80
+
+def getAwtkRoot(ctx):
+  if 'awtk_root' in ctx:
+    return ctx['awtk_root']
+  else:
+    import awtk_locator as locator
+    locator.init()
+    return locator.AWTK_ROOT
+
+def updateVideoImageBitmapFormat(awtk_root):
+  global video_image_bitmap_format
+
+  sys.path.insert(0, awtk_root)
+  import awtk_config as awtk
+
+  if os.environ['NANOVG_BACKEND'] == 'AGGE' or os.environ['NANOVG_BACKEND'] == 'AGG' or os.environ['VGCANVAS'] == 'CAIRO':
+    video_image_bitmap_format="BGR565"
+
+  print("video_image_bitmap_format:", video_image_bitmap_format);
 
 def joinPath(root, subdir):
   return os.path.normpath(os.path.join(root, subdir))
@@ -44,6 +54,7 @@ def on_generate_res_before(ctx):
     print('======================= '+ ctx['type'] + ' =======================')
     # ctx = {'type': 'ui', 'theme': 'default', 'imagegen_options': 'mono', 'input': './', 'output': './'}
     if ctx['type'] == "data" :
+        updateVideoImageBitmapFormat(getAwtkRoot(ctx))
         genVideoImageGen("design/default")
 
 

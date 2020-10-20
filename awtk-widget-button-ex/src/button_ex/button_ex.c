@@ -80,7 +80,9 @@ static ret_t button_ex_on_event(widget_t* widget, event_t* e) {
 
       if (!button_ex->dragged) {
         pointer_event_t evt = *(pointer_event_t*)e;
+
         evt.e = event_init(EVT_CLICK, widget);
+        evt.e.size = sizeof(evt);
         widget_dispatch(widget, (event_t*)&evt);
 
         tk_snprintf(anim_params, sizeof(anim_params), "h(to=%d,duration=500,easing=cubic_out)",

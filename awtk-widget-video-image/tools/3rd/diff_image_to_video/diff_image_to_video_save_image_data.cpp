@@ -22,6 +22,14 @@ using namespace std;
 
 namespace diff_image_video {
 
+#define ROUND_TO(size, round_size) ((((size) + round_size - 1) / round_size) * round_size)
+
+#define PUSH_DIFF_RECT_LIST(list, rect) {               \
+   if (rect.height > 0 && rect.width > 0)  {            \
+      list.push_back(rect);                             \
+   }                                                    \
+}                                                       \
+
 #define FWRITE(data, _ElementSize, _ElementCount, file, file_point)            \
   fwrite(data, _ElementSize, _ElementCount, file);                             \
   file_point += (_ElementSize * _ElementCount);
@@ -184,38 +192,42 @@ void diff_image_to_video_save_image_data::get_diff_rect_list(
   list<Rect>::const_iterator _Last = tmp_rect_list.end();
   list<Rect>::const_iterator _First = tmp_rect_list.begin();
 
-  tmp = *_First;
-  _First++;
-  for (; _First != _Last; ++_First) {
-    rect = _First;
+  if (tmp_rect_list.size() > 0) {
+    tmp = *_First;
+    _First++;
+    for (; _First != _Last; ++_First) {
+      rect = _First;
 
-    if (tmp.y == rect->y && tmp.height == rect->height &&
-        tmp.width + tmp.x == rect->x) {
-      tmp.width += rect->width;
-    } else {
-      rect_list.push_back(tmp);
-      tmp = *rect;
+      if (tmp.y == rect->y && tmp.height == rect->height &&
+          tmp.width + tmp.x == rect->x) {
+        tmp.width += rect->width;
+      } else {
+        PUSH_DIFF_RECT_LIST(rect_list, tmp);
+        tmp = *rect;
+      }
     }
+    PUSH_DIFF_RECT_LIST(rect_list, tmp);
   }
-  rect_list.push_back(tmp);
 
-  _Last = tmp_rect_x_list.end();
-  _First = tmp_rect_x_list.begin();
+  if (tmp_rect_x_list.size() > 0) {
+    _Last = tmp_rect_x_list.end();
+    _First = tmp_rect_x_list.begin();
 
-  tmp = *_First;
-  _First++;
-  for (; _First != _Last; ++_First) {
-    rect = _First;
+    tmp = *_First;
+    _First++;
+    for (; _First != _Last; ++_First) {
+      rect = _First;
 
-    if (tmp.x == rect->x && tmp.width == rect->width &&
-        tmp.height + tmp.y == rect->y) {
-      tmp.height += rect->height;
-    } else {
-      rect_list.push_back(tmp);
-      tmp = *rect;
+      if (tmp.x == rect->x && tmp.width == rect->width &&
+          tmp.height + tmp.y == rect->y) {
+        tmp.height += rect->height;
+      } else {
+        PUSH_DIFF_RECT_LIST(rect_list, tmp);
+        tmp = *rect;
+      }
     }
+    PUSH_DIFF_RECT_LIST(rect_list, tmp);
   }
-  rect_list.push_back(tmp);
 }
 
 void diff_image_to_video_save_image_data::get_diff_image_data_list(
@@ -231,9 +243,10 @@ void diff_image_to_video_save_image_data::get_diff_image_data_list(
     for (; _First != _Last; ++_First) {
       rect = _First;
 
+      unsigned int line_length = ROUND_TO(rect->width * image.channels, 4);
+      unsigned int size = line_length * rect->height;
       unsigned int width_length = image.channels * image.width;
       unsigned int data_width_length = image.channels * rect->width;
-      unsigned int size = rect->width * rect->height * image.channels;
 
       if (width_length >= data_width_length &&
           image.height >= rect->height + rect->y) {
@@ -241,10 +254,12 @@ void diff_image_to_video_save_image_data::get_diff_image_data_list(
         diff_data.rect.y = rect->y;
         diff_data.rect.width = rect->width;
         diff_data.rect.height = rect->height;
+        diff_data.rect.line_length = line_length;
         diff_data.data = new unsigned char[size];
+        memset(diff_data.data, 0x0, size);
 
         for (size_t y = 0; y < diff_data.rect.height; y++) {
-          memcpy(diff_data.data + y * data_width_length,
+          memcpy(diff_data.data + y * line_length,
                  image.data + diff_data.rect.x * image.channels +
                      (diff_data.rect.y + y) * width_length,
                  data_width_length);
@@ -274,7 +289,7 @@ diff_image_to_video_save_image_data::get_diff_image_data_list_to_data(
   for (; _First != _Last; ++_First) {
     diff_data = _First;
     image_data_length +=
-        (diff_data->rect.height * diff_data->rect.width * channels +
+        (diff_data->rect.height * diff_data->rect.line_length +
          sizeof(image_diff_rect_t));
   }
 
@@ -290,7 +305,7 @@ diff_image_to_video_save_image_data::get_diff_image_data_list_to_data(
            sizeof(image_diff_rect_t));
     image_data_list_point += sizeof(image_diff_rect_t);
 
-    length = diff_data->rect.height * diff_data->rect.width * channels;
+    length = diff_data->rect.height * diff_data->rect.line_length;
     memcpy(data + image_data_list_point, diff_data->data, length);
     image_data_list_point += length;
 
@@ -554,15 +569,17 @@ void diff_image_to_video_save_image_data::save_all_frame(
 
     get_diff_rect_list(last_image, image, RECT_SIZE, rect_list);
 
-    get_diff_image_data_list(image, rect_list, image_diff_data_list);
+    if (rect_list.size() > 0) {
+      get_diff_image_data_list(image, rect_list, image_diff_data_list);
 
-    lz4_diff_data = get_diff_image_data_list_to_lz4_data(
-        image_diff_data_list, image.channels, true, image_data_length,
-        image_diff_lz4_length);
+      lz4_diff_data = get_diff_image_data_list_to_lz4_data(
+          image_diff_data_list, image.channels, true, image_data_length,
+          image_diff_lz4_length);
 
-    lz4_image_data = get_lz4_date_to_image_date(
-        image.data, image.width * image.height * image.channels,
-        image_data_lz4_length);
+      lz4_image_data = get_lz4_date_to_image_date(
+          image.data, image.width * image.height * image.channels,
+          image_data_lz4_length);
+    }
 
     head.frame_info_list[frame_curr].start_point = file_point;
 
@@ -573,6 +590,10 @@ void diff_image_to_video_save_image_data::save_all_frame(
           image_data_length;
       FWRITE(lz4_diff_data, sizeof(unsigned char), image_diff_lz4_length,
              save_file, file_point);
+    } else if (image_data_lz4_length == 0 && image_diff_lz4_length == 0) {
+      head.frame_info_list[frame_curr].data_length = 0;
+      head.frame_info_list[frame_curr].compress_type = compress_type_no_change;
+      head.frame_info_list[frame_curr].data_decompress_length = 0;
     } else {
       head.frame_info_list[frame_curr].compress_type = compress_type_lz4;
       head.frame_info_list[frame_curr].data_length = image_data_lz4_length;
@@ -590,7 +611,7 @@ void diff_image_to_video_save_image_data::save_all_frame(
            "lz4_length:%u, rect_list:%u, type:%s \n",
            frame_curr - 1, image_data_length, image_diff_lz4_length,
            image_data_lz4_length, (unsigned int)rect_list.size(),
-           image_data_lz4_length > image_diff_lz4_length ? "diff" : "lz4");
+           image_data_lz4_length > image_diff_lz4_length ? "diff" : image_data_lz4_length == 0 && image_diff_lz4_length == 0 ? "no_change" : "lz4");
 
     delete lz4_diff_data;
     lz4_diff_data = NULL;

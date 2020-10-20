@@ -1,13 +1,7 @@
 ﻿import os
 import scripts.app_helper as app
 
-def initArgument(name, defVal):
-    val = ARGUMENTS.get(name, '')
-    if len(val) == 0:
-        ARGUMENTS[name] = defVal
-
-ARGUMENTS['LCD'] = '800_600'
-helper = app.Helper(ARGUMENTS);
+helper = app.Helper(ARGUMENTS)
 helper.set_dll_def('src/usb_camera.def').set_libs(['usb_camera']).call(DefaultEnvironment)
 
 SConscriptFiles = ['src/SConscript', 'demos/SConscript', 'tests/SConscript']

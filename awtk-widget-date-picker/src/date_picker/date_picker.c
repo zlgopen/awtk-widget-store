@@ -24,6 +24,7 @@
 #include "tkc/date_time.h"
 #include "date_picker.h"
 
+#define DATE_PICKER_FORMAT "%d/%d/%d"
 #define DATE_PICKER_STYLE_DAY "day"
 #define DATE_PICKER_STYLE_DAY_CURRENT "day_current"
 
@@ -99,7 +100,6 @@ static ret_t date_picker_get_prop(widget_t* widget, const char* name, value_t* v
 }
 
 static ret_t date_picker_set_prop(widget_t* widget, const char* name, const value_t* v) {
-  date_picker_t* date_picker = DATE_PICKER(widget);
   return_value_if_fail(widget != NULL && name != NULL && v != NULL, RET_BAD_PARAMS);
 
   if (tk_str_eq(DATE_PICKER_PROP_YEAR, name)) {
@@ -216,11 +216,48 @@ static ret_t date_picker_update_view(widget_t* widget) {
   return RET_OK;
 }
 
+static ret_t date_picker_set_value(widget_t* widget, int year, int month, int day) {
+  char new_text[64];
+  char old_text[64];
+  value_change_event_t evt;
+  date_picker_t* date_picker = DATE_PICKER(widget);
+
+  if(date_picker->year == year && date_picker->month == month && date_picker->day == day) {
+    return RET_OK;
+  }
+
+  tk_snprintf(old_text, sizeof(old_text)-1, DATE_PICKER_FORMAT, 
+      date_picker->year, date_picker->month, date_picker->day);
+  tk_snprintf(new_text, sizeof(old_text)-1, DATE_PICKER_FORMAT, 
+      year, month, day);
+  value_change_event_init(&evt, EVT_VALUE_WILL_CHANGE, widget);
+  value_set_str(&(evt.old_value), old_text);
+  value_set_str(&(evt.new_value), new_text);
+
+  if(widget_dispatch(widget, (event_t*)&evt) != RET_STOP) {
+    date_picker->year = year;
+    date_picker->month = month;
+    date_picker->day = day;
+  
+    evt.e.type = EVT_VALUE_CHANGED;
+    widget_dispatch(widget, (event_t*)&evt);
+    widget_invalidate(widget, NULL);
+  }
+
+  return RET_OK;
+}
+
 static ret_t date_picker_on_button_clicked(void* ctx, event_t* e) {
   widget_t* widget = WIDGET(ctx);
   widget_t* button = WIDGET(e->target);
   const char* name = button->name;
   date_picker_t* date_picker = DATE_PICKER(ctx);
+  int year = date_picker->year;
+  int month = date_picker->month;
+  int day = date_picker->day;
+  int save_year = date_picker->year;
+  int save_month = date_picker->month;
+  int save_day = date_picker->day;
 
   if (tk_str_eq(name, DATE_PICKER_CHILD_TODAY)) {
     date_time_t dt;
@@ -253,8 +290,15 @@ static ret_t date_picker_on_button_clicked(void* ctx, event_t* e) {
     }
   }
 
+  year = date_picker->year;
+  month = date_picker->month;
+  day = date_picker->day;
+  date_picker->year = save_year;
+  date_picker->month = save_month;
+  date_picker->day = save_day;
+
+  date_picker_set_value(widget, year, month, day);
   date_picker_update_view(widget);
-  widget_dispatch_simple_event(widget, EVT_VALUE_CHANGED);
 
   return RET_OK;
 }
@@ -273,7 +317,7 @@ static ret_t date_picker_init(widget_t* widget) {
   date_picker_t* date_picker = DATE_PICKER(widget);
   date_picker_update_view(widget);
   widget_foreach(widget, date_picker_on_visit_child, widget);
-  date_picker->inited;
+  date_picker->inited = TRUE;
 
   return RET_OK;
 }

@@ -166,7 +166,7 @@
       }
     ],
     "header": "label_rotate/label_rotate.h",
-    "desc": "可旋转的文本控件，仅可显示一行文本。\n\n在xml中使用\"label_rotate\"标签创建文本控件。如：\n\n```xml\n<!-- ui -->\n<label_rotate text=\"label_rotate\"/>\n```\n\n在c代码中使用函数label_rotate\\_create创建文本控件。如：\n\n```c\nwidget_t* label_rotate = label_rotate_create(win, 10, 10, 128, 30);\nwidget_set_text(label_rotate, L\"hello awtk!\");\n```\n\n> 创建之后，需要用widget\\_set\\_text或widget\\_set\\_text\\_utf8设置文本内容。\n\n可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：\n\n```xml\n<!-- style -->\n<label_rotate>\n<style name=\"default\">\n<normal text_color=\"#444444\"/>\n<disable text_color=\"#44444466\"/>\n</style>\n</label_rotate>\n```",
+    "desc": "可旋转的文本控件，仅可显示一行文本。\n\n在xml中使用\"label_\\rotate\"标签创建文本控件。如：\n\n```xml\n<!-- ui -->\n<label_rotate text=\"label_rotate\"/>\n```\n\n在c代码中使用函数label_\\rotate\\_create创建文本控件。如：\n\n```c\nwidget_t* label_rotate = label_rotate_create(win, 10, 10, 128, 30);\nwidget_set_text(label_rotate, L\"hello awtk!\");\n```\n\n> 创建之后，需要用widget\\_set\\_text或widget\\_set\\_text\\_utf8设置文本内容。\n\n可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：\n\n```xml\n<!-- style -->\n<label_rotate>\n<style name=\"default\">\n<normal text_color=\"#444444\"/>\n<disable text_color=\"#44444466\"/>\n</style>\n</label_rotate>\n```",
     "name": "label_rotate_t",
     "parent": "widget_t",
     "annotation": {

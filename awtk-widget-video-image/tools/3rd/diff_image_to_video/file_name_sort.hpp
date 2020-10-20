@@ -32,12 +32,17 @@ namespace diff_image_video
 			int number = 0;
 
 			std::string file_name;
+			size_t name_point = 0;
 			size_t p_point = file_path.find_last_of('.');
-			size_t name_point = file_path.find_last_of('/');
-
-			if (name_point == std::string::npos)
-			{
-				name_point = file_path.find_last_of('\\');
+			size_t name_point_1 = file_path.find_last_of('/');
+			size_t name_point_2 = file_path.find_last_of('\\');
+			
+			if (name_point_1 != std::string::npos && name_point_2 != std::string::npos) {
+				name_point = name_point_1 > name_point_2 ? name_point_1 : name_point_2;
+			} else if (name_point_1 != std::string::npos && name_point_2 == std::string::npos) {
+				name_point = name_point_1;
+			} else if (name_point_1 == std::string::npos && name_point_2 != std::string::npos) {
+				name_point = name_point_2;
 			}
 
 			file_name = file_path.substr(name_point + 1, p_point - name_point - 1);

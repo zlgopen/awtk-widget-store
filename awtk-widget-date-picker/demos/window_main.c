@@ -1,4 +1,5 @@
 ﻿#include "awtk.h"
+#include "date_picker_register.h"
 #include "date_picker/date_edit.h"
 
 static ret_t on_close(void* ctx, event_t* e) {
@@ -21,10 +22,9 @@ static ret_t on_lang_changed(void* ctx, event_t* e) {
 }
 
 static ret_t on_date_changed(void* ctx, event_t* e) {
-  widget_t* widget = WIDGET(e->target);
-  date_edit_t* date_edit = DATE_EDIT(widget);
+  value_change_event_t* evt = (value_change_event_cast(e));
 
-  log_debug("%d/%d/%d\n", date_edit->year, date_edit->month, date_edit->day);
+  log_debug("%s => %s\n", value_str(&(evt->old_value)), value_str(&(evt->new_value)));
 
   return RET_OK;
 }
@@ -36,6 +36,16 @@ ret_t application_init(void) {
   date_picker_register();
 
   widget_t* win = window_open("main");
+  widget_t* lang = widget_lookup(win, "lang", TRUE);
+
+  /*test set default lange to en_US*/
+  combo_box_set_value(lang, 0);
+  locale_info_change(locale_info(), "en", "US");
+  
+  /*test set default lange to zh_CN*/
+  //combo_box_set_value(lang, 1);
+  //locale_info_change(locale_info(), "zh", "CN");
+
   widget_child_on(win, "close", EVT_CLICK, on_close, NULL); 
   widget_child_on(win, "lang", EVT_VALUE_CHANGED, on_lang_changed, NULL); 
   widget_child_on(win, "d1", EVT_VALUE_CHANGED, on_date_changed, NULL); 

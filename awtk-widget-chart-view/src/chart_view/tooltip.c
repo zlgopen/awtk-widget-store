@@ -221,10 +221,9 @@ ret_t tooltip_draw_symbol(widget_t* widget, canvas_t* c, uint32_t symbol_size) {
   draw_type = (image_draw_type_t)style_get_int(style, STYLE_ID_TOOLTIP_SYMBOL_BG_IMAGE_DRAW_TYPE,
                                                IMAGE_DRAW_CENTER);
 
-  if (image_name != NULL) {
-    if (image_name[0] == '\0' || widget_load_image(widget, image_name, pimg) != RET_OK) {
-      pimg = NULL;
-    }
+  if (image_name == NULL || image_name[0] == '\0' ||
+      widget_load_image(widget, image_name, pimg) != RET_OK) {
+    pimg = NULL;
   }
 
   if (bg_color.rgba.a || bd_color.rgba.a || pimg != NULL) {

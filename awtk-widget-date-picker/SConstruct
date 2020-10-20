@@ -1,12 +1,7 @@
 ﻿import os
 import scripts.app_helper as app
 
-def initArgument(name, defVal):
-    val = ARGUMENTS.get(name, '')
-    if len(val) == 0:
-        ARGUMENTS[name] = defVal
-
-helper = app.Helper(ARGUMENTS);
+helper = app.Helper(ARGUMENTS)
 helper.set_dll_def('src/date_picker.def').set_libs(['date_picker']).call(DefaultEnvironment)
 
 SConscriptFiles = ['src/SConscript', 'demos/SConscript', 'tests/SConscript']

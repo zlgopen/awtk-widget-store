@@ -1,7 +1,7 @@
 LIBRARY   qr
 EXPORTS
-    qr_register @1
-    qr_supported_render_mode @2
-    qr_create @3
-    qr_cast @4
-    qr_set_value @5
+    qr_register
+    qr_supported_render_mode
+    qr_create
+    qr_cast
+    qr_set_value

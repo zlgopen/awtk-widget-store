@@ -60,6 +60,7 @@ Example:
 }
 ```
 
+> 关于 project.json 的更多说明，请参考 [AWTK项目描述文件](https://github.com/zlgopen/awtk/blob/master/docs/awtk_project_description_file.md)
 > 也可以通过打开 Designer，进入 “项目设置” 页面进行设置。
 
 ### 1.2 添加资源生成事件回调，实现额外处理逻辑
@@ -117,13 +118,15 @@ def on_generate_res_after(ctx):
 
 ##### 1.3.1 awtk 的路径
 
-如果使用 update_res.py 生成资源时出现如下错误：
+update_res.py 须依赖 awtk 提供的公共模块，默认使用 AWTK Designer 安装目录中的 awtk，如果找不到则会尝试在当前工作目录的上3级目录中查找。
+
+如果查找不到 awtk，则会出现如下错误：
 
 ```cmd
-ImportError: No module named update_res_common
+ImportError: No module named update_res_app
 ```
 
-只需修改 update_res.py 中的 AWTK_ROOT 为正确的 awtk 路径即可。
+此时只需修改 update_res.py 中的 AWTK_ROOT 为正确的 awtk 路径即可。
 
 ##### 1.3.2 用于单色屏的位图字体生成工具 fontgen_ft
 

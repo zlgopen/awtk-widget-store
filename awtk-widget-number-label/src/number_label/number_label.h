@@ -93,6 +93,42 @@ typedef struct _number_label_t {
    */
   double value;
 
+  /**
+   * @property {bool_t} readonly
+   * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable"]
+   * 编辑器是否为只读。
+   */
+  bool_t readonly;
+
+  /**
+   * @property {bool_t} loop
+   * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable"]
+   * 值是否循环。用上下键修改时，到达最小值时是否跳到最大值，到达最大值时是否跳到最小值。
+   */
+  bool_t loop;
+
+  /**
+   * @property {double} min
+   * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable"]
+   * 最小值。
+   */
+  double min;
+
+  /**
+   * @property {double} max
+   * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable"]
+   * 最大值。
+   */
+  double max;
+
+  /**
+   * @property {double} step
+   * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable"]
+   * 步长。
+   * 用上下键修改时，一次增加和减少时的数值。
+   */
+  double step;
+
   /*private*/
 } number_label_t;
 
@@ -142,6 +178,41 @@ ret_t number_label_set_format(widget_t* widget, const char* format);
  * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
  */
 ret_t number_label_set_decimal_font_size_scale(widget_t* widget, double decimal_font_size_scale);
+
+/**
+ * @method number_label_set_readonly
+ * 设置控件是否为只读。
+ * @annotation ["scriptable"]
+ * @param {widget_t*} widget widget对象。
+ * @param {bool_t} readonly 只读。
+ *
+ * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
+ */
+ret_t number_label_set_readonly(widget_t* widget, bool_t readonly);
+
+/**
+ * @method number_label_set_loop
+ * 设置 值是否循环
+ * @annotation ["scriptable"]
+ * @param {widget_t*} widget widget对象。
+ * @param {bool_t} loop 值是否循环。
+ *
+ * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
+ */
+ret_t number_label_set_loop(widget_t* widget, bool_t loop);
+
+/**
+ * @method number_label_set_limit
+ * 设置取值范围和步长。
+ * @annotation ["scriptable"]
+ * @param {widget_t*} widget widget对象。
+ * @param {double} min 最小值。
+ * @param {double} max 最大值。
+ * @param {double} step 步长。
+ *
+ * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
+ */
+ret_t number_label_set_limit(widget_t* widget, double min, double max, double step);
 
 /**
  * @method number_label_set_value

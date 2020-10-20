@@ -1,14 +1,8 @@
-import os
+﻿import os
 import scripts.app_helper as app
 
-def initArgument(name, defVal):
-    val = ARGUMENTS.get(name, '')
-    if len(val) == 0:
-        ARGUMENTS[name] = defVal
-
-ARGUMENTS['LCD'] = '800_480'
-helper = app.Helper(ARGUMENTS);
+helper = app.Helper(ARGUMENTS)
 helper.set_dll_def('src/video_image.def').set_libs(['video_image']).call(DefaultEnvironment)
 
-SConscriptFiles = ['src/SConscript', 'demos/SConscript', 'tools/diff_image_to_video_gen/SConscript', 'tests/SConscript']
+SConscriptFiles = ['src/SConscript', 'demos/SConscript', 'tests/SConscript']
 SConscript(SConscriptFiles)

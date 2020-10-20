@@ -23,8 +23,16 @@
 #define TK_VIDEO_IMAGE_H
 
 #include "base/widget.h"
+#include "tkc/types_def.h"
 
 BEGIN_C_DECLS
+
+typedef ret_t (*video_image_dispose_image_t)(void* ctx, bitmap_t* bitmap);
+typedef ret_t (*video_image_to_image_begin_t)(void* ctx, bitmap_t* bitmap);
+typedef ret_t (*video_image_draw_image_t)(void* ctx, bitmap_t* bitmap, canvas_t *c);
+typedef ret_t (*video_image_to_image_end_t)(void* ctx, bitmap_t* bitmap, bool_t is_get_frame);
+typedef ret_t (*video_image_init_image_t)(void* ctx, bitmap_t* bitmap, uint32_t w, uint32_t h, uint32_t channels, bitmap_format_t format);
+
 /**
  * @class video_image_t
  * @parent widget_t
@@ -75,6 +83,78 @@ typedef struct _video_image_t {
    * 延迟播放。
    */
   uint32_t delay_paly;
+
+  /**
+   * @property {bool_t} draw_video_image
+   * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable"]
+   * 是否自动绘制视频贴图数据。（默认为TRUE，该成员变量是为了某一些特殊场景使用）
+   */
+  bool_t draw_video_image;
+
+  /**
+   * @property {void*} init_image_ctx
+   * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable"]
+   * 自定义初始化序列帧位图函数上下文
+   */
+  void* init_image_ctx;
+  /**
+   * @property {video_image_init_image_t} init_image
+   * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable"]
+   * 自定义初始化序列帧位图函数（如果该参数为NULL，会使用默认的位图创建方法）
+   */
+  video_image_init_image_t init_image;
+
+  /**
+   * @property {void*} dispose_image_ctx
+   * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable"]
+   * 自定义释放序列帧位图函数上下文
+   */
+  void* dispose_image_ctx;
+  /**
+   * @property {video_image_dispose_image_t} dispose_image
+   * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable"]
+   * 自定义释放序列帧位图函数（如果该参数为NULL，会使用默认的位图释放方法）
+   */
+  video_image_dispose_image_t dispose_image;
+
+  /**
+   * @property {void*} draw_image_ctx
+   * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable"]
+   * 自定义绘制序列帧位图函数上下文
+   */
+  void* draw_image_ctx;
+  /**
+   * @property {video_image_draw_image_t} draw_image
+   * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable"]
+   * 自定义绘制序列帧位图函数（如果该参数为NULL，会使用默认的位图绘制方法）
+   */
+  video_image_draw_image_t draw_image;
+
+  /**
+   * @property {void*} to_image_begin_ctx
+   * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable"]
+   * 解码序列帧前回调函数上下文
+   */
+  void* to_image_begin_ctx;
+  /**
+   * @property {video_image_to_image_begin_t} to_image_begin
+   * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable"]
+   * 解码序列帧前回调函数
+   */
+  video_image_to_image_begin_t to_image_begin;
+
+    /**
+   * @property {void*} to_image_end_ctx
+   * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable"]
+   * 解码序列帧后回调函数上下文
+   */
+  void* to_image_end_ctx;
+  /**
+   * @property {video_image_to_image_end_t} to_image_end
+   * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable"]
+   * 解码序列帧后回调函数
+   */
+  video_image_to_image_end_t to_image_end;
 
   /*private*/
   bool_t is_done;
@@ -149,9 +229,82 @@ ret_t video_image_set_auto_play(widget_t* widget, bool_t auto_play);
  */
 ret_t video_image_set_delay_paly(widget_t* widget, uint32_t delay_paly);
 
+/**
+ * @method video_image_set_draw_video_image
+ * 设置是否自动绘制视频贴图数据。（默认为TRUE，该成员变量是为了某一些特殊场景使用）
+ * @annotation ["scriptable"]
+ * @param {widget_t*} widget widget对象。
+ * @param {bool_t} draw_video_image 是否自动绘制视频贴图数据。
+ *
+ * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
+ */
+ret_t video_image_set_draw_video_image(widget_t* widget, bool_t draw_video_image);
+
+/**
+ * @method video_image_set_init_bitmap_func
+ * 设置自定义初始化序列帧位图函数（如果该参数为NULL，会使用默认的位图创建方法）
+ * 如果返回失败的话，就会使用默认的方法创建位图。
+ * @annotation ["scriptable"]
+ * @param {widget_t*} widget widget对象。
+ * @param {video_image_init_image_t} init_image 初始化序列帧位图函数。
+ * @param {void*} init_image_ctx 上下文。
+ *
+ * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
+ */
+ret_t video_image_set_init_bitmap_func(widget_t* widget, video_image_init_image_t init_image, void* init_image_ctx);
+
+/**
+ * @method video_image_set_dispose_image_func
+ * 设置自定义释放序列帧位图函数（如果该参数为NULL，会使用默认的位图释放方法）
+ * @annotation ["scriptable"]
+ * @param {widget_t*} widget widget对象。
+ * @param {video_image_dispose_image_t} dispose_image 释放序列帧位图函数。
+ * @param {void*} dispose_image_ctx 上下文。
+ *
+ * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
+ */
+ret_t video_image_set_dispose_image_func(widget_t* widget, video_image_dispose_image_t dispose_image, void* dispose_image_ctx);
+
+/**
+ * @method video_image_set_draw_image_func
+ * 设置自定义绘制序列帧位图函数（如果该参数为NULL，会使用默认的位图绘制方法）
+ * @annotation ["scriptable"]
+ * @param {widget_t*} widget widget对象。
+ * @param {video_image_draw_image_t} draw_image 绘制序列帧位图函数。
+ * @param {void*} draw_image_ctx 上下文。
+ *
+ * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
+ */
+ret_t video_image_set_draw_image_func(widget_t* widget, video_image_draw_image_t draw_image, void* draw_image_ctx);
+
+/**
+ * @method video_image_set_to_image_begin_func
+ * 设置解码序列帧前回调函数
+ * @annotation ["scriptable"]
+ * @param {widget_t*} widget widget对象。
+ * @param {video_image_to_image_begin_t} to_image_begin 解码序列帧前回调函数。
+ * @param {void*} to_image_begin_ctx 解码序列帧前回调函数上下文。
+ *
+ * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
+ */
+ret_t video_image_set_to_image_begin_func(widget_t* widget, video_image_to_image_begin_t to_image_begin, void* to_image_begin_ctx);
+
+/**
+ * @method video_image_set_to_image_end_func
+ * 设置解码序列帧后回调函数
+ * @annotation ["scriptable"]
+ * @param {widget_t*} widget widget对象。
+ * @param {video_image_to_image_end_t} to_image_end 解码序列帧后回调函数。
+ * @param {void*} to_image_end_ctx 解码序列帧后回调函数上下文。
+ *
+ * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
+ */
+ret_t video_image_set_to_image_end_func(widget_t* widget, video_image_to_image_end_t to_image_end, void* to_image_end_ctx);
+
 #define VIDEO_IMAGE_PROP_VIDEO_NAME "video_name"
 #define VIDEO_IMAGE_PROP_AUTO_PLAY "auto_play"
 #define VIDEO_IMAGE_PROP_DELAY_PALY "delay_paly"
+#define VIDEO_IMAGE_PROP_DRAW_VIDEO_IMAGE "draw_video_image"
 
 #define WIDGET_TYPE_VIDEO_IMAGE "video_image"
 

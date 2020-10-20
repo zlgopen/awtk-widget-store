@@ -20,6 +20,7 @@
  */
 
 #include "tkc/mem.h"
+#include "tkc/utf8.h"
 #include "tkc/utils.h"
 #include "tkc/date_time.h"
 #include "base/window.h"
@@ -27,6 +28,7 @@
 #include "date_picker.h"
 
 static ret_t date_edit_update_view(widget_t* widget);
+static ret_t date_edit_set_value(widget_t* widget, int year, int month, int day);
 
 ret_t date_edit_set_year(widget_t* widget, uint32_t year) {
   date_edit_t* date_edit = DATE_EDIT(widget);
@@ -83,7 +85,6 @@ static ret_t date_edit_get_prop(widget_t* widget, const char* name, value_t* v) 
 }
 
 static ret_t date_edit_set_prop(widget_t* widget, const char* name, const value_t* v) {
-  date_edit_t* date_edit = DATE_EDIT(widget);
   return_value_if_fail(widget != NULL && name != NULL && v != NULL, RET_BAD_PARAMS);
 
   if (tk_str_eq(DATE_EDIT_PROP_YEAR, name)) {
@@ -129,15 +130,41 @@ static ret_t date_edit_update_view(widget_t* widget) {
 
 static ret_t date_edit_on_picked(void* ctx, event_t* e) {
   widget_t* widget = WIDGET(ctx);
-  date_edit_t* date_edit = DATE_EDIT(widget);
   date_picker_t* date_picker = DATE_PICKER(e->target);
 
-  date_edit->year = date_picker->year;
-  date_edit->month = date_picker->month;
-  date_edit->day = date_picker->day;
+  date_edit_set_value(widget, date_picker->year, date_picker->month, date_picker->day);
   date_edit_update_view(widget);
 
-  widget_dispatch_simple_event(widget, EVT_VALUE_CHANGED);
+  return RET_OK;
+}
+
+static ret_t date_edit_set_value(widget_t* widget, int year, int month, int day) {
+  char new_text[64];
+  char old_text[64];
+  value_change_event_t evt;
+  date_edit_t* date_edit = DATE_EDIT(widget);
+
+  if(date_edit->year == year && date_edit->month == month && date_edit->day == day) {
+    return RET_OK;
+  }
+
+  tk_snprintf(old_text, sizeof(old_text)-1, DATE_EDIT_FORMAT, 
+      date_edit->year, date_edit->month, date_edit->day);
+  tk_snprintf(new_text, sizeof(old_text)-1, DATE_EDIT_FORMAT, 
+      year, month, day);
+  value_change_event_init(&evt, EVT_VALUE_WILL_CHANGE, widget);
+  value_set_str(&(evt.old_value), old_text);
+  value_set_str(&(evt.new_value), new_text);
+
+  if(widget_dispatch(widget, (event_t*)&evt) != RET_STOP) {
+    date_edit->year = year;
+    date_edit->month = month;
+    date_edit->day = day;
+  
+    evt.e.type = EVT_VALUE_CHANGED;
+    widget_dispatch(widget, (event_t*)&evt);
+    widget_invalidate(widget, NULL);
+  }
 
   return RET_OK;
 }
@@ -149,17 +176,12 @@ static ret_t date_edit_on_edited(void* ctx, event_t* e) {
   int month = 0;
   widget_t* widget = WIDGET(ctx);
   widget_t* target = WIDGET(e->target);
-  date_edit_t* date_edit = DATE_EDIT(widget);
-  date_picker_t* date_picker = DATE_PICKER(e->target);
 
   return_value_if_fail(str_init(&str, 64) != NULL, RET_OK);
 
   str_from_wstr(&str, target->text.str);
   if (tk_sscanf(str.str, DATE_EDIT_FORMAT, &year, &month, &day) == 3) {
-    date_edit->year = year;
-    date_edit->month = month;
-    date_edit->day = day;
-    widget_dispatch_simple_event(widget, EVT_VALUE_CHANGED);
+    date_edit_set_value(widget, year, month, day);
   }
   str_reset(&str);
 
@@ -216,7 +238,7 @@ static ret_t date_edit_init(widget_t* widget) {
   widget_child_on(widget, DATE_EDIT_CHILD_PICK, EVT_CLICK, date_edit_on_pick_clicked, widget);
   widget_child_on(widget, DATE_EDIT_CHILD_DATE, EVT_VALUE_CHANGED, date_edit_on_edited, widget);
 
-  date_edit->inited;
+  date_edit->inited = TRUE;
 
   return RET_OK;
 }

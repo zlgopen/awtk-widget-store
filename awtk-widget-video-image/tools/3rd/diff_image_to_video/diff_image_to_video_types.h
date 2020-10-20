@@ -37,6 +37,7 @@ typedef enum _image_format_t {
 typedef enum _compress_type_t {
   compress_type_lz4 = 0,
   compress_type_diff_lz4,
+  compress_type_no_change,
 } compress_type_t;
 
 typedef struct _image_diff_rect_t {
@@ -44,6 +45,7 @@ typedef struct _image_diff_rect_t {
   unsigned int y;
   unsigned int width;
   unsigned int height;
+  unsigned int line_length;
 } image_diff_rect_t;
 
 typedef struct _image_diff_data_t {
