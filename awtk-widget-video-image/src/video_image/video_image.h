@@ -78,11 +78,11 @@ typedef struct _video_image_t {
   bool_t auto_play;
 
   /**
-   * @property {uint32_t} delay_paly
+   * @property {uint32_t} delay_play
    * @annotation ["set_prop","get_prop","readable","persitent","design","scriptable"]
    * 延迟播放。
    */
-  uint32_t delay_paly;
+  uint32_t delay_play;
 
   /**
    * @property {bool_t} draw_video_image
@@ -219,15 +219,15 @@ ret_t video_image_set_video_name(widget_t* widget, const char* video_name);
 ret_t video_image_set_auto_play(widget_t* widget, bool_t auto_play);
 
 /**
- * @method video_image_set_delay_paly
+ * @method video_image_set_delay_play
  * 设置延迟播放。
  * @annotation ["scriptable"]
  * @param {widget_t*} widget widget对象。
- * @param {uint32_t} delay_paly 延迟播放。
+ * @param {uint32_t} delay_play 延迟播放。
  *
  * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
  */
-ret_t video_image_set_delay_paly(widget_t* widget, uint32_t delay_paly);
+ret_t video_image_set_delay_play(widget_t* widget, uint32_t delay_play);
 
 /**
  * @method video_image_set_draw_video_image
@@ -303,7 +303,7 @@ ret_t video_image_set_to_image_end_func(widget_t* widget, video_image_to_image_e
 
 #define VIDEO_IMAGE_PROP_VIDEO_NAME "video_name"
 #define VIDEO_IMAGE_PROP_AUTO_PLAY "auto_play"
-#define VIDEO_IMAGE_PROP_DELAY_PALY "delay_paly"
+#define VIDEO_IMAGE_PROP_DELAY_PLAY "delay_play"
 #define VIDEO_IMAGE_PROP_DRAW_VIDEO_IMAGE "draw_video_image"
 
 #define WIDGET_TYPE_VIDEO_IMAGE "video_image"

@@ -134,11 +134,11 @@ ret_t video_image_set_draw_video_image(widget_t* widget, bool_t draw_video_image
   return RET_OK;
 }
 
-ret_t video_image_set_delay_paly(widget_t *widget, uint32_t delay_paly) {
+ret_t video_image_set_delay_play(widget_t *widget, uint32_t delay_play) {
   video_image_t *video_image = VIDEO_IMAGE(widget);
   return_value_if_fail(video_image != NULL, RET_BAD_PARAMS);
 
-  video_image->delay_paly = delay_paly;
+  video_image->delay_play = delay_play;
 
   return RET_OK;
 }
@@ -155,8 +155,8 @@ static ret_t video_image_get_prop(widget_t *widget, const char *name,
   } else if (tk_str_eq(VIDEO_IMAGE_PROP_AUTO_PLAY, name)) {
     value_set_bool(v, video_image->auto_play);
     return RET_OK;
-  } else if (tk_str_eq(VIDEO_IMAGE_PROP_DELAY_PALY, name)) {
-    value_set_uint32(v, video_image->delay_paly);
+  } else if (tk_str_eq(VIDEO_IMAGE_PROP_DELAY_PLAY, name)) {
+    value_set_uint32(v, video_image->delay_play);
     return RET_OK;
   } else if (tk_str_eq(VIDEO_IMAGE_PROP_DRAW_VIDEO_IMAGE, name)) {
     value_set_bool(v, video_image->draw_video_image);
@@ -176,8 +176,8 @@ static ret_t video_image_set_prop(widget_t *widget, const char *name,
     return video_image_set_video_name(widget, value_str(v));
   } else if (tk_str_eq(VIDEO_IMAGE_PROP_AUTO_PLAY, name)) {
     return video_image_set_auto_play(widget, value_bool(v));
-  } else if (tk_str_eq(VIDEO_IMAGE_PROP_DELAY_PALY, name)) {
-    return video_image_set_delay_paly(widget, value_uint32(v));
+  } else if (tk_str_eq(VIDEO_IMAGE_PROP_DELAY_PLAY, name)) {
+    return video_image_set_delay_play(widget, value_uint32(v));
   } else if (tk_str_eq(VIDEO_IMAGE_PROP_DRAW_VIDEO_IMAGE, name)) {
     return video_image_set_draw_video_image(widget, value_bool(v));
   }
@@ -295,9 +295,9 @@ static ret_t video_image_on_open(void *ctx, event_t *e) {
   video_image_t *video_image = VIDEO_IMAGE(widget);
 
   if (video_image->auto_play) {
-    if (video_image->delay_paly > 0) {
+    if (video_image->delay_play > 0) {
       video_image->timer_id =
-          timer_add(video_image_delay_play, widget, video_image->delay_paly);
+          timer_add(video_image_delay_play, widget, video_image->delay_play);
     } else {
       video_image_play(widget);
     }
@@ -309,7 +309,7 @@ static ret_t video_image_on_open(void *ctx, event_t *e) {
 const char *s_video_image_properties[] = {VIDEO_IMAGE_PROP_VIDEO_NAME,
                                           VIDEO_IMAGE_PROP_AUTO_PLAY,
                                           VIDEO_IMAGE_PROP_DRAW_VIDEO_IMAGE,
-                                          VIDEO_IMAGE_PROP_DELAY_PALY, NULL};
+                                          VIDEO_IMAGE_PROP_DELAY_PLAY, NULL};
 
 TK_DECL_VTABLE(video_image) = {
     .size = sizeof(video_image_t),
@@ -329,7 +329,7 @@ widget_t *video_image_create(widget_t *parent, xy_t x, xy_t y, wh_t w, wh_t h) {
   video_image_t *video_image = VIDEO_IMAGE(widget);
   return_value_if_fail(video_image != NULL, NULL);
 
-  video_image->delay_paly = 0;
+  video_image->delay_play = 0;
   video_image->auto_play = TRUE;
   video_image->video_name = NULL;
 

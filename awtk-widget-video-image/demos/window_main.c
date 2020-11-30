@@ -81,7 +81,7 @@ ret_t application_init(void) {
    * 所以需要通过原来默认的方法释放该 bitmap。
    * 如果想避免这个情况，可以不在 xml 中写入 video_name，通过代码来设置 video_name。
    */
-  video_image_set_video_name(video_image, "image_138");
+  video_image_set_video_name(video_image, "image_12");
   video_image_set_dispose_image_func(video_image, video_image_dispose_image, NULL);
 #endif
 

@@ -145,7 +145,7 @@
           },
           {
             "type": "uint32_t",
-            "name": "delay_paly",
+            "name": "delay_play",
             "desc": "延迟播放。"
           }
         ],
@@ -153,7 +153,7 @@
           "scriptable": true
         },
         "desc": "设置延迟播放。",
-        "name": "video_image_set_delay_paly",
+        "name": "video_image_set_delay_play",
         "return": {
           "type": "ret_t",
           "desc": "返回RET_OK表示成功，否则表示失败。"
@@ -352,7 +352,7 @@
         }
       },
       {
-        "name": "delay_paly",
+        "name": "delay_play",
         "desc": "延迟播放。",
         "type": "uint32_t",
         "annotation": {
