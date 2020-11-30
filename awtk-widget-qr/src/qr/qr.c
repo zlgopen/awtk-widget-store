@@ -23,6 +23,7 @@
 #include "tkc/utils.h"
 
 #include "qr.h"
+static ret_t qr_ensure_qrcode(widget_t* widget);
 
 ret_t qr_set_value(widget_t* widget, const char* value) {
   qr_t* qr = QR(widget);
@@ -30,7 +31,12 @@ ret_t qr_set_value(widget_t* widget, const char* value) {
 
   qr->value = tk_str_copy(qr->value, value);
 
-  return RET_OK;
+  if (qr->qrcode != NULL) {
+    QRcode_free(qr->qrcode);
+    qr->qrcode = NULL;
+  }
+
+  return (qr_ensure_qrcode(qr) == RET_OK) ? widget_invalidate(qr, NULL) : RET_FAIL;
 }
 
 static ret_t qr_get_prop(widget_t* widget, const char* name, value_t* v) {
