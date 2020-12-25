@@ -186,6 +186,10 @@ static ret_t table_client_on_paint_self(widget_t* widget, canvas_t* c) {
   return RET_OK;
 }
 
+static ret_t table_client_layout_children(widget_t* widget) {
+  return table_client_ensure_children(widget);
+}
+
 static ret_t table_client_prepare_data(widget_t* widget) {
   table_client_t* table_client = TABLE_CLIENT(widget);
 
@@ -324,10 +328,6 @@ ret_t table_client_scroll_to(widget_t* widget, int32_t yoffset_end, int32_t dura
   int32_t rows_per_page = table_client_rows_per_page(widget);
   return_value_if_fail(table_client != NULL, RET_FAIL);
 
-  if (yoffset_end == table_client->yoffset) {
-    return RET_OK;
-  }
-
   max_yoffset = table_client->row_height * (table_client->rows - rows_per_page);
   if (yoffset_end > max_yoffset) {
     yoffset_end = max_yoffset;
@@ -335,6 +335,10 @@ ret_t table_client_scroll_to(widget_t* widget, int32_t yoffset_end, int32_t dura
 
   if (yoffset_end < 0) {
     yoffset_end = 0;
+  }
+
+  if (yoffset_end == table_client->yoffset) {
+    return RET_OK;
   }
 
   yoffset = table_client->yoffset;
@@ -636,6 +640,7 @@ TK_DECL_VTABLE(table_client) = {.size = sizeof(table_client_t),
                                 .parent = TK_PARENT_VTABLE(widget),
                                 .create = table_client_create,
                                 .on_paint_self = table_client_on_paint_self,
+                                .on_layout_children = table_client_layout_children,
                                 .set_prop = table_client_set_prop,
                                 .get_prop = table_client_get_prop,
                                 .on_event = table_client_on_event,
