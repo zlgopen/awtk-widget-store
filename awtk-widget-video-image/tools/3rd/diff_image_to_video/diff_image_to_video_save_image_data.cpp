@@ -579,6 +579,9 @@ void diff_image_to_video_save_image_data::save_all_frame(
       lz4_image_data = get_lz4_date_to_image_date(
           image.data, image.width * image.height * image.channels,
           image_data_lz4_length);
+    } else {
+      image_data_lz4_length = 0;
+      image_diff_lz4_length = 0;
     }
 
     head.frame_info_list[frame_curr].start_point = file_point;

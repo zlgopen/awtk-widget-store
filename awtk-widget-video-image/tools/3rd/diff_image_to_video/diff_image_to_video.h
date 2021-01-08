@@ -22,13 +22,6 @@ public:
                             const std::string &save_file_path,
                             image_format_t frame_image_type,
                             unsigned int delays);
-
-  static bool read_image_data(const unsigned char *file_data,
-                              unsigned int file_data_length,
-                              unsigned int frame_number,
-                              unsigned char **last_image_data,
-                              unsigned int &width, unsigned int &height,
-                              unsigned char &channels, unsigned int &delays);
 };
 
 }; // namespace diff_image_video
