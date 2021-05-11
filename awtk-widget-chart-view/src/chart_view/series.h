@@ -186,6 +186,16 @@ ret_t series_rset(widget_t* widget, uint32_t index, const void* data, uint32_t n
 ret_t series_push(widget_t* widget, const void* data, uint32_t nr);
 
 /**
+ * @method series_clear
+ * 清除全部序列点。
+ * @annotation ["scriptable"]
+ * @param {widget_t*} widget widget对象。
+ *
+ * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
+ */
+ret_t series_clear(widget_t* widget);
+
+/**
  * @method series_at
  * 返回特定位置的序列点数据。
  * @annotation ["scriptable"]

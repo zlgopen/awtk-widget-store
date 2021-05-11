@@ -1172,6 +1172,23 @@ ret_t series_p_push(widget_t* widget, const void* data, uint32_t nr) {
   return RET_OK;
 }
 
+ret_t series_p_clear(widget_t* widget){
+  fifo_t* fifo;
+  series_t* series = SERIES(widget);
+  return_value_if_fail(series != NULL, RET_BAD_PARAMS);
+
+  fifo = series->fifo;
+  return_value_if_fail(fifo != NULL && fifo->capacity > 0, RET_BAD_PARAMS);
+
+  fifo_clear(series->fifo);
+
+  series->new_period = 0;
+
+  widget_invalidate(widget, NULL);
+
+  return RET_OK;
+}
+
 ret_t series_p_pop(widget_t* widget, uint32_t nr) {
   fifo_t* fifo;
   series_t* series = SERIES(widget);

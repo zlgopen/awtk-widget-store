@@ -123,6 +123,7 @@ static const series_vtable_t s_line_series_colorful_internal_vtable = {
     .rset = series_p_rset,
     .push = series_p_push,
     .at = series_p_at,
+    .clear = series_p_clear,
     .get_current = series_p_get_current,
     .is_point_in = series_p_is_point_in,
     .index_of_point_in = series_p_index_of_point_in,

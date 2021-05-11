@@ -42,9 +42,9 @@ series_dispaly_mode_t series_dispaly_mode_from_str(const char* mode) {
 }
 
 uint32_t series_count(widget_t* widget) {
-  ret_t ret = RET_NOT_IMPL;
+  ret_t ret = 0;
   series_t* series = SERIES(widget);
-  return_value_if_fail(series != NULL && series->vt != NULL, RET_BAD_PARAMS);
+  return_value_if_fail(series != NULL && series->vt != NULL, 0);
 
   if (series->vt->count) {
     ret = series->vt->count(widget);
@@ -87,6 +87,17 @@ ret_t series_push(widget_t* widget, const void* data, uint32_t nr) {
   }
 
   return ret;
+}
+
+ret_t series_clear(widget_t* widget){
+  ret_t ret = RET_NOT_IMPL;
+  series_t* series = SERIES(widget);
+  return_value_if_fail(series != NULL && series->vt != NULL, RET_BAD_PARAMS);
+
+  if (series->vt->clear) {
+    ret = series->vt->clear(widget);
+  }
+
 }
 
 void* series_at(widget_t* widget, uint32_t index) {

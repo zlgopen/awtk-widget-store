@@ -147,6 +147,7 @@ ret_t series_p_set_with_animator(widget_t* widget, uint32_t index, const void* d
 ret_t series_p_set_default(widget_t* widget, uint32_t index, const void* data, uint32_t nr);
 ret_t series_p_rset(widget_t* widget, uint32_t index, const void* data, uint32_t nr);
 ret_t series_p_push(widget_t* widget, const void* data, uint32_t nr);
+ret_t series_p_clear(widget_t* widget);
 ret_t series_p_pop(widget_t* widget, uint32_t nr);
 void* series_p_at(widget_t* widget, uint32_t index);
 ret_t series_p_get_current(widget_t* widget, uint32_t* begin, uint32_t* end, uint32_t* middle);

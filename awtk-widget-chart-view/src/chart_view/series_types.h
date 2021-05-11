@@ -171,6 +171,7 @@ typedef uint32_t (*series_count_t)(widget_t* widget);
 typedef ret_t (*series_set_t)(widget_t* widget, uint32_t index, const void* data, uint32_t nr);
 typedef ret_t (*series_rset_t)(widget_t* widget, uint32_t index, const void* data, uint32_t nr);
 typedef ret_t (*series_push_t)(widget_t* widget, const void* data, uint32_t nr);
+typedef ret_t (*series_clear_t)(widget_t* widget);
 typedef ret_t (*series_pop_t)(widget_t* widget, uint32_t nr);
 typedef void* (*series_at_t)(widget_t* widget, uint32_t index);
 typedef ret_t (*series_get_current_t)(widget_t* widget, uint32_t* begin, uint32_t* end,
@@ -190,6 +191,7 @@ typedef struct _series_vtable_t {
   series_set_t set;
   series_rset_t rset;
   series_push_t push;
+  series_clear_t clear;
   series_pop_t pop;
   series_at_t at;
   series_get_current_t get_current;

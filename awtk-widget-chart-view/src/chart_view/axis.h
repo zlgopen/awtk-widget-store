@@ -145,7 +145,7 @@ typedef struct _axis_t {
   uint8_t painted_before : 1;
 
   /**
-   * @property {series_vtable_t} vt
+   * @property {axis_vtable_t} vt
    * @annotation ["readable"]
    * 虚函数表。
    */

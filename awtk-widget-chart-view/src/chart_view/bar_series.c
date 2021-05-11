@@ -376,6 +376,7 @@ static const series_vtable_t s_bar_series_internal_vtable = {
     .count = series_p_count,
     .rset = series_p_rset,
     .push = series_p_push,
+    .clear = series_p_clear,
     .at = series_p_at,
     .get_current = series_p_get_current,
     .is_point_in = series_p_is_point_in,
