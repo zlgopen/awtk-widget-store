@@ -23,6 +23,8 @@
 #include "axis.h"
 #include "series.h"
 #include "tooltip.h"
+#include "series_p.h"
+#include "base/layout.h"
 
 static widget_t* chart_view_get_series(widget_t* widget, uint32_t index) {
   uint32_t cnt = 0;
