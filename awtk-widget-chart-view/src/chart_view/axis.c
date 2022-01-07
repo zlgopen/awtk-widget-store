@@ -179,7 +179,7 @@ static widget_t* axis_lookup_indicated_series(widget_t* widget) {
 
   WIDGET_FOR_EACH_CHILD_BEGIN(widget->parent, iter, i)
   if (widget_is_series(iter)) {
-    if (widget_get_prop_pointer(iter, SERIES_PROP_SERIES_AXIS) == widget) {
+    if (widget_get_prop_pointer(iter, SERIES_PROP_SERIES_AXIS_OBJ) == widget) {
       return iter;
     }
   }

@@ -241,10 +241,22 @@ typedef struct _series_vtable_t {
 #define SERIES_PROP_SERIES_AXIS "series_axis"
 
 /**
+ * @const SERIES_PROP_SERIES_AXIS_OBJ
+ * 指示序列位置的轴对象
+ */
+#define SERIES_PROP_SERIES_AXIS_OBJ "series_axis_obj"
+
+/**
  * @const SERIES_PROP_VALUE_AXIS
  * 指示序列值的轴
  */
 #define SERIES_PROP_VALUE_AXIS "value_axis"
+
+/**
+ * @const SERIES_PROP_VALUE_AXIS_OBJ
+ * 指示序列值的轴对象
+ */
+#define SERIES_PROP_VALUE_AXIS_OBJ "value_axis_obj"
 
 /**
  * @const SERIES_PROP_DISPLAY_MODE

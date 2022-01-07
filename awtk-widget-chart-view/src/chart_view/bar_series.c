@@ -41,9 +41,15 @@ ret_t bar_series_get_prop(widget_t* widget, const char* name, value_t* v) {
   return_value_if_true(series_p_get_prop(widget, name, v) == RET_OK, RET_OK);
 
   if (tk_str_eq(name, SERIES_PROP_SERIES_AXIS)) {
+    value_set_str(v, series->series_axis);
+    return RET_OK;
+  } if (tk_str_eq(name, SERIES_PROP_SERIES_AXIS_OBJ)) {
     value_set_pointer(v, series_p_lookup_series_axis(widget, series->series_axis));
     return RET_OK;
   } else if (tk_str_eq(name, SERIES_PROP_VALUE_AXIS)) {
+    value_set_str(v, series->value_axis);
+    return RET_OK;
+  } else if (tk_str_eq(name, SERIES_PROP_VALUE_AXIS_OBJ)) {
     value_set_pointer(v, series_p_lookup_value_axis(widget, series->value_axis));
     return RET_OK;
   } else if (tk_str_eq(name, SERIES_PROP_TITLE)) {
@@ -128,7 +134,6 @@ ret_t bar_series_on_destroy(widget_t* widget) {
 
   TKMEM_FREE(series->series_axis);
   TKMEM_FREE(series->value_axis);
-  OBJECT_UNREF(series->base.fifo);
 
   return RET_OK;
 }
@@ -140,7 +145,7 @@ static ret_t bar_series_calc_layout(widget_t* widget, bool_t vertical, float_t* 
   const char* margin1 = vertical ? STYLE_ID_MARGIN_LEFT : STYLE_ID_MARGIN_TOP;
   const char* margin2 = vertical ? STYLE_ID_MARGIN_RIGHT : STYLE_ID_MARGIN_BOTTOM;
   float_t interval;
-  widget_t* saxis = widget_get_prop_pointer(widget, SERIES_PROP_SERIES_AXIS);
+  widget_t* saxis = widget_get_prop_pointer(widget, SERIES_PROP_SERIES_AXIS_OBJ);
   bar_series_t* series = BAR_SERIES(widget);
   return_value_if_fail(series != NULL && widget->parent != NULL && saxis != NULL, RET_BAD_PARAMS);
   return_value_if_fail(xoffset != NULL && yoffset != NULL && bar_width != NULL, RET_BAD_PARAMS);
@@ -197,8 +202,8 @@ static bool_t bar_series_is_point_in_bar(widget_t* widget, uint32_t index, xy_t 
   float_t bar_width = 0;
   float_t interval = series_p_get_series_interval(widget);
   bool_t vertical = series_p_is_vertical(widget);
-  widget_t* saxis = widget_get_prop_pointer(widget, SERIES_PROP_SERIES_AXIS);
-  widget_t* vaxis = widget_get_prop_pointer(widget, SERIES_PROP_VALUE_AXIS);
+  widget_t* saxis = widget_get_prop_pointer(widget, SERIES_PROP_SERIES_AXIS_OBJ);
+  widget_t* vaxis = widget_get_prop_pointer(widget, SERIES_PROP_VALUE_AXIS_OBJ);
   return_value_if_fail(widget != NULL && widget->parent != NULL, FALSE);
   return_value_if_fail(saxis != NULL && vaxis != NULL, FALSE);
 

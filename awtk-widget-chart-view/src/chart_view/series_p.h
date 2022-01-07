@@ -148,6 +148,7 @@ bool_t series_p_is_vertical(widget_t* widget);
 ret_t series_p_start_animator_when_inited(widget_t* widget);
 ret_t series_p_on_paint_self_push(widget_t* widget, canvas_t* c);
 ret_t series_p_on_paint_self_cover(widget_t* widget, canvas_t* c);
+ret_t series_p_on_destroy(widget_t* widget);
 
 #define SERIES_ANIMATION_EASING EASING_SIN_INOUT
 

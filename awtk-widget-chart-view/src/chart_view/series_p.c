@@ -938,7 +938,7 @@ ret_t series_p_draw_symbol_colorful(widget_t* widget, canvas_t* c, style_t* styl
   return RET_OK;
 }
 
-static ret_t series_data_draw_normal_to_rect(void* data, float_t ox, float_t oy, uint32_t bar_width,
+static ret_t series_data_draw_normal_to_rect(void* data, float_t ox, float_t oy, float_t bar_width,
                                              bool_t vertical, rect_t* r) {
   series_data_draw_normal_t* d = (series_data_draw_normal_t*)(data);
   assert(d != NULL && r != NULL);
@@ -954,7 +954,7 @@ static ret_t series_data_draw_normal_to_rect(void* data, float_t ox, float_t oy,
   return RET_OK;
 }
 
-static ret_t series_data_draw_minmax_to_rect(void* data, float_t ox, float_t oy, uint32_t bar_width,
+static ret_t series_data_draw_minmax_to_rect(void* data, float_t ox, float_t oy, float_t bar_width,
                                              bool_t vertical, rect_t* r) {
   series_data_draw_minmax_t* d = (series_data_draw_minmax_t*)(data);
   assert(d != NULL && r != NULL);
@@ -969,7 +969,7 @@ static ret_t series_data_draw_minmax_to_rect(void* data, float_t ox, float_t oy,
 }
 
 typedef ret_t (*series_data_draw_normal_to_rect_t)(void* data, float_t ox, float_t oy,
-                                                   uint32_t bar_width, bool_t vertical, rect_t* r);
+                                                   float_t bar_width, bool_t vertical, rect_t* r);
 
 ret_t series_p_draw_bar(widget_t* widget, canvas_t* c, vgcanvas_t* vg, style_t* style, float_t ox,
                         float_t oy, object_t* fifo, uint32_t index, uint32_t size,
@@ -1060,7 +1060,7 @@ ret_t series_p_draw_bar(widget_t* widget, canvas_t* c, vgcanvas_t* vg, style_t* 
 static ret_t series_p_on_fifo_will_set(void* ctx, event_t* e) {
   widget_t* widget = WIDGET(ctx);
   series_t* series = SERIES(widget);
-  widget_t* axis = widget_get_prop_pointer(widget, SERIES_PROP_SERIES_AXIS);
+  widget_t* axis = widget_get_prop_pointer(widget, SERIES_PROP_SERIES_AXIS_OBJ);
 
   series_fifo_set_event_t* evt = series_fifo_set_event_cast(e);
   uint32_t index = evt->index;
@@ -1098,7 +1098,7 @@ static ret_t series_p_on_fifo_will_set(void* ctx, event_t* e) {
 static ret_t series_p_on_fifo_push(void* ctx, event_t* e) {
   object_t* fifo = OBJECT(e->target);
   widget_t* widget = WIDGET(ctx);
-  widget_t* axis = widget_get_prop_pointer(widget, SERIES_PROP_SERIES_AXIS);
+  widget_t* axis = widget_get_prop_pointer(widget, SERIES_PROP_SERIES_AXIS_OBJ);
   series_fifo_push_event_t* evt = series_fifo_push_event_cast(e);
 
   series_t* series = SERIES(widget);
@@ -1151,7 +1151,7 @@ static ret_t series_p_on_fifo_push(void* ctx, event_t* e) {
 
 static ret_t series_p_on_fifo_pop(void* ctx, event_t* e) {
   widget_t* widget = WIDGET(ctx);
-  widget_t* axis = widget_get_prop_pointer(widget, SERIES_PROP_SERIES_AXIS);
+  widget_t* axis = widget_get_prop_pointer(widget, SERIES_PROP_SERIES_AXIS_OBJ);
 
   return widget_invalidate(widget, NULL);
 }
@@ -1179,15 +1179,26 @@ static ret_t series_p_fifo_emitter_off(widget_t* widget) {
   return RET_OK;
 }
 
+static ret_t series_p_fifo_deinit(widget_t* widget) {
+  series_t* series = SERIES(widget);
+  return_value_if_fail(series != NULL, RET_BAD_PARAMS);
+
+  if (series->fifo != NULL) {
+    series_p_fifo_emitter_off(widget);
+    OBJECT_UNREF(series->fifo);
+    series->fifo = NULL;
+  }
+
+  return RET_OK;
+}
+
 ret_t series_p_set_fifo(widget_t* widget, object_t* fifo) {
   series_t* series = SERIES(widget);
   return_value_if_fail(series != NULL && fifo != NULL, RET_BAD_PARAMS);
   return_value_if_fail(tk_str_start_with(object_get_type(fifo), "series_fifo"), RET_BAD_PARAMS);
 
-  if (series->fifo != NULL && series->fifo != fifo) {
-    series_p_fifo_emitter_off(widget);
-    OBJECT_UNREF(series->fifo);
-    series->fifo = NULL;
+  if (series->fifo != fifo) {
+    series_p_fifo_deinit(widget);
   }
 
   if (series->fifo == NULL) {
@@ -1272,7 +1283,7 @@ ret_t series_p_get_current(widget_t* widget, uint32_t* begin, uint32_t* end, uin
   size = SERIES_FIFO_GET_SIZE(fifo);
   return_value_if_fail(size > 0, RET_BAD_PARAMS);
 
-  saxis = widget_get_prop_pointer(widget, SERIES_PROP_SERIES_AXIS);
+  saxis = widget_get_prop_pointer(widget, SERIES_PROP_SERIES_AXIS_OBJ);
   return_value_if_fail(saxis != NULL, RET_BAD_PARAMS);
 
   srange = axis_get_range(saxis, TRUE);
@@ -1305,8 +1316,8 @@ bool_t series_p_is_point_in(widget_t* widget, xy_t x, xy_t y, bool_t is_local) {
   return_value_if_fail(series != NULL && series->fifo != NULL, FALSE);
 
   size = SERIES_FIFO_GET_SIZE(series->fifo);
-  saxis = AXIS(widget_get_prop_pointer(widget, SERIES_PROP_SERIES_AXIS));
-  vaxis = AXIS(widget_get_prop_pointer(widget, SERIES_PROP_VALUE_AXIS));
+  saxis = AXIS(widget_get_prop_pointer(widget, SERIES_PROP_SERIES_AXIS_OBJ));
+  vaxis = AXIS(widget_get_prop_pointer(widget, SERIES_PROP_VALUE_AXIS_OBJ));
   return_value_if_fail(saxis != NULL && vaxis != NULL, FALSE);
 
   if (!is_local) {
@@ -1362,8 +1373,8 @@ int32_t series_p_relative_index_of_point_in(widget_t* widget, xy_t x, xy_t y, bo
   series_t* series = SERIES(widget);
   return_value_if_fail(series != NULL, -1);
 
-  saxis = widget_get_prop_pointer(widget, SERIES_PROP_SERIES_AXIS);
-  vaxis = widget_get_prop_pointer(widget, SERIES_PROP_VALUE_AXIS);
+  saxis = widget_get_prop_pointer(widget, SERIES_PROP_SERIES_AXIS_OBJ);
+  vaxis = widget_get_prop_pointer(widget, SERIES_PROP_VALUE_AXIS_OBJ);
   return_value_if_fail(saxis != NULL && vaxis != NULL, -1);
 
   if (!is_local) {
@@ -1435,8 +1446,8 @@ ret_t series_p_to_local(widget_t* widget, uint32_t index, point_t* p) {
 
   offset = index >= middle ? (index - middle) : (index - begin + end - middle + 1);
 
-  saxis = widget_get_prop_pointer(widget, SERIES_PROP_SERIES_AXIS);
-  vaxis = widget_get_prop_pointer(widget, SERIES_PROP_VALUE_AXIS);
+  saxis = widget_get_prop_pointer(widget, SERIES_PROP_SERIES_AXIS_OBJ);
+  vaxis = widget_get_prop_pointer(widget, SERIES_PROP_VALUE_AXIS_OBJ);
   s = AXIS(saxis);
   v = AXIS(vaxis);
   return_value_if_fail(s != NULL && v != NULL, RET_BAD_PARAMS);
@@ -1479,7 +1490,7 @@ uint32_t series_p_get_offset_max(widget_t* widget) {
   size = SERIES_FIFO_GET_SIZE(series->fifo);
   return_value_if_true(size == 0, 0);
 
-  axis = widget_get_prop_pointer(widget, SERIES_PROP_SERIES_AXIS);
+  axis = widget_get_prop_pointer(widget, SERIES_PROP_SERIES_AXIS_OBJ);
   return_value_if_fail(axis != NULL, 0);
   range = axis_get_range(axis, TRUE);
 
@@ -1515,7 +1526,7 @@ static ret_t series_p_set_new_period_internal(widget_t* widget, uint32_t period,
   size = SERIES_FIFO_GET_SIZE(series->fifo);
   return_value_if_fail(capacity > 0 && period <= size, RET_BAD_PARAMS);
 
-  axis = widget_get_prop_pointer(widget, SERIES_PROP_SERIES_AXIS);
+  axis = widget_get_prop_pointer(widget, SERIES_PROP_SERIES_AXIS_OBJ);
   return_value_if_fail(axis != NULL, RET_BAD_PARAMS);
 
   range = (uint32_t)(axis_get_range(axis, TRUE));
@@ -1671,12 +1682,12 @@ ret_t series_p_get_origin_point(widget_t* widget, widget_t* saxis, widget_t* vax
 }
 
 float_t series_p_get_series_interval(widget_t* widget) {
-  widget_t* axis = widget_get_prop_pointer(widget, SERIES_PROP_SERIES_AXIS);
+  widget_t* axis = widget_get_prop_pointer(widget, SERIES_PROP_SERIES_AXIS_OBJ);
   return axis_measure_series_interval(axis);
 }
 
 bool_t series_p_is_vertical(widget_t* widget) {
-  widget_t* axis = widget_get_prop_pointer(widget, SERIES_PROP_VALUE_AXIS);
+  widget_t* axis = widget_get_prop_pointer(widget, SERIES_PROP_VALUE_AXIS_OBJ);
   return (axis && tk_str_eq(widget_get_type(axis), WIDGET_TYPE_Y_AXIS));
 }
 
@@ -1780,8 +1791,8 @@ ret_t series_p_on_paint_self_push(widget_t* widget, canvas_t* c) {
   return_value_if_fail(series != NULL && series->vt->on_paint != NULL, RET_BAD_PARAMS);
   return_value_if_true(SERIES_FIFO_GET_SIZE(series->fifo) == 0, RET_OK);
 
-  saxis = widget_get_prop_pointer(widget, SERIES_PROP_SERIES_AXIS);
-  vaxis = widget_get_prop_pointer(widget, SERIES_PROP_VALUE_AXIS);
+  saxis = widget_get_prop_pointer(widget, SERIES_PROP_SERIES_AXIS_OBJ);
+  vaxis = widget_get_prop_pointer(widget, SERIES_PROP_VALUE_AXIS_OBJ);
   return_value_if_fail(saxis != NULL && vaxis != NULL, RET_BAD_PARAMS);
 
   vertical = tk_str_eq(widget_get_type(vaxis), WIDGET_TYPE_Y_AXIS);
@@ -1824,8 +1835,8 @@ ret_t series_p_on_paint_self_cover(widget_t* widget, canvas_t* c) {
   size = SERIES_FIFO_GET_SIZE(series->fifo);
   return_value_if_true(size == 0, RET_OK);
 
-  saxis = widget_get_prop_pointer(widget, SERIES_PROP_SERIES_AXIS);
-  vaxis = widget_get_prop_pointer(widget, SERIES_PROP_VALUE_AXIS);
+  saxis = widget_get_prop_pointer(widget, SERIES_PROP_SERIES_AXIS_OBJ);
+  vaxis = widget_get_prop_pointer(widget, SERIES_PROP_VALUE_AXIS_OBJ);
   return_value_if_fail(saxis != NULL && vaxis != NULL, RET_BAD_PARAMS);
 
   vertical = tk_str_eq(widget_get_type(vaxis), WIDGET_TYPE_Y_AXIS);
@@ -1870,6 +1881,15 @@ ret_t series_p_on_paint_self_cover(widget_t* widget, canvas_t* c) {
   }
 
   OBJECT_UNREF(fifo);
+
+  return RET_OK;
+}
+
+ret_t series_p_on_destroy(widget_t* widget) {
+  series_t* series = SERIES(widget);
+  return_value_if_fail(series != NULL, RET_BAD_PARAMS);
+
+  series_p_fifo_deinit(widget);
 
   return RET_OK;
 }

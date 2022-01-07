@@ -364,8 +364,16 @@
         "name": "SERIES_PROP_SERIES_AXIS"
       },
       {
+        "desc": "指示序列位置的轴对象",
+        "name": "SERIES_PROP_SERIES_AXIS_OBJ"
+      },
+      {
         "desc": "指示序列值的轴",
         "name": "SERIES_PROP_VALUE_AXIS"
+      },
+      {
+        "desc": "指示序列值的轴对象",
+        "name": "SERIES_PROP_VALUE_AXIS_OBJ"
       },
       {
         "desc": "序列的显示模式",

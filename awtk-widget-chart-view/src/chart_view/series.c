@@ -232,6 +232,11 @@ ret_t series_set_prepare_fifo(widget_t* widget, series_prepare_fifo_t prepare, v
   return RET_OK;
 }
 
+static ret_t series_on_destroy(void* ctx, event_t* e){
+  widget_t* widget = WIDGET(e->target);
+  return series_p_on_destroy(widget);
+}
+
 TK_DECL_VTABLE(series) = {.size = sizeof(series_t), .parent = TK_PARENT_VTABLE(widget)};
 
 widget_t* series_create(widget_t* parent, const widget_vtable_t* vt, xy_t x, xy_t y, wh_t w,
@@ -239,6 +244,8 @@ widget_t* series_create(widget_t* parent, const widget_vtable_t* vt, xy_t x, xy_
   widget_t* widget = widget_create(parent, vt, x, y, w, h);
   series_t* series = SERIES(widget);
   return_value_if_fail(series != NULL, NULL);
+
+  widget_on(widget, EVT_DESTROY, series_on_destroy, NULL);
 
   series->animator_create = chart_animator_fifo_float_value_create;
   series->value_animation = 500;

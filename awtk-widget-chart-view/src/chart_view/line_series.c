@@ -63,9 +63,15 @@ ret_t line_series_get_prop(widget_t* widget, const char* name, value_t* v) {
   return_value_if_true(series_p_get_prop(widget, name, v) == RET_OK, RET_OK);
 
   if (tk_str_eq(name, SERIES_PROP_SERIES_AXIS)) {
+    value_set_str(v, series->series_axis);
+    return RET_OK;
+  } else if (tk_str_eq(name, SERIES_PROP_SERIES_AXIS_OBJ)) {
     value_set_pointer(v, series_p_lookup_series_axis(widget, series->series_axis));
     return RET_OK;
   } else if (tk_str_eq(name, SERIES_PROP_VALUE_AXIS)) {
+    value_set_str(v, series->value_axis);
+    return RET_OK;
+  } else if (tk_str_eq(name, SERIES_PROP_VALUE_AXIS_OBJ)) {
     value_set_pointer(v, series_p_lookup_value_axis(widget, series->value_axis));
     return RET_OK;
   } else if (tk_str_eq(name, SERIES_PROP_TITLE)) {
@@ -178,7 +184,6 @@ ret_t line_series_on_destroy(widget_t* widget) {
 
   TKMEM_FREE(series->series_axis);
   TKMEM_FREE(series->value_axis);
-  OBJECT_UNREF(series->base.fifo);
 
   return RET_OK;
 }
@@ -235,7 +240,7 @@ ret_t line_series_draw_one_series(widget_t* widget, canvas_t* c, float_t ox, flo
   }
 
   if (series->symbol.show) {
-    widget_t* axis = widget_get_prop_pointer(widget, SERIES_PROP_SERIES_AXIS);
+    widget_t* axis = widget_get_prop_pointer(widget, SERIES_PROP_SERIES_AXIS_OBJ);
     float_t range = axis_get_range(axis, TRUE);
     uint32_t fifo_size = SERIES_FIFO_GET_SIZE(fifo);
 

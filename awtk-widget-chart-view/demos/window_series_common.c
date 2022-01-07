@@ -181,7 +181,7 @@ static void on_series_push_data(widget_t* widget, uint32_t count, uint32_t unit_
     gen(buffer, count);
     series_push(iter, buffer, count);
 
-    axis = widget_get_prop_pointer(iter, SERIES_PROP_SERIES_AXIS);
+    axis = widget_get_prop_pointer(iter, SERIES_PROP_SERIES_AXIS_OBJ);
     if (axis) {
       updated = widget_get_prop_bool(axis, PROP_UPDATED, FALSE);
       if (!updated) {
