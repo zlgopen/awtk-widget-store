@@ -1,7 +1,7 @@
 ﻿#include "awtk.h"
-#include "../src/table_view_register.h"
-#include "../src/table_row/table_row.h"
-#include "../src/table_client/table_client.h"
+#include "table_view_register.h"
+#include "table_row/table_row.h"
+#include "table_client/table_client.h"
 
 static ret_t on_quit(void* ctx, event_t* e) {
   tk_quit();
@@ -21,7 +21,7 @@ static table_row_t* table_row_of(widget_t* child) {
 static ret_t on_value_changed(void* ctx, event_t* e) {
   table_row_t* row = table_row_of(WIDGET(e->target));
 
-  log_debug("changed: %d value=%d\n", row->index, widget_get_value(WIDGET(e->target)));
+  log_debug("changed: %d value=%d\n", row->index, widget_get_value_int(WIDGET(e->target)));
 
   return RET_OK;
 }

@@ -1,9 +1,9 @@
 ﻿#include "awtk.h"
 
 #include "csv/csv_file.h"
-#include "../src/table_view_register.h"
-#include "../src/table_row/table_row.h"
-#include "../src/table_client/table_client.h"
+#include "table_view_register.h"
+#include "table_row/table_row.h"
+#include "table_client/table_client.h"
 
 #define COL_NAME 0
 #define COL_CHINESE 1
