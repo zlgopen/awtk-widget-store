@@ -1,8 +1,0 @@
-﻿import os
-import scripts.app_helper as app
-
-helper = app.Helper(ARGUMENTS)
-helper.set_dll_def('src/chart_view.def').set_libs(['chart_view']).call(DefaultEnvironment)
-
-SConscriptFiles = ['src/SConscript', 'demos/SConscript']
-SConscript(SConscriptFiles)
